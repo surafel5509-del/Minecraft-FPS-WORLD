@@ -5,190 +5,144 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>BLOCK OPS - Voxel Warfare</title>
+<meta name="theme-color" content="#0b1110">
+<title>BLOCK OPS: Frontline — Voxel FPS</title>
 <style>
+:root{--ink:#edf4ed;--muted:#95a39b;--dim:#5f6d65;--lime:#b9f45d;--lime2:#79b936;--amber:#ffc857;--red:#ff5f56;--cyan:#67dbe8;--panel:rgba(12,18,17,.92);--line:rgba(255,255,255,.1);--shadow:0 24px 80px rgba(0,0,0,.45)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:"Trebuchet MS","Segoe UI",Roboto,Arial,sans-serif;color:#fff;touch-action:none;overscroll-behavior:none}
-canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;image-rendering:pixelated}
-.hidden{display:none!important}
-#hud{position:fixed;inset:0;pointer-events:none;text-shadow:2px 2px 0 rgba(0,0,0,.7)}
-#mini{position:absolute;left:12px;top:12px;width:120px;height:120px;border:4px solid #2b2b2b;outline:2px solid #777;background:#123;border-radius:50%;box-shadow:0 0 0 2px #000,0 4px 14px rgba(0,0,0,.6)}
-#top{position:absolute;left:50%;top:8px;transform:translateX(-50%);text-align:center}
-#waveTxt{font:900 26px Impact,"Arial Black",sans-serif;letter-spacing:3px;color:#ffd24a;text-shadow:3px 3px 0 #5a3a00,0 0 12px rgba(255,200,0,.4)}
-#enemyTxt{font-weight:700;font-size:13px;letter-spacing:2px;color:#ddd}
-#scoreBox{position:absolute;right:76px;top:10px;text-align:right}
-#score{font:900 28px Impact,sans-serif;letter-spacing:2px;color:#fff}
-#killsTxt{font-size:12px;letter-spacing:2px;color:#ccc}
-#pauseB{position:absolute;right:12px;top:12px;width:52px;height:52px;border:3px solid #111;background:rgba(40,40,40,.75);color:#fff;font:900 20px Impact;text-align:center;line-height:46px;pointer-events:auto;box-shadow:inset 0 0 0 2px #888}
-#feed{position:absolute;right:14px;top:84px;text-align:right;font-weight:800;font-size:14px;letter-spacing:1px}
-#feed div{animation:fd 2.6s forwards;margin-bottom:2px}
-@keyframes fd{0%{opacity:0;transform:translateX(30px)}8%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
-#cross{position:absolute;left:50%;top:50%;width:0;height:0;--g:8px}
-#cross i{position:absolute;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.7)}
-#cross i:nth-child(1){width:2px;height:8px;left:-1px;top:calc(-8px - var(--g))}
-#cross i:nth-child(2){width:2px;height:8px;left:-1px;top:var(--g)}
-#cross i:nth-child(3){height:2px;width:8px;top:-1px;left:calc(-8px - var(--g))}
-#cross i:nth-child(4){height:2px;width:8px;top:-1px;left:var(--g)}
-#hitm{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;opacity:0}
-#hitm:before,#hitm:after{content:"";position:absolute;left:15px;top:-4px;width:4px;height:42px;background:#fff;transform:rotate(45deg);box-shadow:0 0 0 1px #000}
-#hitm:after{transform:rotate(-45deg)}
-#hitm.on{animation:hm .25s forwards}
-#hitm.kill{animation:hm .45s forwards}
-#hitm.kill:before,#hitm.kill:after{background:#ff3030}
-@keyframes hm{0%{opacity:1;transform:scale(1.4)}100%{opacity:0;transform:scale(.9)}}
-#vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(200,0,0,.85) 100%);opacity:0}
-#flashW{position:absolute;inset:0;background:#fff;opacity:0}
-#dirInd{position:absolute;left:50%;top:50%;width:0;height:0;opacity:0}
-#dirInd:after{content:"";position:absolute;left:-60px;top:-170px;width:120px;height:26px;background:radial-gradient(ellipse at center,rgba(255,30,30,.95),transparent 70%)}
-#scope{position:absolute;inset:0;background:radial-gradient(circle at center,transparent 0,transparent 32vh,#000 33vh);display:none}
-#scope:before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:#000}
-#scope:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;background:#000}
-#bossBar{position:absolute;left:50%;top:58px;transform:translateX(-50%);width:min(420px,60vw);text-align:center;font-weight:900;letter-spacing:3px;font-size:12px;color:#ff8a3a;display:none}
-#bossBar div{height:12px;border:2px solid #000;background:#2a1000;margin-top:2px}
-#bossFill{display:block;height:100%;width:100%;background:linear-gradient(#ff7a2a,#c62a00)}
-#bars{position:absolute;left:14px;bottom:14px;width:210px}
-.bar{height:20px;border:3px solid #000;background:rgba(0,0,0,.55);margin-top:5px;position:relative;box-shadow:inset 0 0 0 1px #777}
-.bar i{display:block;height:100%;width:100%;transition:width .15s}
-#hpFill{background:linear-gradient(#5be15b,#1f9a1f)}
-#arFill{background:linear-gradient(#5aa8ff,#1f5fc0)}
-.bar b{position:absolute;left:6px;top:0;font-size:12px;line-height:14px}
-#ammoBox{position:absolute;right:18px;bottom:14px;text-align:right}
-#wname{font-weight:900;letter-spacing:2px;font-size:13px;color:#ffd24a}
-#ammo{font:900 46px Impact,sans-serif;line-height:46px}
-#ammo small{font-size:22px;color:#bbb}
-#gren{font-weight:800;font-size:14px;color:#9f9}
-#slots{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:5px;pointer-events:auto}
-.slot{width:74px;padding:5px 4px;border:3px solid #111;background:rgba(0,0,0,.5);font-size:10px;font-weight:800;text-align:center;letter-spacing:1px;box-shadow:inset 0 0 0 1px #666;color:#ccc}
-.slot.on{background:rgba(255,190,0,.35);border-color:#ffd24a;color:#fff}
-#banner{position:absolute;left:0;right:0;top:22%;text-align:center;opacity:0;transition:opacity .4s;pointer-events:none}
-#banner.show{opacity:1}
-#banner h1{margin:0;font:900 clamp(38px,9vw,84px) Impact,"Arial Black",sans-serif;letter-spacing:6px;color:#fff;text-shadow:5px 5px 0 #b34700,0 0 30px rgba(255,150,0,.6)}
-#banner p{margin:4px 0 0;font-weight:800;letter-spacing:4px;color:#ffd24a;font-size:clamp(12px,2.4vw,20px)}
-#streak{position:absolute;left:14px;bottom:100px;font-weight:900;font-size:12px;letter-spacing:2px;color:#ffd24a}
-#streak.rdy{color:#ff5a2a;animation:pl .6s infinite alternate}
-@keyframes pl{to{transform:scale(1.12);color:#fff}}
-#touch{position:fixed;inset:0;pointer-events:none}
-#joyBase{position:absolute;width:120px;height:120px;border-radius:50%;border:4px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);display:none}
-#joyKnob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.55);border:3px solid rgba(0,0,0,.4)}
-.tb{position:absolute;pointer-events:auto;border-radius:50%;border:4px solid rgba(255,255,255,.55);background:rgba(30,30,30,.45);color:#fff;display:flex;align-items:center;justify-content:center;font:900 13px Impact,sans-serif;letter-spacing:1px;text-align:center;touch-action:none}
-.tb:active,.tb.down{background:rgba(255,160,0,.55)}
-#bFire{right:max(22px,env(safe-area-inset-right));bottom:36px;width:96px;height:96px;font-size:20px;border-color:rgba(255,120,60,.9)}
-#bFire2{left:26px;bottom:200px;width:70px;height:70px;border-color:rgba(255,120,60,.8)}
-#bJump{right:max(26px,env(safe-area-inset-right));bottom:150px;width:64px;height:64px}
-#bAds{right:130px;bottom:122px;width:62px;height:62px}
-#bRel{right:132px;bottom:42px;width:58px;height:58px}
-#bGren{right:204px;bottom:78px;width:58px;height:58px}
-#bSwap{right:26px;bottom:228px;width:54px;height:54px}
-#bStrike{right:96px;bottom:200px;width:70px;height:70px;border-color:#ff4a2a;background:rgba(160,30,0,.55);display:none}
-#rotate{position:fixed;inset:0;z-index:99;background:#111;display:none;align-items:center;justify-content:center;text-align:center;font:900 24px Impact;letter-spacing:3px;padding:20px}
-@media (orientation:portrait){body.touch #rotate{display:flex}}
-body.touch #ammoBox{right:auto;left:50%;transform:translateX(-50%);bottom:6px;text-align:center}
-body.touch #ammo{font-size:34px;line-height:34px}
-body.touch #slots{top:130px;transform:none;right:10px}
-body.touch #bars{width:170px;bottom:8px}
-body.touch #streak{bottom:70px}
-.ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:50;overflow:auto;padding:10px;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-#menu{background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.72))}
-.panel{background:rgba(35,35,38,.92);border:4px solid #000;box-shadow:inset 0 0 0 3px #6b6b70,0 10px 40px rgba(0,0,0,.7);padding:16px 20px;max-width:640px;width:100%;margin:auto}
-.logo{font:900 clamp(40px,10vw,92px) Impact,"Arial Black",sans-serif;letter-spacing:6px;text-align:center;line-height:1;color:#7be04a;text-shadow:0 5px 0 #2d6a14,0 10px 0 #1a3d0b,6px 14px 20px rgba(0,0,0,.8);margin:0}
-.logo span{color:#ffb020;text-shadow:0 5px 0 #8a4a00,0 10px 0 #4a2800,6px 14px 20px rgba(0,0,0,.8)}
-.sub{text-align:center;font-weight:800;letter-spacing:4px;font-size:clamp(10px,2vw,14px);color:#cfd;margin:6px 0 12px}
-.row{display:flex;align-items:center;gap:8px;margin:7px 0;flex-wrap:wrap}
-.row label{width:96px;font-weight:900;font-size:12px;letter-spacing:2px;color:#ffd24a}
-.seg{display:flex;flex:1;gap:4px;min-width:200px}
-.seg button,.btn{font:900 13px Impact,"Arial Black",sans-serif;letter-spacing:2px;color:#fff;background:#4a4a4f;border:3px solid #000;box-shadow:inset 0 0 0 2px #8a8a90,inset 0 -5px 0 rgba(0,0,0,.35);padding:9px 6px;cursor:pointer;flex:1}
-.seg button.on{background:#4a9a2a;box-shadow:inset 0 0 0 2px #9be06a,inset 0 -5px 0 rgba(0,0,0,.3)}
-.btn{font-size:18px;padding:13px 18px;background:#4a9a2a;box-shadow:inset 0 0 0 2px #9be06a,inset 0 -6px 0 rgba(0,0,0,.3);width:100%;margin-top:8px}
-.btn.alt{background:#555a66;box-shadow:inset 0 0 0 2px #9aa0b0,inset 0 -6px 0 rgba(0,0,0,.3);font-size:15px}
-.btn:active,.seg button:active{transform:translateY(2px)}
-input[type=range]{flex:1;min-width:140px;accent-color:#6fd33a}
-.help{font-size:11.5px;line-height:1.5;color:#ccd;margin-top:10px;border-top:2px solid #555;padding-top:8px}
-.help b{color:#ffd24a}
-#hi{text-align:center;font-weight:800;letter-spacing:2px;color:#ffd24a;font-size:13px;margin-top:8px}
-#pause,#over{background:rgba(0,0,0,.65)}
-.big{font:900 44px Impact,sans-serif;letter-spacing:5px;text-align:center;margin:0 0 8px;color:#ff4a3a;text-shadow:3px 3px 0 #500}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0;font-weight:800;letter-spacing:1px;font-size:14px}
-.stats div{background:rgba(0,0,0,.4);border:2px solid #444;padding:8px;text-align:center}
-.stats b{display:block;font:900 24px Impact;color:#ffd24a}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070b0a;color:var(--ink);font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;touch-action:none;overscroll-behavior:none}
+button,input{font:inherit}button{color:inherit}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;filter:saturate(1.08) contrast(1.025)}
+.hidden{display:none!important}.mono{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}.accent{color:var(--lime)}
+/* Shared overlays */
+.ov{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;overflow:auto;padding:24px;touch-action:pan-y;-webkit-overflow-scrolling:touch;background:rgba(3,7,6,.7);backdrop-filter:blur(8px)}
+.panel{width:min(440px,100%);margin:auto;padding:28px;background:linear-gradient(145deg,rgba(24,33,30,.98),rgba(9,14,13,.98));border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);position:relative;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px))}
+.panel:before{content:"";position:absolute;left:0;top:0;width:74px;height:3px;background:var(--lime)}
+.eyebrow{font-size:10px;line-height:1.4;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--lime)}
+.big{margin:7px 0 5px;font-size:clamp(30px,5vw,46px);line-height:1;font-weight:900;letter-spacing:-1px;text-transform:uppercase}
+.subtitle{margin:0 0 22px;color:var(--muted);font-size:13px;line-height:1.6}
+.btn{width:100%;border:0;padding:15px 18px;margin-top:10px;background:var(--lime);color:#15200e;font-weight:900;font-size:12px;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:translateY(2px)}.btn.alt{background:rgba(255,255,255,.07);color:var(--ink);border:1px solid var(--line);box-shadow:none}.btn.danger{color:#ff9b94}.btn.small{width:auto;padding:9px 13px;margin:0;font-size:10px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0 12px}.stats div{padding:13px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:1.5px;text-transform:uppercase}.stats b{display:block;margin-top:5px;color:var(--ink);font-size:25px;letter-spacing:0}
+/* Main command center */
+#menu{padding:0;background:linear-gradient(90deg,rgba(4,8,7,.93) 0%,rgba(4,8,7,.72) 44%,rgba(4,8,7,.4) 100%);backdrop-filter:none;align-items:stretch;justify-content:stretch}
+#menu:after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0,rgba(255,255,255,.012) 1px,transparent 1px,transparent 4px);z-index:-1}
+.menu-shell{width:100%;min-height:100%;max-width:1500px;margin:auto;padding:26px clamp(24px,4vw,68px) 20px;display:flex;flex-direction:column}
+.menu-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid var(--line);gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:950;letter-spacing:1px}.brand svg{width:34px;height:34px;filter:drop-shadow(0 5px 10px rgba(185,244,93,.15))}.brand small{font-size:9px;color:var(--lime);letter-spacing:2.4px;border-left:1px solid var(--line);padding-left:12px;margin-left:2px}
+.online{display:flex;align-items:center;gap:9px;font:700 9px/1 "SFMono-Regular",Consolas,monospace;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}.online i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime)}.online span{color:var(--dim);margin-left:12px}
+.menu-grid{flex:1;display:grid;grid-template-columns:minmax(330px,.85fr) minmax(550px,1.15fr);gap:clamp(35px,6vw,100px);align-items:center;padding:30px 0 24px}
+.menu-hero{max-width:540px}.menu-hero h1{margin:12px 0 18px;font-size:clamp(52px,6vw,92px);line-height:.86;letter-spacing:-5px;font-weight:950;text-transform:uppercase;text-shadow:0 8px 30px rgba(0,0,0,.3)}.menu-hero h1 span{color:var(--lime)}
+.hero-copy{max-width:440px;color:#aab7af;font-size:14px;line-height:1.75;margin:0 0 24px}.feature-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}.feature-row span{padding:7px 10px;border:1px solid var(--line);background:rgba(10,16,14,.5);font-size:9px;font-weight:800;letter-spacing:1.2px;color:#c3cec7;text-transform:uppercase}
+.selected-op{position:relative;padding:18px 20px 18px 23px;background:linear-gradient(100deg,rgba(185,244,93,.1),rgba(10,16,14,.55));border:1px solid rgba(185,244,93,.18);border-left:3px solid var(--lime);max-width:470px}.selected-op .op-index{font:700 9px/1 Consolas,monospace;color:var(--lime);letter-spacing:1.5px}.selected-op h2{font-size:19px;margin:7px 0 6px;letter-spacing:.2px;text-transform:uppercase}.selected-op p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.selected-op .op-meta{margin-top:12px;display:flex;gap:16px;font:700 9px/1.3 Consolas,monospace;color:#c6d2ca;letter-spacing:.5px;text-transform:uppercase}
+.command-panel{width:100%;max-width:690px;justify-self:end;background:var(--panel);border:1px solid rgba(255,255,255,.13);box-shadow:var(--shadow);padding:24px 26px 22px;position:relative;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)}
+.command-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}.command-head h2{margin:3px 0 0;font-size:20px;text-transform:uppercase;letter-spacing:.5px}.career{text-align:right}.career b{display:block;color:var(--lime);font-size:12px;letter-spacing:1px}.career span{font:700 9px/1.5 Consolas,monospace;color:var(--muted)}
+.mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:18px}.mode-tabs button{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:11px 6px;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;cursor:pointer}.mode-tabs button.on{color:#17210f;background:var(--lime);border-color:var(--lime)}
+.field-label{display:flex;align-items:center;justify-content:space-between;margin:14px 0 8px;font-size:9px;font-weight:900;letter-spacing:1.6px;color:#bdc8c0;text-transform:uppercase}.field-label span{color:var(--dim);font:600 9px/1 Consolas,monospace;letter-spacing:.4px}
+.mission-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:174px;overflow:auto;padding-right:3px}.mission-item{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.025);padding:9px 10px;min-height:49px;cursor:pointer}.mission-item:hover{background:rgba(255,255,255,.06)}.mission-item.on{border-color:rgba(185,244,93,.6);background:rgba(185,244,93,.08)}.mission-item .num{font:800 11px/1 Consolas,monospace;color:var(--dim)}.mission-item.on .num{color:var(--lime)}.mission-item b{display:block;font-size:10px;letter-spacing:.4px;text-transform:uppercase}.mission-item small{display:block;color:var(--muted);font-size:8px;margin-top:3px;text-transform:uppercase;letter-spacing:.7px}.mission-item .done{margin-left:auto;color:var(--lime);font-size:12px}
+.map-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.map-card{padding:0;border:1px solid var(--line);background:#111816;overflow:hidden;text-align:left;cursor:pointer;position:relative}.map-card:hover{border-color:rgba(255,255,255,.3)}.map-card.on{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime)}.map-card.on:after{content:"✓";position:absolute;right:5px;top:5px;width:17px;height:17px;display:grid;place-items:center;background:var(--lime);color:#15200e;font-size:10px;font-weight:900}.map-shot{height:55px;position:relative;overflow:hidden;background-color:#668153}.map-shot:before{content:"";position:absolute;inset:0;background:linear-gradient(155deg,transparent 45%,rgba(0,0,0,.25) 46%),repeating-linear-gradient(90deg,transparent 0 17px,rgba(255,255,255,.07) 17px 18px),repeating-linear-gradient(0deg,transparent 0 17px,rgba(0,0,0,.08) 17px 18px)}.map-shot:after{content:"";position:absolute;width:38px;height:28px;left:28%;top:17px;background:#b9b09a;box-shadow:9px -9px 0 #79836d,24px 12px 0 #4d6d3e,-23px 15px 0 #315f35;transform:skewY(-8deg)}.map-card[data-map="1"] .map-shot{background-color:#b7824e}.map-card[data-map="1"] .map-shot:after{background:#a95535;box-shadow:9px -9px 0 #d49a5c,28px 11px 0 #7d3f2c,-25px 14px 0 #d1a064}.map-card[data-map="2"] .map-shot{background-color:#8ca8b4}.map-card[data-map="2"] .map-shot:after{background:#e5eef0;box-shadow:9px -9px 0 #a8c0c9,27px 12px 0 #536f75,-24px 14px 0 #dce8e9}.map-card[data-map="3"] .map-shot{background-color:#252c45}.map-card[data-map="3"] .map-shot:after{background:#48536b;box-shadow:9px -14px 0 #d85b87,28px 8px 0 #4dcee0,-24px 14px 0 #333b57}.map-info{padding:8px 9px}.map-info b{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.5px}.map-info small{font-size:8px;color:var(--muted);text-transform:uppercase}
+.advanced{margin-top:13px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.advanced summary{padding:11px 0;cursor:pointer;list-style:none;font-size:9px;font-weight:900;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}.advanced summary::-webkit-details-marker{display:none}.advanced summary:after{content:"+";float:right;color:var(--lime);font-size:14px}.advanced[open] summary:after{content:"−"}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;padding:2px 0 12px}.row{display:flex;align-items:center;gap:8px;margin:4px 0;flex-wrap:wrap}.row label{width:70px;flex:none;font-weight:800;font-size:8px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}.seg{display:flex;flex:1;gap:3px;min-width:115px}.seg button{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);padding:6px 3px;font-size:7px;font-weight:900;letter-spacing:.4px;cursor:pointer}.seg button.on{background:rgba(185,244,93,.16);border-color:rgba(185,244,93,.55);color:var(--lime)}input[type=range]{flex:1;min-width:90px;height:3px;accent-color:var(--lime)}
+#deploy{margin-top:16px;padding:16px 20px;justify-content:space-between;font-size:12px}#deploy span{font-size:20px;line-height:10px}.deploy-foot{display:flex;justify-content:space-between;gap:12px;margin-top:10px;color:var(--dim);font:600 8px/1.5 Consolas,monospace;text-transform:uppercase;letter-spacing:.4px}.deploy-foot button{border:0;background:none;color:var(--muted);padding:0;cursor:pointer;text-transform:uppercase;font:inherit}.deploy-foot button:hover{color:var(--lime)}
+.menu-footer{border-top:1px solid var(--line);padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--dim);font:600 8px/1.4 Consolas,monospace;letter-spacing:.8px;text-transform:uppercase}#hi{color:var(--muted)}
+/* In-game HUD */
+#hud{position:fixed;inset:0;pointer-events:none;text-shadow:0 2px 4px rgba(0,0,0,.75);font-family:"Segoe UI",Arial,sans-serif}
+#mini{position:absolute;left:20px;top:20px;width:142px;height:142px;background:#0a1210;border:1px solid rgba(255,255,255,.25);outline:4px solid rgba(5,10,8,.65);box-shadow:0 8px 25px rgba(0,0,0,.25);border-radius:3px}
+#mapLabel{position:absolute;left:21px;top:167px;font:800 8px/1 Consolas,monospace;letter-spacing:1.5px;color:#d5dfd8;text-transform:uppercase}
+#top{position:absolute;left:50%;top:20px;transform:translateX(-50%);text-align:center;min-width:240px}#waveTxt{font-size:15px;font-weight:900;letter-spacing:2px;color:#fff;text-transform:uppercase}#enemyTxt{margin-top:4px;font:700 9px/1 Consolas,monospace;letter-spacing:1.2px;color:var(--lime)}
+#compass{position:absolute;top:64px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.45);font:700 9px/1 Consolas,monospace;letter-spacing:2px}#compass b{color:#fff;font-size:11px}#compass:before,#compass:after{content:"";width:55px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4))}#compass:after{transform:scaleX(-1)}
+#scoreBox{position:absolute;right:78px;top:20px;text-align:right}#score{font:800 25px/1 Consolas,monospace;letter-spacing:-1px}#killsTxt{margin-top:5px;color:var(--muted);font:700 8px/1 Consolas,monospace;letter-spacing:1.4px}
+#pauseB{position:absolute;right:20px;top:20px;width:42px;height:42px;border:1px solid rgba(255,255,255,.2);background:rgba(7,12,10,.65);color:#fff;display:grid;place-items:center;font-size:14px;pointer-events:auto;cursor:pointer}
+#missionHud{position:absolute;left:20px;top:190px;width:245px;padding:12px 14px;background:linear-gradient(90deg,rgba(6,12,10,.82),rgba(6,12,10,.35));border-left:2px solid var(--lime)}#opName{font-size:8px;font-weight:900;color:var(--lime);letter-spacing:1.3px;text-transform:uppercase}#objTxt{font-size:12px;font-weight:800;margin-top:5px;text-transform:uppercase;letter-spacing:.3px}.obj-line{display:flex;justify-content:space-between;margin-top:8px;color:#c4cec7;font:700 8px/1 Consolas,monospace}.obj-track{height:3px;margin-top:6px;background:rgba(255,255,255,.16)}#objFill{display:block;height:100%;width:0;background:var(--lime);transition:width .2s}
+#feed{position:absolute;right:20px;top:82px;text-align:right;font:800 10px/1.4 Consolas,monospace;letter-spacing:.4px}#feed div{animation:fd 2.8s forwards;margin-bottom:5px;padding:5px 8px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.45))}@keyframes fd{0%{opacity:0;transform:translateX(20px)}8%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
+#cross{position:absolute;left:50%;top:50%;width:0;height:0;--g:7px}#cross i{position:absolute;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.65)}#cross i:nth-child(1){width:2px;height:7px;left:-1px;top:calc(-7px - var(--g))}#cross i:nth-child(2){width:2px;height:7px;left:-1px;top:var(--g)}#cross i:nth-child(3){height:2px;width:7px;top:-1px;left:calc(-7px - var(--g))}#cross i:nth-child(4){height:2px;width:7px;top:-1px;left:var(--g)}#cross:after{content:"";position:absolute;width:2px;height:2px;left:-1px;top:-1px;background:var(--lime)}
+#hitm{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;opacity:0}#hitm:before,#hitm:after{content:"";position:absolute;left:14px;top:-3px;width:2px;height:36px;background:#fff;transform:rotate(45deg);box-shadow:0 0 0 1px #000}#hitm:after{transform:rotate(-45deg)}#hitm.on{animation:hm .22s forwards}#hitm.kill{animation:hm .4s forwards}#hitm.kill:before,#hitm.kill:after{background:var(--red)}@keyframes hm{0%{opacity:1;transform:scale(1.35)}100%{opacity:0;transform:scale(.9)}}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(190,10,0,.82) 100%);opacity:0}#flashW{position:absolute;inset:0;background:#fff;opacity:0}#dirInd{position:absolute;left:50%;top:50%;opacity:0}#dirInd:after{content:"";position:absolute;left:-65px;top:-170px;width:130px;height:24px;background:radial-gradient(ellipse,rgba(255,40,30,.95),transparent 70%)}
+#scope{position:absolute;inset:0;background:radial-gradient(circle at center,transparent 0,transparent 32vh,#000 33vh);display:none}#scope:before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#111}#scope:after{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:#111}
+#bossBar{position:absolute;left:50%;top:98px;transform:translateX(-50%);width:min(420px,55vw);text-align:center;font-weight:900;letter-spacing:2px;font-size:9px;color:#ffb28a;display:none}#bossBar div{height:7px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);margin-top:6px}#bossFill{display:block;height:100%;width:100%;background:linear-gradient(90deg,#d73e2f,#ff9d4d)}
+#bars{position:absolute;left:20px;bottom:22px;width:225px}.bar-label{display:flex;justify-content:space-between;align-items:end;margin-bottom:5px}.bar-label span{font-size:8px;font-weight:900;letter-spacing:1.3px;color:var(--muted)}.bar-label b{font:800 19px/1 Consolas,monospace}.bar{height:7px;background:rgba(0,0,0,.55);margin-top:4px;position:relative;border:1px solid rgba(255,255,255,.12)}.bar i{display:block;height:100%;width:100%;transition:width .15s}#hpFill{background:var(--lime)}#arFill{background:var(--cyan)}.bar b{position:absolute;left:6px;top:0;font-size:10px}.armor-label{margin-top:10px}.armor-label b{font-size:13px;color:var(--cyan)}
+#ammoBox{position:absolute;right:22px;bottom:20px;text-align:right;min-width:180px}#wname{font-weight:900;letter-spacing:1.5px;font-size:10px;color:#dbe5de;text-transform:uppercase}#ammo{font:800 48px/.95 Consolas,monospace;letter-spacing:-3px;margin-top:4px}#ammo small{font-size:18px;color:var(--muted);letter-spacing:-1px}#gren{margin-top:7px;font:700 9px/1 Consolas,monospace;color:var(--amber);letter-spacing:1px}
+#slots{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:5px;pointer-events:auto}.slot{width:62px;height:45px;padding:6px 4px;border:1px solid rgba(255,255,255,.15);background:rgba(5,10,8,.68);font:800 8px/1 Consolas,monospace;text-align:center;letter-spacing:.5px;color:#8f9b93;cursor:pointer}.slot.on{border-color:var(--lime);color:var(--lime);background:rgba(25,40,18,.82);transform:translateY(-3px)}
+#streak{position:absolute;left:20px;bottom:104px;font:800 9px/1 Consolas,monospace;letter-spacing:1px;color:var(--amber)}#streak.rdy{color:var(--lime);animation:pl .7s infinite alternate}@keyframes pl{to{filter:brightness(1.5);transform:translateX(3px)}}
+#banner{position:absolute;left:0;right:0;top:25%;text-align:center;opacity:0;transition:opacity .3s;pointer-events:none}#banner.show{opacity:1}#banner h1{display:inline-block;margin:0;padding:10px 24px;font-size:clamp(28px,5vw,52px);font-weight:950;line-height:1;letter-spacing:-1px;color:#fff;text-transform:uppercase;background:linear-gradient(90deg,transparent,rgba(5,10,8,.65),transparent)}#banner p{margin:8px 0 0;font:800 10px/1.4 Consolas,monospace;letter-spacing:2px;color:var(--lime);text-transform:uppercase}
+#interact{position:absolute;left:50%;bottom:104px;transform:translateX(-50%);padding:9px 14px;background:rgba(5,10,8,.8);border:1px solid rgba(255,255,255,.18);font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:none}#interact b{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:8px;background:var(--lime);color:#17210f;text-shadow:none}
+#buildBar{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);text-align:center;display:none}#buildSlots{display:flex;gap:5px;pointer-events:auto}.build-slot{width:68px;height:50px;background:rgba(5,10,8,.82);border:1px solid rgba(255,255,255,.15);padding:5px;color:#c2cdc5;font:800 8px/1 Consolas,monospace;cursor:pointer}.build-slot i{display:block;width:17px;height:17px;margin:0 auto 5px;background:var(--c);box-shadow:inset -4px -4px 0 rgba(0,0,0,.18)}.build-slot.on{border-color:var(--lime);transform:translateY(-3px)}.build-slot small{color:var(--muted)}#buildTip{margin-top:7px;font:700 8px/1 Consolas,monospace;color:var(--lime);letter-spacing:1px}
+#vehicleHud{position:absolute;right:22px;bottom:115px;width:170px;padding:12px;background:rgba(5,10,8,.75);border-right:2px solid var(--amber);text-align:right;display:none}#vehicleHud .vlabel{font-size:8px;font-weight:900;letter-spacing:1.4px;color:var(--amber)}#speedTxt{font:800 35px/1 Consolas,monospace;margin:5px 0}#speedTxt small{font-size:10px;color:var(--muted)}.vtrack{height:4px;background:rgba(255,255,255,.13)}#vehicleHpFill{display:block;height:100%;background:var(--amber);width:100%}#vehicleHud .vhint{font:700 7px/1.4 Consolas,monospace;color:var(--muted);margin-top:7px}
+/* Touch controls */
+#touch{position:fixed;inset:0;pointer-events:none}#joyBase{position:absolute;width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.07);display:none}#joyKnob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(185,244,93,.45);border:2px solid rgba(255,255,255,.4)}
+.tb{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(15,23,20,.48);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;letter-spacing:.5px;text-align:center;touch-action:none}.tb:active,.tb.down{background:rgba(185,244,93,.4)}
+#bFire{right:max(22px,env(safe-area-inset-right));bottom:30px;width:88px;height:88px;font-size:14px;border-color:rgba(255,130,90,.8)}#bFire2{left:26px;bottom:190px;width:64px;height:64px;border-color:rgba(255,130,90,.7)}#bJump{right:max(28px,env(safe-area-inset-right));bottom:133px;width:58px;height:58px}#bAds{right:120px;bottom:117px;width:55px;height:55px}#bRel{right:120px;bottom:42px;width:52px;height:52px}#bGren{right:184px;bottom:65px;width:52px;height:52px}#bSwap{right:28px;bottom:204px;width:50px;height:50px}#bStrike{right:92px;bottom:192px;width:62px;height:62px;border-color:#ff794d;background:rgba(160,30,0,.55);display:none}#bBuild{left:25px;bottom:110px;width:58px;height:58px;border-color:rgba(185,244,93,.6)}#bInteract{left:98px;bottom:105px;width:58px;height:58px;border-color:rgba(255,200,87,.7)}#bRemove{left:98px;bottom:178px;width:52px;height:52px;display:none}
+#rotate{position:fixed;inset:0;z-index:99;background:#09100e;display:none;align-items:center;justify-content:center;text-align:center;font-size:18px;font-weight:900;letter-spacing:2px;padding:20px}@media (orientation:portrait){body.touch #rotate{display:flex}}
+body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabel{display:none}body.touch #missionHud{left:12px;top:128px;width:205px}body.touch #ammoBox{right:245px;bottom:8px;min-width:120px}body.touch #ammo{font-size:31px}body.touch #slots{display:none}body.touch #bars{width:170px;left:12px;bottom:10px}body.touch #streak{display:none}body.touch #buildBar{bottom:5px}body.touch #buildSlots{transform:scale(.78);transform-origin:bottom center}body.touch #buildTip{display:none}body.touch #vehicleHud{right:250px;bottom:80px}body.touch #interact{bottom:150px}
+/* Help */
+.help-panel{width:min(720px,100%)}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.help-card{padding:14px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.help-card h3{margin:0 0 10px;font-size:10px;letter-spacing:1.5px;color:var(--lime);text-transform:uppercase}.help-card p{margin:6px 0;color:var(--muted);font-size:11px;line-height:1.5}.key{display:inline-block;min-width:23px;padding:2px 5px;margin-right:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:#fff;font:800 9px/1.3 Consolas,monospace;text-align:center}
+/* Responsive menu */
+@media(max-width:1050px){.menu-grid{grid-template-columns:1fr;gap:25px;align-items:start}.menu-hero{max-width:none}.menu-hero h1{font-size:54px;letter-spacing:-3px}.hero-copy{display:none}.feature-row{margin-bottom:15px}.selected-op{max-width:none}.command-panel{justify-self:start;max-width:none}.menu-shell{overflow:auto}.menu-grid{padding:24px 0}.menu-footer{margin-top:10px}}
+@media(max-width:650px){.ov{padding:14px}.menu-shell{padding:18px 16px}.menu-top{padding-bottom:15px}.online span{display:none}.brand small{display:none}.menu-hero h1{font-size:43px}.feature-row{display:none}.selected-op{padding:13px 15px}.command-panel{padding:18px 15px}.map-grid{grid-template-columns:1fr 1fr}.map-shot{height:43px}.settings-grid{grid-template-columns:1fr}.help-grid{grid-template-columns:1fr}.menu-footer{display:none}.mission-list{max-height:155px}.panel{padding:23px}.menu-grid{gap:18px}}
+@media(max-height:760px) and (min-width:1051px){.menu-shell{padding-top:18px}.menu-top{padding-bottom:14px}.menu-grid{padding:18px 0}.menu-hero h1{font-size:65px}.hero-copy{margin-bottom:15px}.feature-row{margin-bottom:16px}.command-panel{padding-top:18px;padding-bottom:16px}.command-head{margin-bottom:12px}.mode-tabs{margin-bottom:12px}.mission-list{max-height:112px}.map-shot{height:43px}.advanced{margin-top:9px}#deploy{margin-top:11px}.menu-footer{padding-top:10px}}
 </style>
 </head>
 <body>
-<canvas id="gl"></canvas>
-
+<canvas id="gl" aria-label="Block Ops 3D game"></canvas>
 <div id="hud" class="hidden">
-  <canvas id="mini" width="240" height="240"></canvas>
+  <canvas id="mini" width="240" height="240"></canvas><div id="mapLabel">TACTICAL MAP · <span id="mapName">GREENHAVEN</span></div>
   <div id="top"><div id="waveTxt">WAVE 1</div><div id="enemyTxt">HOSTILES 0</div></div>
-  <div id="scoreBox"><div id="score">0</div><div id="killsTxt">KILLS 0</div></div>
-  <div id="pauseB">II</div>
-  <div id="feed"></div>
-  <div id="bossBar"><span>ATTACK HELICOPTER</span><div><i id="bossFill"></i></div></div>
-  <div id="vig"></div><div id="flashW"></div><div id="dirInd"></div>
-  <div id="scope"></div>
-  <div id="cross"><i></i><i></i><i></i><i></i></div>
-  <div id="hitm"></div>
+  <div id="compass"><span>W</span><b id="compassTxt">N · 000</b><span>E</span></div>
+  <div id="scoreBox"><div id="score">0</div><div id="killsTxt">0 ELIMINATIONS</div></div><div id="pauseB" title="Pause">Ⅱ</div>
+  <div id="missionHud"><div id="opName">OPERATION 01</div><div id="objTxt">ELIMINATE HOSTILES</div><div class="obj-line"><span id="objProgress">0 / 12</span><span id="objDist"></span></div><div class="obj-track"><i id="objFill"></i></div></div>
+  <div id="feed"></div><div id="bossBar"><span>ATTACK HELICOPTER</span><div><i id="bossFill"></i></div></div>
+  <div id="vig"></div><div id="flashW"></div><div id="dirInd"></div><div id="scope"></div><div id="cross"><i></i><i></i><i></i><i></i></div><div id="hitm"></div>
   <div id="streak">KILLSTREAK 0/8</div>
-  <div id="bars">
-    <div class="bar"><i id="hpFill"></i><b id="hpTxt">100</b></div>
-    <div class="bar"><i id="arFill" style="width:0"></i><b id="arTxt">ARMOR 0</b></div>
-  </div>
-  <div id="ammoBox"><div id="wname">M4 CARBINE</div><div id="ammo">30<small>/150</small></div><div id="gren">GRENADES 3</div></div>
-  <div id="slots"></div>
+  <div id="bars"><div class="bar-label"><span>HEALTH</span><b id="hpTxt">100</b></div><div class="bar"><i id="hpFill"></i></div><div class="bar-label armor-label"><span>ARMOR</span><b id="arTxt">0</b></div><div class="bar"><i id="arFill" style="width:0"></i></div></div>
+  <div id="ammoBox"><div id="wname">M4 CARBINE</div><div id="ammo">30<small>/150</small></div><div id="gren">FRAG × 3 · [G]</div></div><div id="slots"></div>
+  <div id="buildBar"><div id="buildSlots"></div><div id="buildTip">LMB PLACE · RMB REMOVE · B EXIT · V FLIGHT</div></div>
+  <div id="vehicleHud"><div class="vlabel">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · E EXIT</div></div>
+  <div id="interact"><b>E</b><span id="interactTxt">INTERACT</span></div>
   <div id="banner"><h1 id="bannerH">WAVE 1</h1><p id="bannerP"></p></div>
 </div>
-
 <div id="touch" class="hidden">
-  <div id="joyBase"><div id="joyKnob"></div></div>
-  <div class="tb" id="bFire" data-b="fire">FIRE</div>
-  <div class="tb" id="bFire2" data-b="fire">FIRE</div>
-  <div class="tb" id="bJump" data-b="jump">JUMP</div>
-  <div class="tb" id="bAds" data-b="ads">AIM</div>
-  <div class="tb" id="bRel" data-b="reload">RELOAD</div>
-  <div class="tb" id="bGren" data-b="gren">GRENADE</div>
-  <div class="tb" id="bSwap" data-b="swap">SWAP</div>
-  <div class="tb" id="bStrike" data-b="strike">AIR<br>STRIKE</div>
+  <div id="joyBase"><div id="joyKnob"></div></div><div class="tb" id="bFire" data-b="fire">FIRE</div><div class="tb" id="bFire2" data-b="fire">FIRE</div><div class="tb" id="bJump" data-b="jump">JUMP</div><div class="tb" id="bAds" data-b="ads">AIM</div><div class="tb" id="bRel" data-b="reload">RELOAD</div><div class="tb" id="bGren" data-b="gren">FRAG</div><div class="tb" id="bSwap" data-b="swap">SWAP</div><div class="tb" id="bStrike" data-b="strike">AIR<br>STRIKE</div><div class="tb" id="bBuild" data-b="build">BUILD</div><div class="tb" id="bInteract" data-b="interact">USE</div><div class="tb" id="bRemove" data-b="remove">REMOVE</div>
 </div>
-
-<div id="rotate">PLEASE ROTATE YOUR DEVICE<br>TO LANDSCAPE</div>
-
+<div id="rotate">ROTATE YOUR DEVICE<br>FOR THE BEST EXPERIENCE</div>
 <div id="menu" class="ov">
-  <div class="panel">
-    <h1 class="logo">BLOCK<span>OPS</span></h1>
-    <div class="sub">VOXEL WARFARE &bull; ZOMBIES &bull; SQUADS &bull; GUNSHIPS</div>
-    <div class="row"><label>DIFFICULTY</label><div class="seg" data-k="diff"><button data-v="0">RECRUIT</button><button data-v="1" class="on">VETERAN</button><button data-v="2">ELITE</button></div></div>
-    <div class="row"><label>MISSION TIME</label><div class="seg" data-k="time"><button data-v="0" class="on">DAY</button><button data-v="1">SUNSET</button><button data-v="2">NIGHT</button></div></div>
-    <div class="row"><label>GRAPHICS</label><div class="seg" data-k="q"><button data-v="0">LOW</button><button data-v="1">MEDIUM</button><button data-v="2" class="on">HIGH</button></div></div>
-    <div class="row"><label>CONTROLS</label><div class="seg" data-k="touch"><button data-v="1" id="ctTouch">TOUCH</button><button data-v="0" id="ctKey">KEYBOARD</button></div></div>
-    <div class="row"><label>SENSITIVITY</label><input type="range" id="sens" min="0.3" max="2.5" step="0.05" value="1"></div>
-    <div class="row"><label>VOLUME</label><input type="range" id="vol" min="0" max="1" step="0.05" value="0.7"></div>
-    <button class="btn" id="deploy">DEPLOY</button>
-    <div id="hi"></div>
-    <div class="help"><b>PC:</b> WASD move &bull; Mouse aim &bull; LMB fire &bull; RMB aim &bull; R reload &bull; G grenade &bull; F airstrike &bull; 1-5 / wheel weapons &bull; Shift sprint &bull; Space jump &bull; Esc pause.<br>
-    <b>MOBILE:</b> left thumb = move, right thumb = look, big buttons to shoot/aim/jump. Auto-jump over 1-block steps. Explosions destroy blocks!<br>
-    Survive endless waves of zombies, enemy soldiers and attack helicopters. 8 kills charges an <b>AIRSTRIKE</b>. Pick up health, armor and ammo drops. 100% offline.</div>
-  </div>
+ <div class="menu-shell">
+  <header class="menu-top"><div class="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><path fill="#b9f45d" d="M20 2 37 11v18l-17 9L3 29V11z"/><path fill="#78b63b" d="m3 11 17 9v18L3 29z"/><path fill="#d9ff9f" d="m3 11 17-9 17 9-17 9z"/><path fill="none" stroke="#0d170a" stroke-width="1.4" d="M20 20v18M3 11l17 9 17-9"/></svg>BLOCK OPS <small>FRONTLINE</small></div><div class="online"><i></i> OFFLINE READY <span>BUILD 2.0 · SINGLE FILE</span></div></header>
+  <main class="menu-grid">
+   <section class="menu-hero"><div class="eyebrow">Tactical voxel combat</div><h1>Build.<br><span>Drive.</span><br>Survive.</h1><p class="hero-copy">Drop into a fully destructible voxel battlefield. Master five weapons, fortify your position block by block, commandeer vehicles, and complete high-stakes operations across four distinct regions.</p><div class="feature-row"><span>6 Operations</span><span>4 Regions</span><span>Build Mode</span><span>Drivable 4×4</span></div>
+    <div class="selected-op"><div class="op-index" id="selectedCode">OPERATION 01 · CAMPAIGN</div><h2 id="selectedName">First Contact</h2><p id="selectedDesc">Sweep Greenhaven and eliminate the hostile vanguard before they establish a foothold.</p><div class="op-meta"><span id="selectedMap">GREENHAVEN</span><span id="selectedType">ELIMINATION</span><span id="selectedReward">+500 XP</span></div></div>
+   </section>
+   <section class="command-panel"><div class="command-head"><div><div class="eyebrow">Deployment terminal</div><h2>Command Center</h2></div><div class="career"><b id="careerRank">RANK 01 · RECRUIT</b><span><span id="careerXp">0</span> XP · <span id="careerCredits">0</span> CR</span></div></div>
+    <div class="mode-tabs" id="modeTabs"><button data-mode="campaign" class="on">Campaign</button><button data-mode="survival">Survival</button><button data-mode="creative">Creative</button></div>
+    <div id="campaignSelect"><div class="field-label">Select operation <span>Progress saved locally</span></div><div class="mission-list" id="missionList"></div></div>
+    <div class="field-label">Combat region <span id="regionHint">Operation region</span></div><div class="map-grid" id="mapGrid">
+      <button class="map-card on" data-map="0"><div class="map-shot"></div><div class="map-info"><b>Greenhaven</b><small>Forest village</small></div></button>
+      <button class="map-card" data-map="1"><div class="map-shot"></div><div class="map-info"><b>Redrock</b><small>Desert outpost</small></div></button>
+      <button class="map-card" data-map="2"><div class="map-shot"></div><div class="map-info"><b>Frostfall</b><small>Arctic relay</small></div></button>
+      <button class="map-card" data-map="3"><div class="map-shot"></div><div class="map-info"><b>Neon District</b><small>Urban warfare</small></div></button>
+    </div>
+    <details class="advanced"><summary>Difficulty, graphics & controls</summary><div class="settings-grid">
+      <div class="row"><label>Difficulty</label><div class="seg" data-k="diff"><button data-v="0">Recruit</button><button data-v="1" class="on">Veteran</button><button data-v="2">Elite</button></div></div>
+      <div class="row"><label>Time</label><div class="seg" data-k="time"><button data-v="0" class="on">Day</button><button data-v="1">Sunset</button><button data-v="2">Night</button></div></div>
+      <div class="row"><label>Graphics</label><div class="seg" data-k="q"><button data-v="0">Low</button><button data-v="1">Medium</button><button data-v="2" class="on">High</button></div></div>
+      <div class="row"><label>Input</label><div class="seg" data-k="touch"><button data-v="1" id="ctTouch">Touch</button><button data-v="0" id="ctKey">Keyboard</button></div></div>
+      <div class="row"><label>Sensitivity</label><input type="range" id="sens" aria-label="Sensitivity" min="0.3" max="2.5" step="0.05" value="1"></div>
+      <div class="row"><label>Volume</label><input type="range" id="vol" aria-label="Volume" min="0" max="1" step="0.05" value="0.7"></div>
+    </div></details>
+    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><button id="helpB">Controls & field manual</button></div>
+   </section>
+  </main>
+  <footer class="menu-footer"><span>WASD MOVE · MOUSE AIM · B BUILD · E VEHICLE / INTERACT</span><div id="hi"></div></footer>
+ </div>
 </div>
-
-<div id="pause" class="ov hidden"><div class="panel" style="max-width:380px">
-  <div class="big" style="color:#ffd24a;text-shadow:3px 3px 0 #5a3a00">PAUSED</div>
-  <button class="btn" id="resumeB">RESUME</button>
-  <button class="btn alt" id="restartB">RESTART MISSION</button>
-  <button class="btn alt" id="quitB">MAIN MENU</button>
-</div></div>
-
-<div id="over" class="ov hidden"><div class="panel" style="max-width:440px">
-  <div class="big">MISSION FAILED</div>
-  <div class="stats"><div>SCORE<b id="oScore">0</b></div><div>BEST<b id="oBest">0</b></div><div>WAVE<b id="oWave">0</b></div><div>KILLS<b id="oKills">0</b></div></div>
-  <button class="btn" id="againB">REDEPLOY</button>
-  <button class="btn alt" id="menuB">MAIN MENU</button>
-</div></div>
-
+<div id="pause" class="ov hidden"><div class="panel"><div class="eyebrow">Tactical suspension</div><div class="big">Paused</div><p class="subtitle">The battlefield is frozen. Review your controls or return to the operation.</p><button class="btn" id="resumeB">Resume operation</button><button class="btn alt" id="restartB">Restart mission</button><button class="btn alt" id="pauseHelpB">Field manual</button><button class="btn alt danger" id="quitB">Abort to command center</button></div></div>
+<div id="over" class="ov hidden"><div class="panel"><div class="eyebrow" id="overSub">After action report</div><div class="big" id="overTitle">Mission failed</div><p class="subtitle" id="overMessage">Regroup, rearm, and return to the fight.</p><div class="stats"><div>Score<b id="oScore">0</b></div><div>Personal best<b id="oBest">0</b></div><div>Wave<b id="oWave">0</b></div><div>Eliminations<b id="oKills">0</b></div></div><button class="btn hidden" id="nextB">Next operation →</button><button class="btn" id="againB">Redeploy</button><button class="btn alt" id="menuB">Command center</button></div></div>
+<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,rnd=Math.random,rr=(a,b)=>a+(b-a)*Math.random();
 const PI=Math.PI;
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch};
+const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0};
 const DIFF=[{dmg:.6,hp:.8,cnt:.8,regen:1},{dmg:1,hp:1,cnt:1,regen:1},{dmg:1.5,hp:1.3,cnt:1.25,regen:0}];
 const QS=[.5,.75,1];
 let state='menu';
@@ -273,11 +227,11 @@ function mDir(o,x,y,z,dx,dy,dz){
 const IDENT=new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
 
 /* ================= TEXTURE ATLAS ================= */
-const TS=16,COLS=8,ROWS=3,AW=TS*COLS,AH=TS*ROWS;
+const TS=16,COLS=8,ROWS=4,AW=TS*COLS,AH=TS*ROWS;
 const atlas=document.createElement('canvas');atlas.width=AW;atlas.height=AH;
 const actx=atlas.getContext('2d');
 let seed=1337;function srnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646}
-const T={GRASS:0,GSIDE:1,DIRT:2,STONE:3,SBRICK:4,RBRICK:5,CRATE:6,LOGS:7,LOGT:8,LEAF:9,SAND:10,METAL:11,BAG:12,PLAIN:13,ZFACE:14,SFACE:15,MED:16,AMMO:17,ARMOR:18,BLOOD:19,CAMO:20,GUN:21,SKIN:22,WHITE:23};
+const T={GRASS:0,GSIDE:1,DIRT:2,STONE:3,SBRICK:4,RBRICK:5,CRATE:6,LOGS:7,LOGT:8,LEAF:9,SAND:10,METAL:11,BAG:12,PLAIN:13,ZFACE:14,SFACE:15,MED:16,AMMO:17,ARMOR:18,BLOOD:19,CAMO:20,GUN:21,SKIN:22,WHITE:23,SNOW:24,PLANK:25,COBBLE:26,ROAD:27,LINE:28,NEON:29,ICE:30,BLADE:31};
 function mk(i,b,v,fn){
   const x0=(i%COLS)*TS,y0=((i/COLS)|0)*TS;
   for(let y=0;y<TS;y++)for(let x=0;x<TS;x++){const k=1+(srnd()-.5)*v;actx.fillStyle=`rgb(${b[0]*k|0},${b[1]*k|0},${b[2]*k|0})`;actx.fillRect(x0+x,y0+y,1,1);}
@@ -308,11 +262,19 @@ mk(20,[215,215,215],.08,(x0,y0)=>{for(let i=0;i<14;i++)px(x0,y0,srnd()*13|0,srnd
 mk(21,[70,72,78],.18,(x0,y0)=>{px(x0,y0,0,7,16,1,'rgba(0,0,0,.25)')});
 mk(22,[236,236,236],.05);
 mk(23,[255,255,255],0);
-const TUV=[];for(let i=0;i<24;i++){const c=i%COLS,r=(i/COLS)|0;TUV.push([(c*TS+.05)/AW,(r*TS+.05)/AH,((c+1)*TS-.05)/AW,((r+1)*TS-.05)/AH]);}
+mk(24,[224,238,242],.12,(x0,y0)=>{for(let i=0;i<12;i++)px(x0,y0,srnd()*15|0,srnd()*15|0,1,1,'rgba(130,170,190,.3)')});
+mk(25,[166,123,70],.18,(x0,y0)=>{for(const y of[3,7,11,15])px(x0,y0,0,y,16,1,'#76512f');for(let r=0;r<4;r++)px(x0,y0,(r%2?5:11),r*4,1,3,'#8b6036')});
+mk(26,[112,119,119],.28,(x0,y0)=>{for(let y=0;y<16;y+=5)for(let x=(y/5)%2?-3:0;x<16;x+=7){px(x0,y0,x,y,6,1,'#596362');px(x0,y0,x,y,1,4,'#66706f')}});
+mk(27,[52,59,61],.22,(x0,y0)=>{for(let i=0;i<20;i++)px(x0,y0,srnd()*15|0,srnd()*15|0,1,1,'rgba(190,200,200,.16)')});
+mk(28,[58,64,65],.12,(x0,y0)=>{px(x0,y0,6,0,4,16,'#d9c979');px(x0,y0,7,0,1,16,'#fff0a0')});
+mk(29,[30,37,54],.1,(x0,y0)=>{px(x0,y0,2,2,12,12,'#18202e');for(const x of[4,10])for(const y of[4,10])px(x0,y0,x,y,2,2,(x+y)%4?'#52dbe3':'#ed659a')});
+mk(30,[132,194,214],.14,(x0,y0)=>{for(let i=0;i<8;i++)px(x0,y0,srnd()*14|0,srnd()*14|0,3,1,'rgba(225,250,255,.4)')});
+mk(31,[155,165,169],.12,(x0,y0)=>{px(x0,y0,0,7,16,2,'#606a6f');px(x0,y0,7,0,2,16,'#d7e1e3')});
+const TUV=[];for(let i=0;i<32;i++){const c=i%COLS,r=(i/COLS)|0;TUV.push([(c*TS+.05)/AW,(r*TS+.05)/AH,((c+1)*TS-.05)/AW,((r+1)*TS-.05)/AH]);}
 
 /* ================= WEBGL ================= */
 const cv=$('gl');
-const gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'high-performance'})||cv.getContext('experimental-webgl');
+const gl=cv.getContext('webgl',{antialias:true,alpha:false,powerPreference:'high-performance'})||cv.getContext('experimental-webgl');
 if(!gl){document.body.innerHTML='<h2 style="padding:30px">WebGL is not supported on this device.</h2>';return;}
 const VS=`attribute vec3 aPos;attribute float aShade;attribute vec4 aCol;attribute vec2 aUV;uniform mat4 uVP;varying vec4 vCol;varying vec2 vUV;varying float vDist;varying float vS;
 void main(){vec4 p=uVP*vec4(aPos,1.0);gl_Position=p;vCol=aCol;vUV=aUV;vDist=p.w;vS=aShade;}`;
@@ -378,20 +340,24 @@ function boxM(b,m,cx,cy,cz,sx,sy,sz,r,g,bl,a,tile,ft,em){
 }
 
 /* ================= WORLD ================= */
-const W=96,H=24,CH=16,NC=W/CH;
+const W=128,H=32,CH=16,NC=W/CH;
 const vox=new Uint8Array(W*H*W),occ=new Uint8Array(W*W);
 const vi=(x,y,z)=>(y*W+z)*W+x;
 function getV(x,y,z){if(y<0||x<0||z<0||x>=W||z>=W)return 1;if(y>=H)return 0;return vox[(y*W+z)*W+x];}
 const BT=[null,
  {t:T.GRASS,s:T.GSIDE,b:T.DIRT,c:[.36,.62,.2]},{t:T.SAND,s:T.SAND,b:T.SAND,c:[.87,.8,.58]},{t:T.STONE,s:T.STONE,b:T.STONE,c:[.5,.5,.5]},
  {t:T.SBRICK,s:T.SBRICK,b:T.SBRICK,c:[.55,.55,.57]},{t:T.RBRICK,s:T.RBRICK,b:T.RBRICK,c:[.65,.25,.18]},{t:T.CRATE,s:T.CRATE,b:T.CRATE,c:[.68,.5,.28]},
- {t:T.LOGT,s:T.LOGS,b:T.LOGT,c:[.4,.3,.18]},{t:T.LEAF,s:T.LEAF,b:T.LEAF,c:[.2,.5,.16]},{t:T.METAL,s:T.METAL,b:T.METAL,c:[.34,.36,.4]},{t:T.BAG,s:T.BAG,b:T.BAG,c:[.74,.64,.44]}];
+ {t:T.LOGT,s:T.LOGS,b:T.LOGT,c:[.4,.3,.18]},{t:T.LEAF,s:T.LEAF,b:T.LEAF,c:[.2,.5,.16]},{t:T.METAL,s:T.METAL,b:T.METAL,c:[.34,.36,.4]},{t:T.BAG,s:T.BAG,b:T.BAG,c:[.74,.64,.44]},
+ {t:T.SNOW,s:T.SNOW,b:T.DIRT,c:[.87,.93,.96]},{t:T.PLANK,s:T.PLANK,b:T.PLANK,c:[.65,.47,.27]},
+ {t:T.COBBLE,s:T.COBBLE,b:T.COBBLE,c:[.44,.48,.48]},{t:T.ROAD,s:T.ROAD,b:T.ROAD,c:[.2,.23,.24]},
+ {t:T.LINE,s:T.LINE,b:T.ROAD,c:[.62,.57,.35]},{t:T.NEON,s:T.NEON,b:T.NEON,c:[.18,.35,.42]},
+ {t:T.ICE,s:T.ICE,b:T.ICE,c:[.5,.75,.85]}];
 const FACES=[
  {n:[1,0,0],u:[0,0,-1],v:[0,1,0],sh:.85,side:1},{n:[-1,0,0],u:[0,0,1],v:[0,1,0],sh:.66,side:1},
  {n:[0,1,0],u:[1,0,0],v:[0,0,1],sh:1,side:0},{n:[0,-1,0],u:[1,0,0],v:[0,0,-1],sh:.5,side:0},
  {n:[0,0,1],u:[1,0,0],v:[0,1,0],sh:.8,side:1},{n:[0,0,-1],u:[-1,0,0],v:[0,1,0],sh:.7,side:1}];
 const AOV=[.52,.7,.86,1];
-const CB=new Builder(700000);
+const CB=new Builder(1800000);
 const chunks=[];
 for(let cz=0;cz<NC;cz++)for(let cx=0;cx<NC;cx++)chunks.push({x0:cx*CH,z0:cz*CH,vbo:gl.createBuffer(),count:0,dirty:true});
 const _ao=[0,0,0,0];
@@ -468,7 +434,7 @@ function genWorld(){
   markR(0,0,W-1,3,1);markR(0,W-4,W-1,W-1,1);markR(0,0,3,W-1,1);markR(W-4,0,W-1,W-1,1);
   const c=W/2;markR(c-9,c-9,c+9,c+9);
   let bc=0,tr=0;
-  while(bc<9&&tr<300){tr++;const bw=7+(wr()*6|0),bd=7+(wr()*6|0),x0=7+(wr()*(W-14-bw)|0),z0=7+(wr()*(W-14-bd)|0);
+  while(bc<14&&tr<450){tr++;const bw=7+(wr()*6|0),bd=7+(wr()*6|0),x0=7+(wr()*(W-14-bw)|0),z0=7+(wr()*(W-14-bd)|0);
     if(!freeR(x0-3,z0-3,x0+bw+8,z0+bd+3))continue;building(x0,z0,bw,bd,bc);markR(x0-3,z0-3,x0+bw+8,z0+bd+3);bc++;}
   for(let i=0,tries=0;i<14&&tries<200;tries++){
     const len=5+(wr()*6|0),h=2+(wr()*2|0),alongX=wr()<.5,x=6+(wr()*(W-20)|0),z=6+(wr()*(W-20)|0);
@@ -481,11 +447,11 @@ function genWorld(){
     const x1=alongX?x+len:x,z1=alongX?z:z+len;if(!freeR(x,z,x1,z1))continue;
     fillB(x,1,z,x1,2,z1,10);markR(x-1,z-1,x1+1,z1+1);i++;
   }
-  for(let i=0,tries=0;i<55&&tries<400;tries++){
+  for(let i=0,tries=0;i<70&&tries<550;tries++){
     const s=wr()<.4?2:1,x=4+(wr()*(W-10)|0),z=4+(wr()*(W-10)|0),h=1+(wr()*3|0);
     if(!freeR(x,z,x+s,z+s))continue;fillB(x,1,z,x+s-1,h,z+s-1,6);markR(x,z,x+s,z+s);i++;
   }
-  for(let i=0,tries=0;i<50&&tries<400;tries++){
+  for(let i=0,tries=0;i<80&&tries<650;tries++){
     const x=4+(wr()*(W-8)|0),z=4+(wr()*(W-8)|0);if(!freeR(x-2,z-2,x+2,z+2))continue;
     const h=4+(wr()*2|0);fillB(x,1,z,x,h,z,7);
     for(let dy=h-2;dy<=h+1;dy++){const r=dy>=h+1?1:2;for(let dx=-r;dx<=r;dx++)for(let dz=-r;dz<=r;dz++){if(Math.abs(dx)==2&&Math.abs(dz)==2&&wr()<.6)continue;if(!(dx==0&&dz==0&&dy<=h))if(!vox[vi(x+dx,dy,z+dz)])vox[vi(x+dx,dy,z+dz)]=8;}}
@@ -607,7 +573,7 @@ let ws=[],cur=1,fireCd=0,swapT=0,reloadT=0,fireBuf=0,muzzleT=0,kick=0,autoRl=0,a
 let enemies=[],proj=[],grens=[],PT=[],pickups=[],tracers=[],bombs=[];
 let time=0,wave=0,score=0,kills=0,shake=0,dmgFlash=0,whiteFlash=0,dirT=0,bobT=0,lastStep=0,flowT=0,deadT=0;
 let toSpawnZ=0,toSpawnS=0,toSpawnH=0,spawnT=0,breakT=0,waveActive=false,streakN=0,strikeReady=false,camX=0,camY=0,camZ=0,fovCur=75,menuA=0;
-const hiKey='blockops_hi';let hiScore=+(localStorage.getItem(hiKey)||0);
+const hiKey='blockops_hi';let hiScore=0;try{hiScore=+(localStorage.getItem(hiKey)||0);}catch(e){}
 const moveIn={x:0,y:0,sprint:false},keys={};
 
 /* ================= PARTICLES ================= */
@@ -1000,7 +966,7 @@ function updateHUD(dt){
 let mmT=0;
 function drawMini(dt){
   mmT-=dt;if(mmDirty&&mmT<=0){renderMini();mmT=1.5;}
-  const c=mctx,S2=240,sc=2.6;c.clearRect(0,0,S2,S2);c.save();c.beginPath();c.arc(120,120,120,0,PI*2);c.clip();
+  const c=mctx,S2=240,sc=2.6;c.clearRect(0,0,S2,S2);c.save();c.beginPath();c.rect(0,0,240,240);c.clip();
   c.fillStyle='#0a1a2a';c.fillRect(0,0,S2,S2);c.translate(120,120);c.rotate(P.yaw);c.imageSmoothingEnabled=false;
   c.drawImage(mm,-P.x*sc,-P.z*sc,W*sc,W*sc);
   for(const p of pickups){c.fillStyle=p.type==='hp'?'#4f4':p.type==='armor'?'#4af':'#fd4';c.fillRect((p.x-P.x)*sc-3,(p.z-P.z)*sc-3,6,6);}
@@ -1225,7 +1191,7 @@ cv.addEventListener('mousedown',e=>{
 });
 window.addEventListener('mouseup',e=>{if(e.button===0)wantFire=false;else if(e.button===2)adsHeld=false;dragging=false;});
 window.addEventListener('contextmenu',e=>e.preventDefault());
-window.addEventListener('wheel',e=>{if(state!=='play')return;switchWeapon((cur+(e.deltaY>0?1:WP.length-1))%WP.length);},{passive:true});
+window.addEventListener('wheel',e=>{if(state!=='play')return;if(buildMode)switchWeapon((buildMat+(e.deltaY>0?1:BUILD.length-1))%BUILD.length);else switchWeapon((cur+(e.deltaY>0?1:WP.length-1))%WP.length);},{passive:true});
 window.addEventListener('keydown',e=>{
   if(state==='play'){
     if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault();
@@ -1308,6 +1274,372 @@ $('quitB').addEventListener('click',toMenu);
 $('againB').addEventListener('click',startGame);
 $('menuB').addEventListener('click',toMenu);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')pauseGame();});
+
+
+/* ================= FRONTLINE 2.0 EXPANSION ================= */
+const BASE={genWorld,resetGame,startGame,startWave,updateWaves,updatePlayer,updateWeapon,tryFire,switchWeapon,buildDynamic,buildViewModel,drawMini,updateHUD,hurtPlayer,killEnemy,btnDown,gameOver,toMenu,throwGren,startReload,callStrike,eyePos};
+const MAPS=[
+ {name:'GREENHAVEN',sub:'FOREST VILLAGE',desc:'Dense woodland, fortified homes and a central village plaza.'},
+ {name:'REDROCK',sub:'DESERT OUTPOST',desc:'Sun-scorched mesas, sandy ruins and long open sightlines.'},
+ {name:'FROSTFALL',sub:'ARCTIC RELAY',desc:'Snow-covered structures, frozen ground and reduced visibility.'},
+ {name:'NEON DISTRICT',sub:'URBAN WARFARE',desc:'Metal towers, glowing signage and rain-slick city streets.'}
+];
+const MISSIONS=[
+ {name:'First Contact',type:'kills',goal:12,map:0,label:'ELIMINATION',reward:500,desc:'Sweep Greenhaven and eliminate the hostile vanguard before they establish a foothold.'},
+ {name:'Hold the Line',type:'waves',goal:3,map:0,label:'BASE DEFENSE',reward:750,desc:'Build defenses and survive three escalating assault waves in Greenhaven.'},
+ {name:'Lost Intelligence',type:'intel',goal:3,map:1,label:'SEARCH & RECOVER',reward:900,desc:'Recover three encrypted field cases scattered across the Redrock outpost.'},
+ {name:'Signal Blackout',type:'defense',goal:45,map:2,label:'UPLINK DEFENSE',reward:1100,desc:'Hold the Arctic uplink perimeter for 45 seconds while reinforcements close in.'},
+ {name:'Skyfall',type:'heli',goal:1,map:3,label:'BOSS HUNT',reward:1400,desc:'Take the fight to Neon District and destroy the enemy attack helicopter.'},
+ {name:'Extraction Protocol',type:'extract',goal:15,map:1,label:'COMBAT EXTRACTION',reward:1800,desc:'Eliminate 15 hostiles, then reach the extraction beacon. A scout 4×4 is recommended.'}
+];
+const BUILD=[
+ {name:'STONE',v:4,tile:T.SBRICK,color:'#8d9694',start:48},{name:'BRICK',v:5,tile:T.RBRICK,color:'#a95743',start:40},
+ {name:'TIMBER',v:12,tile:T.PLANK,color:'#b88950',start:48},{name:'STEEL',v:9,tile:T.METAL,color:'#66737b',start:32},
+ {name:'COBBLE',v:13,tile:T.COBBLE,color:'#737e7b',start:56},{name:'SANDBAG',v:10,tile:T.BAG,color:'#bca574',start:32}
+];
+let cars=[],decor=[],missionObjects=[];
+let buildMode=false,buildMat=0,builtCount=0,removedCount=0,buildInv=BUILD.map(b=>b.start);
+let activeCar=null,flying=false,carDistance=0,carBumpCd=0;
+let missionDone=false,wavesCleared=0,intelN=0,heliKills=0,defenseT=0,extractStage=0,missionClock=0;
+let career={xp:0,credits:0,completed:{}};
+try{career=Object.assign(career,JSON.parse(localStorage.getItem('blockops_career')||'{}'));if(!career.completed)career.completed={};}catch(e){}
+function saveCareer(){try{localStorage.setItem('blockops_career',JSON.stringify(career));}catch(e){}}
+function missionDef(){return MISSIONS[S.mission]||MISSIONS[0];}
+function mapDef(){return MAPS[S.map]||MAPS[0];}
+function clearSpotNear(x,z,r=2){
+ for(let y=1;y<Math.min(H,8);y++)for(let dz=-r;dz<=r;dz++)for(let dx=-r;dx<=r;dx++){
+  const t=getV(x+dx,y,z+dz);if(t===6||t===7||t===8||t===10)vox[vi(clamp(x+dx,0,W-1),y,clamp(z+dz,0,W-1))]=0;
+ }
+}
+function spawnCar(x,z,yaw=0,color=0){cars.push({x,y:1,z,yaw,speed:0,hp:100,maxhp:100,color,dead:false});}
+function spawnWorldCars(){
+ cars=[];const c=W/2;spawnCar(c+5.5,c+5.5,0,0);spawnCar(c-5.5,c-5.5,PI,1);spawnCar(c+5.5,c-5.5,PI*.5,2);
+ if(S.mode!=='creative')spawnCar(c-5.5,c+5.5,-PI*.5,0);
+}
+function findMissionSpot(minD=18){
+ for(let i=0;i<300;i++){
+  const a=rnd()*PI*2,d=rr(minD,Math.min(W*.4,minD+25)),x=clamp(P.x+Math.cos(a)*d,6,W-6),z=clamp(P.z+Math.sin(a)*d,6,W-6);
+  if(validSpot(x,z)&&!cars.some(c=>Math.hypot(c.x-x,c.z-z)<4))return{x,z};
+ }
+ for(let i=0;i<200;i++){const x=rr(6,W-6),z=rr(6,W-6);if(validSpot(x,z))return{x,z};}
+ return{x:W/2+8,z:W/2+8};
+}
+function addLamp(x,z,color){decor.push({type:'lamp',x,y:1,z,color});}
+genWorld=function(){
+ BASE.genWorld();decor=[];missionObjects=[];const c=W/2;
+ // Biome conversion preserves the destructible voxel mesh while giving every region a unique material palette.
+ for(let y=0;y<H;y++)for(let z=0;z<W;z++)for(let x=0;x<W;x++){
+  const id=vi(x,y,z),t=vox[id];if(!t)continue;
+  if(S.map===1){if(y===0&&(t===1||t===3))vox[id]=2;else if(t===4&&rnd()<.42)vox[id]=5;}
+  else if(S.map===2){if(y===0&&(t===1||t===2||t===3))vox[id]=11;else if(t===5&&y>=5) vox[id]=11;}
+  else if(S.map===3){if(y===0&&(t===1||t===2))vox[id]=14;else if(t===5&&rnd()<.6)vox[id]=9;}
+ }
+ // A connected road cross and fortified central plaza.
+ for(let i=4;i<W-4;i++)for(let w=-2;w<=2;w++){
+  for(const [x,z,along] of [[c+w,i,true],[i,c+w,false]]){
+   vox[vi(x,0,z)]=(w===0&&((i%7+7)%7)<3)?15:14;
+   for(let y=1;y<=3;y++){const t=getV(x,y,z);if(t===6||t===7||t===8||t===10)vox[vi(x,y,z)]=0;}
+  }
+ }
+ for(let z=c-8;z<=c+8;z++)for(let x=c-8;x<=c+8;x++)if(Math.abs(x-c)>2&&Math.abs(z-c)>2)vox[vi(x,0,z)]=S.map===1?2:S.map===2?11:13;
+ // Sandbag fighting positions with generous gaps for infantry and vehicles.
+ for(const side of[-1,1])for(let k=-6;k<=6;k++){
+  if(Math.abs(k)<2)continue;
+  if(k%2===0){vox[vi(c+k,1,c+side*8)]=10;vox[vi(c+side*8,1,c+k)]=10;}
+ }
+ // Distinct skyline details and regional props.
+ if(S.map===1){
+  for(let i=0;i<18;i++){const x=6+(rnd()*(W-12)|0),z=6+(rnd()*(W-12)|0);if(getV(x,1,z)||getV(x,2,z)||Math.hypot(x-c,z-c)<14)continue;const h=2+(rnd()*3|0);fillB(x,1,z,x,h,z,8);}
+ }else if(S.map===2){
+  for(let i=0;i<34;i++){const x=5+(rnd()*(W-10)|0),z=5+(rnd()*(W-10)|0);if(getV(x,1,z)||Math.hypot(x-c,z-c)<12)continue;vox[vi(x,1,z)]=17;}
+ }else if(S.map===3){
+  for(let i=0;i<22;i++){
+   const x=7+(rnd()*(W-16)|0),z=7+(rnd()*(W-16)|0);if(Math.hypot(x-c,z-c)<17||getV(x,1,z))continue;
+   const h=5+(rnd()*9|0);fillB(x,1,z,x+1,h,z+1,rnd()<.55?9:4);fillB(x,h+1,z,x+1,h+1,z+1,16);
+  }
+ }
+ const lc=S.map===3?[.25,.9,1]:[1,.78,.35];addLamp(c-7,c-7,lc);addLamp(c+7,c-7,lc);addLamp(c-7,c+7,lc);addLamp(c+7,c+7,lc);
+ if(S.map===3)for(let i=0;i<10;i++){const a=i/10*PI*2;addLamp(Math.round(c+Math.cos(a)*15),Math.round(c+Math.sin(a)*15),i%2?[1,.2,.55]:[.2,.8,1]);}
+ spawnWorldCars();for(const ch of chunks)ch.dirty=true;mmDirty=true;
+};
+
+/* ---------- Construction system ---------- */
+function updateBuildUI(){
+ const on=buildMode&&state==='play';$('buildBar').style.display=on?'block':'none';E.slots.style.visibility=on||activeCar?'hidden':'visible';
+ $('bRemove').style.display=on&&S.touch?'flex':'none';$('buildTip').textContent=S.mode==='creative'?'LMB PLACE · RMB REMOVE · B EXIT · V FLIGHT':'LMB PLACE · RMB REMOVE · B COMBAT';
+ const box=$('buildSlots');if(!box.children.length){
+  BUILD.forEach((b,i)=>{const d=document.createElement('button');d.className='build-slot';d.style.setProperty('--c',b.color);d.innerHTML=(i+1)+' <i></i>'+b.name+' <small></small>';d.addEventListener('click',()=>selectBuild(i));box.appendChild(d);});
+ }
+ for(let i=0;i<box.children.length;i++){const d=box.children[i];d.classList.toggle('on',i===buildMat);d.querySelector('small').textContent=buildInv[i]===Infinity?'∞':'×'+buildInv[i];}
+ $('ammoBox').style.opacity=on||activeCar?'.18':'1';$('bFire').textContent=on?'PLACE':'FIRE';$('bFire2').textContent=on?'PLACE':'FIRE';
+}
+function selectBuild(i){if(i<0||i>=BUILD.length)return;buildMat=i;buildMode=true;flying=false;activeCar&&exitVehicle();updateBuildUI();sfxTone(420,620,.04,.12,'square');}
+function toggleBuild(){
+ if(state!=='play'||P.dead)return;if(activeCar)exitVehicle();buildMode=!buildMode;wantFire=false;adsHeld=adsToggle=false;reloadT=0;
+ if(buildMode&&S.mode==='creative')flying=true;updateBuildUI();feed(buildMode?'CONSTRUCTION MODE':'COMBAT LOADOUT',buildMode?'#b9f45d':'#fff');sfxTone(buildMode?400:650,buildMode?700:400,.07,.16,'square');
+}
+function buildRay(){const e=BASE.eyePos();return castVoxel(e[0],e[1],e[2],fwdV[0],fwdV[1],fwdV[2],6);}
+function placeBlock(){
+ if(fireCd>0||P.dead)return;fireCd=.16;fireBuf=0;const b=BUILD[buildMat];if(buildInv[buildMat]<=0){feed('NO '+b.name+' BLOCKS','#ff8c70');sfxTone(180,130,.08,.15,'square');return;}
+ const h=buildRay();if(!h)return;const x=h.x+h.nx,y=h.y+h.ny,z=h.z+h.nz;
+ if(x<2||z<2||x>=W-2||z>=W-2||y<1||y>=H||getV(x,y,z))return;
+ if(x+1>P.x-P.r&&x<P.x+P.r&&z+1>P.z-P.r&&z<P.z+P.r&&y+1>P.y&&y<P.y+P.h){feed('CANNOT BUILD INSIDE PLAYER','#ffb06a');return;}
+ if(cars.some(c=>Math.abs(c.x-(x+.5))<1.4&&Math.abs(c.z-(z+.5))<1.8))return;
+ vox[vi(x,y,z)]=b.v;markDirty(x,z);mmDirty=true;if(buildInv[buildMat]!==Infinity)buildInv[buildMat]--;builtCount++;score+=2;
+ const cc=BT[b.v].c;for(let i=0;i<4;i++)pt(x+.5,y+.5,z+.5,rr(-1,1),rr(0,2),rr(-1,1),.35,.08,cc[0],cc[1],cc[2],0,12);
+ sfxNoise(.055,900,260,.18);updateBuildUI();
+}
+function removeBuildBlock(){
+ if(!buildMode||P.dead||fireCd>0)return;fireCd=.14;const h=buildRay();if(!h||h.y<1)return;const t=getV(h.x,h.y,h.z);if(!t)return;
+ if(breakBlock(h.x,h.y,h.z,true)){const bi=BUILD.findIndex(b=>b.v===t);if(bi>=0&&buildInv[bi]!==Infinity)buildInv[bi]=Math.min(999,buildInv[bi]+1);removedCount++;sfxNoise(.08,700,180,.2);updateBuildUI();}
+}
+
+/* ---------- Drivable scout vehicles ---------- */
+function nearestCar(){let best=null,bd=3.4;for(const c of cars){if(c.dead)continue;const d=Math.hypot(c.x-P.x,c.z-P.z);if(d<bd){bd=d;best=c;}}return best;}
+function enterCar(c){
+ if(!c||c.dead||P.dead)return;activeCar=c;buildMode=false;flying=false;wantFire=false;adsHeld=adsToggle=false;reloadT=0;c.speed=0;
+ P.x=c.x;P.z=c.z;P.y=1;P.vx=P.vz=P.vy=0;showBanner('SCOUT 4×4','WASD DRIVE · SPACE HANDBRAKE · E EXIT',1700);sfxTone(90,150,.25,.22,'sawtooth');updateBuildUI();
+}
+function exitVehicle(){
+ const c=activeCar;if(!c)return;const rx=Math.cos(c.yaw)*2,rz=-Math.sin(c.yaw)*2;let x=c.x+rx,z=c.z+rz;
+ if(collides(x,1,z,P.r,P.h)){x=c.x-rx;z=c.z-rz;}P.x=clamp(x,3,W-3);P.z=clamp(z,3,W-3);P.y=1;P.vx=P.vz=P.vy=0;activeCar=null;updateBuildUI();sfxTone(180,110,.08,.12,'square');
+}
+function destroyCar(c){
+ if(!c||c.dead)return;c.dead=true;if(activeCar===c)exitVehicle();explode(c.x,1.4,c.z,7,100,2.4,false);feed('VEHICLE DESTROYED','#ff6a50');
+}
+function updateCar(dt){
+ const c=activeCar;if(!c||c.dead){activeCar=null;return;}if(P.dead){exitVehicle();return;}carBumpCd=Math.max(0,carBumpCd-dt);
+ let throttle=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)-moveIn.y;
+ let steer=(keys.KeyA||keys.ArrowLeft?1:0)-(keys.KeyD||keys.ArrowRight?1:0)-moveIn.x;throttle=clamp(throttle,-1,1);steer=clamp(steer,-1,1);
+ const brake=keys.Space||jumpReq;jumpReq=false;
+ if(throttle){const accel=c.speed*throttle<0?18:11;c.speed+=throttle*accel*dt;}else c.speed*=Math.pow(.25,dt);
+ if(brake)c.speed*=Math.pow(.015,dt);c.speed=clamp(c.speed,-7,17);if(Math.abs(c.speed)<.025)c.speed=0;
+ if(Math.abs(c.speed)>.15)c.yaw+=steer*dt*1.25*clamp(Math.abs(c.speed)/5,.2,1)*(c.speed<0?-1:1);
+ const ox=c.x,oz=c.z,nx=c.x-Math.sin(c.yaw)*c.speed*dt,nz=c.z-Math.cos(c.yaw)*c.speed*dt;
+ if(!collides(nx,1,nz,1.02,1.35)){c.x=nx;c.z=nz;carDistance+=Math.hypot(nx-ox,nz-oz);}else{
+  if(Math.abs(c.speed)>3&&carBumpCd<=0){c.hp-=Math.abs(c.speed)*1.4;carBumpCd=.4;shake=Math.max(shake,.3);sfxNoise(.15,600,90,.45);}
+  c.speed*=-.22;
+ }
+ P.x=c.x;P.z=c.z;P.y=1;P.vx=-Math.sin(c.yaw)*c.speed;P.vz=-Math.cos(c.yaw)*c.speed;P.vy=0;P.onGround=true;
+ for(const e of enemies){if(e.dead||e.type==='heli')continue;const d=Math.hypot(e.x-c.x,e.z-c.z);if(d<1.75&&Math.abs(c.speed)>3){hurtEnemy(e,Math.abs(c.speed)*20,false);c.speed*=.76;shake=Math.max(shake,.18);feed('VEHICLE IMPACT','#ffc857');}}
+ if(c.hp<=0)destroyCar(c);
+}
+eyePos=function(){
+ if(activeCar){const back=5.8;return[P.x+Math.sin(P.yaw)*back,P.y+3.5+Math.sin(P.pitch)*1.2,P.z+Math.cos(P.yaw)*back];}
+ return BASE.eyePos();
+};
+updatePlayer=function(dt){
+ if(activeCar){updateCar(dt);return;}
+ if(S.mode==='creative'&&flying&&!P.dead){
+  let ix=moveIn.x+(keys.KeyD?1:0)-(keys.KeyA?1:0),iz=-moveIn.y+(keys.KeyW?1:0)-(keys.KeyS?1:0);const l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l;}
+  const sp=(keys.ControlLeft||keys.ControlRight)?18:10,sy=Math.sin(P.yaw),cy=Math.cos(P.yaw),k=Math.min(1,dt*8);
+  P.vx+=((cy*ix-sy*iz)*sp-P.vx)*k;P.vz+=((-sy*ix-cy*iz)*sp-P.vz)*k;
+  const vertical=(keys.Space?1:0)-((keys.ShiftLeft||keys.ShiftRight)?1:0);P.vy+=(vertical*sp-P.vy)*k;
+  P.x=clamp(P.x+P.vx*dt,2.5,W-2.5);P.z=clamp(P.z+P.vz*dt,2.5,W-2.5);P.y=clamp(P.y+P.vy*dt,1,H-2);P.onGround=false;bobT+=dt*l*2;return;
+ }
+ BASE.updatePlayer(dt);
+};
+updateWeapon=function(dt){if(activeCar||buildMode){adsHeld=false;adsToggle=false;}BASE.updateWeapon(dt);};
+tryFire=function(){if(activeCar)return;if(buildMode){placeBlock();return;}BASE.tryFire();};
+switchWeapon=function(i){if(buildMode){selectBuild((i+BUILD.length)%BUILD.length);return;}if(activeCar)return;BASE.switchWeapon(i);};
+startReload=function(){if(!activeCar&&!buildMode)BASE.startReload();};
+throwGren=function(){if(!activeCar&&!buildMode)BASE.throwGren();};
+callStrike=function(){if(!activeCar&&!buildMode)BASE.callStrike();};
+hurtPlayer=function(d,ax,az){
+ if(activeCar){const c=activeCar;c.hp-=d*.7;BASE.hurtPlayer(d*.14,ax,az);if(c.hp<=0)destroyCar(c);else if(P.dead&&activeCar)exitVehicle();return;}BASE.hurtPlayer(d,ax,az);
+};
+
+/* ---------- Campaign objectives, progression and interaction ---------- */
+function spawnMissionObjects(){
+ missionObjects=[];if(S.mode!=='campaign')return;const m=missionDef(),c=W/2;
+ if(m.type==='intel')for(let i=0;i<m.goal;i++){const p=findMissionSpot(20+i*4);missionObjects.push({type:'intel',x:p.x,y:1,z:p.z,t:rnd()*6});}
+ else if(m.type==='defense')missionObjects.push({type:'uplink',x:c+.5,y:1,z:c-4.5,t:0});
+}
+function nearestInteraction(){
+ if(state!=='play'||P.dead)return null;if(activeCar)return{kind:'exit',label:'EXIT SCOUT 4×4'};
+ let best=null,bd=3;
+ for(const o of missionObjects){const d=Math.hypot(o.x-P.x,o.z-P.z);if(d<bd){bd=d;best=o;}}
+ if(best){if(best.type==='intel')return{kind:'intel',obj:best,label:'RECOVER INTELLIGENCE'};if(best.type==='extract')return{kind:'extract',obj:best,label:'CONFIRM EXTRACTION'};if(best.type==='uplink')return{kind:'uplink',obj:best,label:'UPLINK STATUS'};}
+ const c=nearestCar();return c?{kind:'car',obj:c,label:'ENTER SCOUT 4×4'}:null;
+}
+function interact(){
+ const n=nearestInteraction();if(!n)return;
+ if(n.kind==='exit'){exitVehicle();return;}if(n.kind==='car'){enterCar(n.obj);return;}
+ if(n.kind==='intel'){
+  const i=missionObjects.indexOf(n.obj);if(i>=0)missionObjects.splice(i,1);intelN++;score+=300;career.credits+=25;sfxPick();feed('+300 ENCRYPTED INTEL '+intelN+'/'+missionDef().goal,'#ffc857');showBanner('INTEL RECOVERED',intelN+' OF '+missionDef().goal+' FIELD CASES',1300);
+ }else if(n.kind==='extract')completeMission();else if(n.kind==='uplink')feed('UPLINK '+Math.floor(defenseT)+' / '+missionDef().goal+' SECONDS','#67dbe8');
+}
+function completeMission(){
+ if(missionDone||state!=='play'||S.mode!=='campaign')return;missionDone=true;state='over';wantFire=false;activeCar=null;
+ const m=missionDef(),bonus=m.reward+wave*100;score+=bonus;career.xp+=m.reward;career.credits+=Math.round(m.reward*.35);career.completed[S.mission]=true;saveCareer();
+ if(score>hiScore){hiScore=score;try{localStorage.setItem(hiKey,hiScore);}catch(e){}}
+ try{document.exitPointerLock&&document.exitPointerLock();}catch(e){}
+ E.oScore.textContent=score;E.oBest.textContent=hiScore;E.oWave.textContent=wave;E.oKills.textContent=kills;
+ $('overTitle').textContent='Mission complete';$('overTitle').style.color='var(--lime)';$('overSub').textContent='Operation accomplished · +'+m.reward+' XP';$('overMessage').textContent=m.name+' is secure. Your career progress has been saved locally.';
+ $('nextB').classList.toggle('hidden',S.mission>=MISSIONS.length-1);$('againB').textContent='Replay operation';E.hud.classList.add('hidden');E.touch.classList.add('hidden');E.over.classList.remove('hidden');sfxTone(440,880,.5,.25,'sine');sfxTone(660,1100,.5,.18,'sine',0,.15);
+}
+function updateMission(dt){
+ if(S.mode!=='campaign'||missionDone||P.dead)return;const m=missionDef();missionClock+=dt;
+ if(m.type==='kills'&&kills>=m.goal)completeMission();
+ else if(m.type==='waves'&&wavesCleared>=m.goal)completeMission();
+ else if(m.type==='intel'&&intelN>=m.goal)completeMission();
+ else if(m.type==='defense'){
+  const o=missionObjects.find(o=>o.type==='uplink');if(o&&Math.hypot(o.x-P.x,o.z-P.z)<12)defenseT=Math.min(m.goal,defenseT+dt);
+  if(defenseT>=m.goal)completeMission();
+ }else if(m.type==='heli'&&heliKills>=m.goal)completeMission();
+ else if(m.type==='extract'&&extractStage===0&&kills>=m.goal){
+  extractStage=1;const p=findMissionSpot(34);missionObjects.push({type:'extract',x:p.x,y:1,z:p.z,t:0});showBanner('EXTRACTION AVAILABLE','FOLLOW THE GOLD BEACON · USE A VEHICLE',3000);sfxTone(500,1000,.35,.25,'sine');
+ }
+}
+resetGame=function(){
+ activeCar=null;buildMode=S.mode==='creative';flying=S.mode==='creative';buildInv=BUILD.map(b=>S.mode==='creative'?Infinity:b.start);builtCount=removedCount=0;carDistance=0;
+ missionDone=false;wavesCleared=intelN=heliKills=0;defenseT=0;extractStage=0;missionClock=0;
+ BASE.resetGame();spawnMissionObjects();
+ if(S.mode==='creative'){enemies=[];toSpawnZ=toSpawnS=toSpawnH=0;waveActive=false;breakT=Infinity;P.gren=0;wave=0;}
+ updateBuildUI();
+};
+startGame=function(){
+ $('helpOv').classList.add('hidden');BASE.startGame();updateBuildUI();
+ if(S.mode==='creative')showBanner('CREATIVE WORLD','INFINITE BLOCKS · V TOGGLE FLIGHT · E DRIVE',2800);
+ else if(S.mode==='campaign')showBanner(missionDef().name,missionDef().label+' · '+mapDef().name,2600);
+};
+startWave=function(n){
+ if(S.mode==='creative'){wave=0;waveActive=false;breakT=Infinity;return;}BASE.startWave(n);
+ if(S.mode==='campaign'&&missionDef().type==='heli'&&n===1)toSpawnH=1;
+};
+updateWaves=function(dt){
+ if(S.mode==='creative')return;const was=waveActive,w=wave;BASE.updateWaves(dt);if(was&&!waveActive&&w===wave)wavesCleared++;updateMission(dt);
+};
+killEnemy=function(e,head){const heli=e.type==='heli'&&!e.dead;BASE.killEnemy(e,head);if(heli)heliKills++;};
+gameOver=function(){
+ const was=state==='play';BASE.gameOver();if(!was)return;activeCar=null;
+ if(S.mode==='survival'){career.xp+=kills*10;career.credits+=kills*2;saveCareer();}
+ $('overTitle').textContent='Mission failed';$('overTitle').style.color='var(--red)';$('overSub').textContent='After action report';$('overMessage').textContent='Regroup, rearm, and return to the fight.';$('nextB').classList.add('hidden');$('againB').textContent='Redeploy';
+};
+toMenu=function(){activeCar=null;buildMode=false;$('helpOv').classList.add('hidden');BASE.toMenu();refreshMenu();updateBuildUI();};
+btnDown=function(n,t){
+ if(n==='build'){toggleBuild();return;}if(n==='interact'){interact();return;}if(n==='remove'){removeBuildBlock();return;}
+ if(n==='jump'&&activeCar){jumpReq=true;return;}BASE.btnDown(n,t);
+};
+
+/* ---------- Expanded world rendering ---------- */
+function drawCar(c){
+ if(c.dead)return;NS=1;mTRY(_bm,c.x,c.y,c.z,c.yaw,1);drawShadow(c.x,1,c.z,2.6);
+ const colors=[[.28,.48,.25],[.62,.43,.19],[.25,.43,.55]],body=colors[c.color%colors.length];
+ boxM(dynO,_bm,0,.65,0,1.9,.55,3.8,body[0],body[1],body[2],1,T.METAL,-1,0);
+ boxM(dynO,_bm,0,1.15,.35,1.72,.65,1.95,body[0]*1.08,body[1]*1.08,body[2]*1.08,1,T.METAL,-1,0);
+ boxM(dynO,_bm,0,1.18,-.69,1.5,.48,.08,.18,.48,.58,1,T.PLAIN,-1,.2);
+ boxM(dynO,_bm,0,1.18,1.36,1.5,.45,.08,.15,.32,.38,1,T.PLAIN,-1,0);
+ boxM(dynO,_bm,0,.83,-1.55,1.82,.18,1.05,body[0]*1.12,body[1]*1.12,body[2]*1.12,1,T.METAL,-1,0);
+ boxM(dynO,_bm,0,.48,-2,2.05,.18,.18,.16,.18,.19,1,T.GUN,-1,0);boxM(dynO,_bm,0,.48,2,2.05,.18,.18,.16,.18,.19,1,T.GUN,-1,0);
+ for(const sx of[-1,1])for(const sz of[-1,1]){
+  boxM(dynO,_bm,sx*1.02,.43,sz*1.25,.38,.72,.72,.055,.06,.065,1,T.PLAIN,-1,0);
+  boxM(dynO,_bm,sx*1.225,.43,sz*1.25,.04,.34,.34,.32,.34,.35,1,T.METAL,-1,0);
+ }
+ for(const sx of[-1,1]){boxM(dynT,_bm,sx*.62,.82,-2.08,.38,.25,.08,1,.92,.6,.95,T.WHITE,-1,1);boxM(dynT,_bm,sx*.63,.77,2.08,.32,.18,.08,1,.08,.03,.8,T.WHITE,-1,1);}
+ boxM(dynO,_bm,-.83,1.2,-.4,.06,.55,.85,.12,.27,.32,1,T.PLAIN,-1,0);boxM(dynO,_bm,.83,1.2,-.4,.06,.55,.85,.12,.27,.32,1,T.PLAIN,-1,0);
+}
+function drawMissionObject(o){
+ let gy=1;while(gy<H-2&&getV(o.x|0,gy,o.z|0))gy++;o.y=gy;o.t=(o.t||0)+.016;NS=1;
+ if(o.type==='intel'){
+  mTRY(_bm,o.x,o.y+.45+Math.sin(time*2+o.x)*.08,o.z,time*.7,1);boxM(dynO,_bm,0,0,0,.75,.48,.55,.58,.4,.12,1,T.CRATE,-1,0);boxM(dynO,_bm,0,.28,0,.28,.08,.12,.95,.75,.25,1,T.METAL,-1,.5);
+  boxM(dynT,IDENT,o.x,o.y+2,o.z,.35,4,.35,1,.7,.15,.18,T.WHITE,-1,1);drawShadow(o.x,o.y,o.z,.8);
+ }else if(o.type==='uplink'){
+  boxM(dynO,IDENT,o.x,o.y+.55,o.z,1.2,1.1,1.2,.25,.32,.34,1,T.METAL,-1,0);boxM(dynO,IDENT,o.x,o.y+1.85,o.z,.12,1.6,.12,.5,.55,.56,1,T.METAL,-1,0);
+  const blink=.6+.4*Math.sin(time*5);boxM(dynT,IDENT,o.x,o.y+2.75,o.z,.32,.32,.32,.2,.9,1,blink,T.WHITE,-1,1);boxM(dynT,IDENT,o.x,o.y+5,o.z,.22,8,.22,.2,.85,1,.12,T.WHITE,-1,1);
+ }else if(o.type==='extract'){
+  const pulse=1+Math.sin(time*4)*.15;boxM(dynT,IDENT,o.x,o.y+5,o.z,1.3*pulse,10,1.3*pulse,.65,1,.25,.18,T.WHITE,-1,1);
+  for(let i=0;i<4;i++){const a=time+i*PI/2;boxM(dynT,IDENT,o.x+Math.cos(a)*2,o.y+.25,o.z+Math.sin(a)*2,.35,.5,.35,.8,1,.35,.7,T.WHITE,-1,1);}drawShadow(o.x,o.y,o.z,3);
+ }
+}
+buildDynamic=function(eye){
+ BASE.buildDynamic(eye);NS=1;const lim=THEMES[S.time].ff+10;
+ for(const c of cars){const dx=c.x-eye[0],dz=c.z-eye[2];if(dx*dx+dz*dz<lim*lim)drawCar(c);}
+ for(const d of decor){if(d.type==='lamp'){
+  boxM(dynO,IDENT,d.x,d.y+2,d.z,.16,4,.16,.2,.23,.24,1,T.METAL,-1,0);boxM(dynO,IDENT,d.x,d.y+4,d.z,.65,.16,.65,.16,.18,.19,1,T.METAL,-1,0);
+  boxM(dynT,IDENT,d.x,d.y+3.82,d.z,.48,.22,.48,d.color[0],d.color[1],d.color[2],.95,T.WHITE,-1,1);
+ }}
+ for(const o of missionObjects)drawMissionObject(o);
+ if(buildMode&&!P.dead){const h=buildRay();if(h){const x=h.x+h.nx,y=h.y+h.ny,z=h.z+h.nz;if(!getV(x,y,z)&&y>=1&&y<H){const b=BUILD[buildMat],cc=BT[b.v].c;boxM(dynT,IDENT,x+.5,y+.5,z+.5,1.015,1.015,1.015,cc[0],cc[1],cc[2],.34,b.tile,-1,.15);}}}
+ // Lightweight deterministic weather: no allocations or physics overhead.
+ if(S.map===2){for(let i=0;i<(S.q===0?28:70);i++){
+  const x=eye[0]+((i*17.13+time*1.2)%42)-21,z=eye[2]+((i*29.71+time*.35)%42)-21,y=1+((i*11.37-time*3.4)%20+20)%20;
+  boxM(dynT,IDENT,x,y,z,.07,.07,.07,.9,.96,1,.75,T.WHITE,-1,.5);
+ }}else if(S.map===3){for(let i=0;i<(S.q===0?20:55);i++){
+  const x=eye[0]+((i*19.17+time*2)%38)-19,z=eye[2]+((i*31.31)%38)-19,y=1+((i*13.73-time*15)%20+20)%20;
+  boxM(dynT,IDENT,x,y,z,.025,.42,.025,.45,.68,.85,.42,T.WHITE,-1,.3);
+ }}else if(S.map===1){for(let i=0;i<18;i++){
+  const x=eye[0]+((i*23.17+time*.8)%34)-17,z=eye[2]+((i*11.31+time*.25)%34)-17,y=1+((i*7.73+time*.2)%5);
+  boxM(dynT,IDENT,x,y,z,.06,.06,.06,.85,.62,.32,.25,T.WHITE,-1,0);
+ }}
+};
+buildViewModel=function(){
+ if(activeCar){dynV.reset();dynVT.reset();return;}
+ if(buildMode){dynV.reset();dynVT.reset();NS=1;const b=BUILD[buildMat];mLimb(_vm,IDENT,.23,-.2,-.43,.15+Math.sin(bobT)*.025,-.12);boxM(dynV,_vm,0,0,0,.25,.25,.25,1,1,1,1,b.tile,b.tile,0);boxM(dynV,_vm,-.03,-.2,.08,.09,.25,.1,.88,.68,.5,1,T.PLAIN,-1,0);return;}BASE.buildViewModel();
+};
+
+/* ---------- Tactical HUD and minimap ---------- */
+function objectiveInfo(){
+ if(S.mode==='creative')return{op:'CREATIVE · '+mapDef().name,text:'SHAPE THE WORLD',progress:builtCount+' BLOCKS PLACED',pct:builtCount%100,dist:flying?'FLIGHT ON':'FLIGHT OFF'};
+ if(S.mode==='survival')return{op:'SURVIVAL · '+mapDef().name,text:'SURVIVE THE ONSLAUGHT',progress:'WAVE '+wave+' · '+kills+' KILLS',pct:Math.min(100,streakN/8*100),dist:'ENDLESS'};
+ const m=missionDef(),info={op:'OPERATION '+String(S.mission+1).padStart(2,'0')+' · '+m.label,text:'',progress:'',pct:0,dist:''};
+ if(m.type==='kills'){info.text='ELIMINATE HOSTILES';info.progress=Math.min(kills,m.goal)+' / '+m.goal;info.pct=kills/m.goal*100;}
+ else if(m.type==='waves'){info.text='SURVIVE ASSAULT WAVES';info.progress=wavesCleared+' / '+m.goal+' CLEARED';info.pct=wavesCleared/m.goal*100;}
+ else if(m.type==='intel'){info.text='RECOVER FIELD INTEL';info.progress=intelN+' / '+m.goal+' RECOVERED';info.pct=intelN/m.goal*100;}
+ else if(m.type==='defense'){info.text='HOLD UPLINK PERIMETER';info.progress=Math.floor(defenseT)+' / '+m.goal+' SEC';info.pct=defenseT/m.goal*100;}
+ else if(m.type==='heli'){info.text='DESTROY THE GUNSHIP';info.progress=Math.min(heliKills,1)+' / 1 DESTROYED';info.pct=heliKills*100;}
+ else if(m.type==='extract'){
+  if(!extractStage){info.text='CLEAR EXTRACTION ROUTE';info.progress=Math.min(kills,m.goal)+' / '+m.goal+' KILLS';info.pct=kills/m.goal*100;}
+  else{info.text='REACH EXTRACTION · [E]';info.progress='BEACON ACTIVE';info.pct=100;}
+ }
+ let target=null,bd=Infinity;for(const o of missionObjects){if(m.type==='extract'&&o.type!=='extract')continue;const d=Math.hypot(o.x-P.x,o.z-P.z);if(d<bd){bd=d;target=o;}}if(target)info.dist=Math.round(bd)+'m';
+ return info;
+}
+updateHUD=function(dt){
+ BASE.updateHUD(dt);E.hpTxt.textContent=Math.ceil(P.hp);E.arTxt.textContent=Math.ceil(P.armor);$('mapName').textContent=mapDef().name;
+ const deg=((-P.yaw*180/PI)%360+360)%360,dirs=['N','NE','E','SE','S','SW','W','NW'];$('compassTxt').textContent=dirs[Math.round(deg/45)%8]+' · '+String(Math.round(deg)%360).padStart(3,'0');
+ const o=objectiveInfo();$('opName').textContent=o.op;$('objTxt').textContent=o.text;$('objProgress').textContent=o.progress;$('objDist').textContent=o.dist;$('objFill').style.width=clamp(o.pct,0,100)+'%';
+ if(S.mode==='creative'){E.waveTxt.textContent='CREATIVE MODE';E.enemyTxt.textContent='INFINITE RESOURCES · NO HOSTILES';}
+ const n=nearestInteraction();$('interact').style.display=n?'block':'none';if(n)$('interactTxt').textContent=n.label;
+ $('vehicleHud').style.display=activeCar?'block':'none';if(activeCar){$('speedTxt').innerHTML=Math.round(Math.abs(activeCar.speed)*5)+' <small>KM/H</small>';$('vehicleHpFill').style.width=clamp(activeCar.hp,0,100)+'%';}
+ if(buildMode)for(let i=0;i<BUILD.length;i++)$('buildSlots').children[i].querySelector('small').textContent=buildInv[i]===Infinity?'∞':'×'+buildInv[i];
+};
+drawMini=function(dt){
+ BASE.drawMini(dt);const c=mctx,sc=2.6;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(P.yaw);
+ for(const car of cars){if(car.dead)continue;const x=(car.x-P.x)*sc,z=(car.z-P.z)*sc;c.fillStyle='#67dbe8';c.fillRect(x-4,z-5,8,10);c.strokeStyle='#07110f';c.lineWidth=1;c.strokeRect(x-4,z-5,8,10);}
+ for(const o of missionObjects){const x=(o.x-P.x)*sc,z=(o.z-P.z)*sc;c.fillStyle=o.type==='uplink'?'#67dbe8':o.type==='extract'?'#b9f45d':'#ffc857';c.beginPath();c.arc(x,z,o.type==='extract'?7:5,0,PI*2);c.fill();c.strokeStyle='#111';c.stroke();}
+ c.restore();
+};
+
+/* ---------- Command center and expanded input ---------- */
+function rankInfo(){const level=Math.floor(career.xp/1000)+1,names=['RECRUIT','RANGER','SPECIALIST','VANGUARD','ELITE','COMMANDER'];return{level,name:names[Math.min(names.length-1,Math.floor((level-1)/2))]};}
+function refreshMenu(){
+ document.querySelectorAll('#modeTabs button').forEach(b=>b.classList.toggle('on',b.dataset.mode===S.mode));document.querySelectorAll('.map-card').forEach(b=>b.classList.toggle('on',+b.dataset.map===S.map));
+ $('campaignSelect').classList.toggle('hidden',S.mode!=='campaign');const r=rankInfo();$('careerRank').textContent='RANK '+String(r.level).padStart(2,'0')+' · '+r.name;$('careerXp').textContent=career.xp;$('careerCredits').textContent=career.credits;
+ if(S.mode==='campaign'){
+  const m=missionDef();$('selectedCode').textContent='OPERATION '+String(S.mission+1).padStart(2,'0')+' · CAMPAIGN';$('selectedName').textContent=m.name;$('selectedDesc').textContent=m.desc;$('selectedType').textContent=m.label;$('selectedReward').textContent='+'+m.reward+' XP';
+  const list=$('missionList');list.innerHTML='';MISSIONS.forEach((m,i)=>{const b=document.createElement('button');b.className='mission-item'+(i===S.mission?' on':'');b.innerHTML='<span class="num">'+String(i+1).padStart(2,'0')+'</span><span><b>'+m.name+'</b><small>'+m.label+' · '+MAPS[m.map].name+'</small></span>'+(career.completed[i]?'<span class="done">✓</span>':'');b.addEventListener('click',()=>{S.mission=i;S.map=m.map;refreshMenu();});list.appendChild(b);});
+ }else if(S.mode==='survival'){
+  $('selectedCode').textContent='ENDLESS OPERATIONS · SURVIVAL';$('selectedName').textContent='Last One Standing';$('selectedDesc').textContent='Face infinite escalating waves, gunships and elite enemies. Build a fortress, use vehicles, and chase a new high score in '+mapDef().name+'.';$('selectedType').textContent='ENDLESS WAVES';$('selectedReward').textContent='HIGH SCORE';
+ }else{
+  $('selectedCode').textContent='SANDBOX · CREATIVE';$('selectedName').textContent='World Architect';$('selectedDesc').textContent='Unlimited blocks, creative flight, no enemies, and full access to every region and vehicle. Build anything you can imagine.';$('selectedType').textContent='INFINITE BUILD';$('selectedReward').textContent='NO LIMITS';
+ }
+ $('selectedMap').textContent=mapDef().name;$('regionHint').textContent=S.mode==='campaign'?'Custom region available':'4 regions available';$('deploy').innerHTML=(S.mode==='creative'?'Enter creative world':S.mode==='survival'?'Start survival':'Deploy operation')+' <span>→</span>';
+}
+$('modeTabs').addEventListener('click',e=>{const b=e.target.closest('button[data-mode]');if(!b)return;S.mode=b.dataset.mode;if(S.mode==='campaign')S.map=missionDef().map;refreshMenu();sfxTone(350,520,.04,.1,'square');});
+$('mapGrid').addEventListener('click',e=>{const b=e.target.closest('button[data-map]');if(!b)return;S.map=+b.dataset.map;refreshMenu();sfxTone(400,580,.04,.1,'square');});
+function showHelp(){$('helpOv').classList.remove('hidden');}function hideHelp(){$('helpOv').classList.add('hidden');}
+$('helpB').addEventListener('click',showHelp);$('pauseHelpB').addEventListener('click',showHelp);$('closeHelp').addEventListener('click',hideHelp);
+$('nextB').addEventListener('click',()=>{if(S.mission<MISSIONS.length-1){S.mission++;S.map=missionDef().map;refreshMenu();startGame();}});
+window.addEventListener('keydown',e=>{
+ if(state!=='play'||e.repeat)return;
+ if(e.code==='KeyB'){e.preventDefault();toggleBuild();}
+ else if(e.code==='KeyE')interact();
+ else if(e.code==='KeyV'&&S.mode==='creative'){flying=!flying;P.vy=0;feed(flying?'CREATIVE FLIGHT ENABLED':'CREATIVE FLIGHT DISABLED','#b9f45d');}
+ else if(e.code==='Digit6'&&buildMode)selectBuild(5);
+});
+cv.addEventListener('mousedown',e=>{if(state==='play'&&buildMode&&e.button===2){e.preventDefault();adsHeld=false;removeBuildBlock();}});
+refreshMenu();updateBuildUI();
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
