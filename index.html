@@ -71,7 +71,7 @@ canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;filter:sat
 #touch{position:fixed;inset:0;pointer-events:none}#joyBase{position:absolute;width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.07);display:none}#joyKnob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(185,244,93,.45);border:2px solid rgba(255,255,255,.4)}
 .tb{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(15,23,20,.48);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;letter-spacing:.5px;text-align:center;touch-action:none}.tb:active,.tb.down{background:rgba(185,244,93,.4)}
 #bFire{right:max(22px,env(safe-area-inset-right));bottom:30px;width:88px;height:88px;font-size:14px;border-color:rgba(255,130,90,.8)}#bFire2{left:26px;bottom:190px;width:64px;height:64px;border-color:rgba(255,130,90,.7)}#bJump{right:max(28px,env(safe-area-inset-right));bottom:133px;width:58px;height:58px}#bAds{right:120px;bottom:117px;width:55px;height:55px}#bRel{right:120px;bottom:42px;width:52px;height:52px}#bGren{right:184px;bottom:65px;width:52px;height:52px}#bSwap{right:28px;bottom:204px;width:50px;height:50px}#bStrike{right:92px;bottom:192px;width:62px;height:62px;border-color:#ff794d;background:rgba(160,30,0,.55);display:none}#bBuild{left:25px;bottom:110px;width:58px;height:58px;border-color:rgba(185,244,93,.6)}#bInteract{left:98px;bottom:105px;width:58px;height:58px;border-color:rgba(255,200,87,.7)}#bRemove{left:98px;bottom:178px;width:52px;height:52px;display:none}
-#rotate{position:fixed;inset:0;z-index:99;background:#09100e;display:none;align-items:center;justify-content:center;text-align:center;font-size:18px;font-weight:900;letter-spacing:2px;padding:20px}@media (orientation:portrait){body.touch #rotate{display:flex}}
+#rotate{position:fixed;inset:0;z-index:99;background:rgba(6,12,10,.96);display:none;align-items:center;justify-content:center;text-align:center;padding:20px}.rotate-card{width:min(360px,92vw);padding:28px 22px;border:1px solid rgba(185,244,93,.3);background:#0b1511;box-shadow:var(--shadow)}.rotate-card h2{margin:10px 0;font-size:21px;letter-spacing:1px}.rotate-card p{color:var(--muted);font-size:11px;line-height:1.6}.rotate-actions{display:grid;gap:8px;margin-top:20px}.rotate-actions button{padding:13px 10px;border:1px solid var(--lime);background:rgba(185,244,93,.12);color:var(--lime);font:900 9px/1 Consolas,monospace;letter-spacing:1px;cursor:pointer;touch-action:manipulation}.rotate-actions button.alt{border-color:var(--line);color:#fff;background:rgba(255,255,255,.04)}@media (orientation:portrait){body.touch.in-game:not(.rotate-dismissed) #rotate{display:flex}}
 body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabel{display:none}body.touch #missionHud{left:12px;top:128px;width:205px}body.touch #ammoBox{right:245px;bottom:8px;min-width:120px}body.touch #ammo{font-size:31px}body.touch #slots{display:none}body.touch #bars{width:170px;left:12px;bottom:10px}body.touch #streak{display:none}body.touch #buildBar{bottom:5px}body.touch #buildSlots{transform:scale(.78);transform-origin:bottom center}body.touch #buildTip{display:none}body.touch #vehicleHud{right:250px;bottom:80px}body.touch #interact{bottom:150px}
 /* Help */
 .help-panel{width:min(720px,100%)}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.help-card{padding:14px;background:rgba(255,255,255,.035);border:1px solid var(--line)}.help-card h3{margin:0 0 10px;font-size:10px;letter-spacing:1.5px;color:var(--lime);text-transform:uppercase}.help-card p{margin:6px 0;color:var(--muted);font-size:11px;line-height:1.5}.key{display:inline-block;min-width:23px;padding:2px 5px;margin-right:5px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);color:#fff;font:800 9px/1.3 Consolas,monospace;text-align:center}
@@ -133,7 +133,7 @@ body.inserting #ammoBox,body.inserting #missionHud,body.inserting #bars,body.ins
 <div id="touch" class="hidden">
   <div id="joyBase"><div id="joyKnob"></div></div><div class="tb" id="bFire" data-b="fire">FIRE</div><div class="tb" id="bFire2" data-b="fire">FIRE</div><div class="tb" id="bJump" data-b="jump">JUMP</div><div class="tb" id="bAds" data-b="ads">AIM</div><div class="tb" id="bRel" data-b="reload">RELOAD</div><div class="tb" id="bGren" data-b="gren">FRAG</div><div class="tb" id="bSwap" data-b="swap">SWAP</div><div class="tb" id="bStrike" data-b="strike">AIR<br>STRIKE</div><div class="tb" id="bBuild" data-b="build">BUILD</div><div class="tb" id="bInteract" data-b="interact">USE</div><div class="tb" id="bRemove" data-b="remove">REMOVE</div><div class="tb" id="bCam" data-b="camera">CAM</div>
 </div>
-<div id="rotate">ROTATE YOUR DEVICE<br>FOR THE BEST EXPERIENCE</div>
+<div id="rotate" role="dialog" aria-label="Display orientation"><div class="rotate-card"><div class="eyebrow">Portrait display</div><h2>ROTATE FOR THE BEST EXPERIENCE</h2><p>Landscape gives you more room for combat controls. You can also continue in portrait or return to the command center.</p><div class="rotate-actions"><button id="rotateContinue" data-b="rotateContinue">PLAY IN PORTRAIT</button><button id="rotateMenu" class="alt" data-b="rotateMenu">COMMAND CENTER</button></div></div></div>
 <div id="menu" class="ov">
  <div class="menu-shell">
   <header class="menu-top"><div class="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><path fill="#b9f45d" d="M20 2 37 11v18l-17 9L3 29V11z"/><path fill="#78b63b" d="m3 11 17 9v18L3 29z"/><path fill="#d9ff9f" d="m3 11 17-9 17 9-17 9z"/><path fill="none" stroke="#0d170a" stroke-width="1.4" d="M20 20v18M3 11l17 9 17-9"/></svg>BLOCK OPS <small>FRONTLINE</small></div><div class="online"><i></i> OFFLINE READY <span>BUILD 3.0 · TACTICAL PRO</span></div></header>
@@ -1157,7 +1157,7 @@ function menuHeli(){}
 let last=performance.now();
 function frame(now){
   requestAnimationFrame(frame);
-  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);updateEnvironment(dt);updatePerformance(dt);
+  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);document.body.classList.toggle('in-game',state==='play');updateEnvironment(dt);updatePerformance(dt);
   for(const c of chunks){} let rb=0;for(const c of chunks){if(c.dirty&&rb<3){buildChunk(c);rb++;}}
   if(state==='play'){
     time+=dt;updateVecs();
@@ -2166,12 +2166,23 @@ updateHUD=function(dt){
 drawMini=function(dt){VG.drawMini(dt);if(state!=='play')return;const c=mctx,yaw=activeCar?driveCam.yaw:P.yaw;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(yaw);for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.fillRect((b.x-P.x)*2.6-3,(b.z-P.z)*2.6-3,6,6);}c.restore();};
 drawTacticalMap=function(){VG.drawTacticalMap();if(state!=='play')return;const c=$('bigMap').getContext('2d'),sc=640/W;for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.beginPath();c.arc(b.x*sc,b.z*sc,5,0,TAU);c.fill();}};
 resetGame=function(){insertion=null;wave=0;waveActive=false;toSpawnZ=toSpawnS=toSpawnH=0;teamEnded=false;teamPoints=[0,0];invulnT=0;stamina=100;crouchAmount=0;landKick=0;scopeSteady=false;coyote=0;jumpBuffer=0;document.body.classList.remove('inserting','driving');VG.resetGame();resetCompanions();applyCosmetics();};
-startGame=function(){insertionIntent=S.mode==='campaign';VG.startGame();insertionIntent=false;if(S.mode==='campaign')beginInsertion();};
-toMenu=function(){insertion=null;insertionIntent=false;document.body.classList.remove('inserting','driving');VG.toMenu();};
+startGame=function(){closeMenuOverlays();insertionIntent=S.mode==='campaign';VG.startGame();insertionIntent=false;if(S.mode==='campaign')beginInsertion();};
+toMenu=function(){closeMenuOverlays();insertion=null;insertionIntent=false;document.body.classList.remove('inserting','driving','in-game');VG.toMenu();};
 gameOver=function(){if(S.mode==='teams'&&state==='play'){if(P.dead)handleTeamDeath();return;}VG.gameOver();};
-btnDown=function(b){if(b==='jumpPlane'){beginParachute();return;}VG.btnDown(b);};
+btnDown=function(b){if(b==='jumpPlane'){beginParachute();return;}if(b==='rotateContinue'){document.body.classList.add('rotate-dismissed');return;}if(b==='rotateMenu'){toMenu();return;}VG.btnDown(b);};
 $('jumpPlane').addEventListener('click',beginParachute);
 window.addEventListener('keydown',e=>{if(e.code==='Escape'&&!$('marketOv').classList.contains('hidden')){$('marketOv').classList.add('hidden');return;}if(state!=='play')return;if(insertion&&(e.code==='KeyE'||e.code==='Space')){beginParachute();e.preventDefault();return;}if(e.code==='KeyQ'&&robot.active&&!robot.dead){robot.hold=!robot.hold;feed('N.O.V.A. · '+(robot.hold?'HOLD POSITION':'FOLLOW ME'),'#79dfe8');}});
+
+
+/* ================= COMMAND CENTER NAVIGATION FIX ================= */
+function closeMenuOverlays(){for(const id of['marketOv','rewardsOv','settingsOv','helpOv'])$(id).classList.add('hidden');}
+$('rotateContinue').addEventListener('click',()=>document.body.classList.add('rotate-dismissed'));
+$('rotateMenu').addEventListener('click',()=>toMenu());
+window.addEventListener('keydown',e=>{
+ if(e.code!=='Escape'||e.repeat)return;const open=['helpOv','settingsOv','rewardsOv','marketOv'].find(id=>!$(id).classList.contains('hidden'));
+ if(open){e.preventDefault();e.stopImmediatePropagation();$(open).classList.add('hidden');if(open==='settingsOv')saveSettings();return;}
+ if(state==='paused'){e.preventDefault();e.stopImmediatePropagation();resumeGame();}
+},true);
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
