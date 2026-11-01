@@ -99,6 +99,15 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
 #matchRewards{margin:-8px 0 12px;padding:10px;border:1px solid rgba(255,200,87,.22);background:rgba(255,200,87,.06);color:var(--amber);font:800 9px/1.4 Consolas,monospace;letter-spacing:.5px}#careerTier{margin-top:3px;color:var(--amber);font:700 8px/1 Consolas,monospace;letter-spacing:.6px}#rewardNotify{display:inline-block;width:5px;height:5px;margin-left:3px;border-radius:50%;background:var(--amber);vertical-align:top}#rewardNotify.claimed{display:none}
 .rewards-shell{width:min(850px,100%);max-height:calc(100vh - 36px);overflow:auto;margin:auto;padding:25px;background:rgba(7,13,11,.98);border:1px solid rgba(255,255,255,.15);box-shadow:var(--shadow)}.rewards-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line)}.rewards-head .big{font-size:34px}.rank-hero{display:flex;align-items:center;gap:17px;margin:18px 0;padding:18px;background:linear-gradient(110deg,rgba(255,200,87,.12),rgba(255,255,255,.025));border:1px solid rgba(255,200,87,.2)}.rank-emblem{display:grid;place-items:center;width:62px;height:62px;color:var(--amber);border:2px solid var(--amber);font-size:37px;transform:rotate(45deg)}.rank-emblem::first-letter{transform:rotate(-45deg)}.rank-hero h2{margin:3px 0;font-size:23px;letter-spacing:1px}.rank-hero p{margin:0;color:var(--muted);font:700 9px/1 Consolas,monospace}.season-xp{flex:1;margin-left:auto;max-width:230px}.season-xp span{color:var(--muted);font:700 8px/1 Consolas,monospace}.season-xp b{float:right;color:var(--amber);font:700 9px/1 Consolas,monospace}.season-xp>div{clear:both;height:5px;margin-top:11px;background:rgba(255,255,255,.12)}.season-xp i{display:block;width:0;height:100%;background:var(--amber)}.reward-section{padding:15px 0;border-top:1px solid var(--line)}.reward-section h3{margin:0 0 10px;font-size:10px;letter-spacing:1px;text-transform:uppercase}.reward-title{display:flex;align-items:center;justify-content:space-between;gap:15px}.reward-title h3{margin:0}.reward-title p{margin:5px 0 0;color:var(--muted);font-size:10px}.daily-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:14px}.daily-day{padding:11px 4px;text-align:center;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);font:700 8px/1.4 Consolas,monospace}.daily-day b{display:block;margin-top:6px;color:var(--amber);font-size:10px}.daily-day.today{border-color:var(--amber);background:rgba(255,200,87,.08)}.daily-day.claimed{opacity:.4}.reward-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.career-record{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.career-record div{padding:12px 5px;background:rgba(255,255,255,.035);text-align:center;color:var(--muted);font-size:8px}.career-record b{display:block;margin-bottom:5px;color:#fff;font:800 21px/1 Consolas,monospace}.rank-tiers{display:flex;flex-wrap:wrap;gap:5px}.rank-tiers span{padding:8px 10px;border:1px solid var(--line);color:var(--dim);font:800 8px/1 Consolas,monospace}.rank-tiers span.on{border-color:var(--amber);color:var(--amber);background:rgba(255,200,87,.07)}.reward-note{margin:5px 0 0;color:var(--dim);font-size:9px;line-height:1.5}
 @media(max-width:600px){.daily-grid{grid-template-columns:repeat(4,1fr)}.reward-columns{grid-template-columns:1fr}.rank-hero{flex-wrap:wrap}.season-xp{max-width:none;flex-basis:100%}.rewards-shell{padding:17px}}
+
+body.inserting #ammoBox,body.inserting #missionHud,body.inserting #bars,body.inserting #slots,body.inserting #abilities,body.inserting #robotHud,body.inserting #cross,body.inserting #scope,body.inserting #mini,body.inserting #teamHud,body.inserting #waypointHud{display:none!important}
+/* Vanguard: team battle, optics, movement, insertion and Market */
+.mode-tabs{grid-template-columns:repeat(4,1fr)}.team-select{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}.team-select button{padding:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:9px;font-weight:900;letter-spacing:1px;cursor:pointer}.team-select .blue.on{border-color:#58aaff;background:rgba(88,170,255,.15);color:#8dc5ff}.team-select .red.on{border-color:#ff625b;background:rgba(255,98,91,.15);color:#ff9b96}
+#scope .scope-reticle{position:absolute;left:50%;top:50%;width:1px;height:1px}#scope .scope-reticle:before,#scope .scope-reticle:after{content:"";position:absolute;background:rgba(10,10,10,.85)}#scope .scope-reticle:before{left:-140px;top:0;width:280px;height:1px}#scope .scope-reticle:after{left:0;top:-140px;width:1px;height:280px}#scope .scope-reticle i{position:absolute;width:5px;height:5px;border:1px solid rgba(0,0,0,.8);border-radius:50%}#scope .scope-reticle i:nth-child(1){left:-2px;top:22px}#scope .scope-reticle i:nth-child(2){left:-2px;top:48px}#scope .scope-reticle i:nth-child(3){left:-2px;top:79px}#scope .scope-reticle i:nth-child(4){left:-2px;top:116px}.scope-data{position:absolute;left:50%;top:calc(50% + 34vh);transform:translateX(-50%);display:flex;gap:25px;color:#b9c5bd;font:700 8px/1 Consolas,monospace;letter-spacing:1px;white-space:nowrap}.scope-data span:first-child{color:var(--lime)}.scope-glint{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 45% 42%,rgba(160,210,255,.07),transparent 30%)}.stamina-label{margin-top:7px}.stamina-label b{color:var(--amber)}.stamina-bar{height:4px}#staminaFill{background:var(--amber)}
+#robotHud{position:absolute;left:20px;top:326px;display:flex;align-items:center;gap:7px;padding:7px 9px;background:rgba(5,10,8,.65);border-left:2px solid var(--cyan);font:800 8px/1 Consolas,monospace;color:#b6c7c0}#robotHud i{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}#robotHud b{color:var(--cyan);font-size:7px}#teamHud{position:absolute;left:50%;top:17px;transform:translateX(-50%);display:none;align-items:center;gap:16px;text-align:center}#teamHud>div{display:flex;align-items:center;gap:10px;padding:7px 12px;background:rgba(5,10,8,.65);font:900 10px/1 Consolas,monospace}#teamHud b{font-size:24px}#teamHud>i{color:var(--muted);font:700 8px/1 Consolas,monospace}.team-blue{color:#76b9ff}.team-red{color:#ff7770}
+#insertionHud{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:min(460px,85vw);padding:18px 22px;text-align:center;background:rgba(5,10,8,.78);border:1px solid rgba(255,255,255,.16);display:none}#insertionHud h2{margin:6px 0;font-size:17px;letter-spacing:.5px}#insertionHud p{margin:5px 0 12px;color:var(--muted);font-size:10px}.altitude{display:flex;justify-content:center;gap:15px;color:var(--muted);font:700 9px/1 Consolas,monospace}.altitude b{color:var(--amber)}#jumpPlane{margin:14px auto 0;padding:11px 20px;border:1px solid var(--lime);background:rgba(185,244,93,.14);color:var(--lime);font:900 10px/1 Consolas,monospace;letter-spacing:1px;pointer-events:auto;cursor:pointer}
+.market-shell{width:min(950px,100%);max-height:calc(100vh - 36px);overflow:auto;margin:auto;padding:25px;background:rgba(7,13,11,.98);border:1px solid rgba(255,255,255,.15);box-shadow:var(--shadow)}.market-head{display:flex;justify-content:space-between;gap:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}.market-head .big{font-size:34px}.market-head .subtitle{margin-bottom:0}.market-wallet{text-align:right;color:var(--muted);font:700 8px/1 Consolas,monospace}.market-wallet>b{display:block;margin:7px 0 12px;color:var(--amber);font-size:22px}.market-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:20px 0}.market-card{padding:14px;border:1px solid var(--line);background:rgba(255,255,255,.025)}.market-preview{height:72px;margin-bottom:13px;background:linear-gradient(145deg,var(--skin),#111a17);position:relative;overflow:hidden}.market-preview:before{content:"";position:absolute;width:42px;height:42px;left:50%;top:15px;transform:translateX(-50%) rotate(45deg);background:var(--skin);box-shadow:0 0 25px var(--skin)}.market-card h3{margin:0 0 5px;font-size:11px;letter-spacing:.7px}.market-card p{margin:0 0 12px;color:var(--muted);font-size:9px;line-height:1.5}.market-card button{width:100%;padding:9px;border:1px solid var(--lime);background:rgba(185,244,93,.1);color:var(--lime);font:800 8px/1 Consolas,monospace;cursor:pointer}.market-card button:disabled{border-color:var(--line);color:var(--dim);cursor:not-allowed}.market-note{margin:0;color:var(--dim);font-size:9px}body.touch #robotHud{display:none}body.touch #insertionHud{bottom:28%}
+@media(max-width:650px){.market-grid{grid-template-columns:1fr 1fr}.scope-data{gap:10px;font-size:6px}.mode-tabs button{font-size:8px}.market-shell{padding:16px}}
 </style>
 </head>
 <body>
@@ -110,11 +119,11 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
   <div id="scoreBox"><div id="score">0</div><div id="killsTxt">0 ELIMINATIONS</div><div id="worldTime">☀ 12:00 · DAY</div></div><div id="pauseB" title="Pause">Ⅱ</div>
   <div id="missionHud"><div id="opName">OPERATION 01</div><div id="objTxt">ELIMINATE HOSTILES</div><div class="obj-line"><span id="objProgress">0 / 12</span><span id="objDist"></span></div><div class="obj-track"><i id="objFill"></i></div></div>
   <div id="feed"></div><div id="bossBar"><span>ATTACK HELICOPTER</span><div><i id="bossFill"></i></div></div>
-  <div id="vig"></div><div id="flashW"></div><div id="dirInd"></div><div id="scope"></div><div id="cross"><i></i><i></i><i></i><i></i></div><div id="hitm"></div>
+  <div id="vig"></div><div id="flashW"></div><div id="dirInd"></div><div id="scope"><div class="scope-reticle"><i></i><i></i><i></i><i></i></div><div class="scope-data"><span id="scopeZoom">4.5× OPTIC</span><span id="scopeRange">RANGE ---m</span><span>HOLD SHIFT TO STEADY</span></div><div class="scope-glint"></div></div><div id="cross"><i></i><i></i><i></i><i></i></div><div id="hitm"></div>
   <div id="streak">KILLSTREAK 0/8</div>
   <div id="abilities"><div id="abilityRp">REQUISITION <b>250 RP</b></div><button class="ability" id="abilityRecon" data-b="recon" data-ability="recon"><span class="key">X</span><i>◎</i><div><b>RECON PULSE</b><small id="reconStatus">READY</small></div></button><button class="ability" id="abilityMed" data-b="med" data-ability="med"><span class="key">H</span><i>+</i><div><b>FIELD MEDKIT</b><small id="medStatus">2 AVAILABLE</small></div></button><button class="ability" id="abilityTurret" data-b="turret" data-ability="turret"><span class="key">T</span><i>⌁</i><div><b>SENTRY GUN</b><small id="turretStatus">1 AVAILABLE</small></div></button></div>
-  <div id="waypointHud">◆ WAYPOINT <b>0m</b></div>
-  <div id="bars"><div class="bar-label"><span>HEALTH</span><b id="hpTxt">100</b></div><div class="bar"><i id="hpFill"></i></div><div class="bar-label armor-label"><span>ARMOR</span><b id="arTxt">0</b></div><div class="bar"><i id="arFill" style="width:0"></i></div></div>
+  <div id="waypointHud">◆ WAYPOINT <b>0m</b></div><div id="robotHud"><i></i><span>N.O.V.A. BOT</span><b id="robotStatus">FOLLOWING</b></div><div id="teamHud"><div class="team-blue"><span>BLUE</span><b id="blueScore">0</b></div><i>TO 20</i><div class="team-red"><b id="redScore">0</b><span>RED</span></div></div><div id="insertionHud"><div class="eyebrow" id="insertionPhase">AIRBORNE INSERTION</div><h2 id="insertionTitle">C-130 APPROACHING DROP ZONE</h2><p id="insertionText">Press SPACE or E to jump</p><div class="altitude"><span>ALTITUDE</span><b id="altitudeTxt">2800m</b></div><button id="jumpPlane" data-b="jumpPlane">SPACE · JUMP NOW</button></div>
+  <div id="bars"><div class="bar-label"><span>HEALTH</span><b id="hpTxt">100</b></div><div class="bar"><i id="hpFill"></i></div><div class="bar-label armor-label"><span>ARMOR</span><b id="arTxt">0</b></div><div class="bar"><i id="arFill" style="width:0"></i></div><div class="bar-label armor-label stamina-label"><span>STAMINA</span><b id="staminaTxt">100</b></div><div class="bar stamina-bar"><i id="staminaFill"></i></div></div>
   <div id="ammoBox"><div id="wname">M4 CARBINE</div><div id="ammo">30<small>/150</small></div><div id="gren">FRAG × 3 · [G]</div></div><div id="slots"></div>
   <div id="buildBar"><div id="buildSlots"></div><div id="buildTip">LMB PLACE · RMB REMOVE · B EXIT · V FLIGHT</div></div>
   <div id="driveActions"><button data-b="camera">C · CAMERA</button><button data-b="lights">L · LIGHTS</button><button data-b="exit">E · EXIT</button></div><div id="vehicleHud"><div class="vlabel" id="vehicleName">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="drive-meta"><span id="gearTxt">N</span><span id="cameraTxt">CHASE CAM</span></div><div class="rpm-track"><i id="rpmFill"></i></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · C CAMERA · E EXIT</div></div>
@@ -133,9 +142,9 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
     <div class="selected-op"><div class="op-index" id="selectedCode">OPERATION 01 · CAMPAIGN</div><h2 id="selectedName">First Contact</h2><p id="selectedDesc">Sweep Greenhaven and eliminate the hostile vanguard before they establish a foothold.</p><div class="op-meta"><span id="selectedMap">GREENHAVEN</span><span id="selectedType">ELIMINATION</span><span id="selectedReward">+500 XP</span></div></div>
    </section>
    <section class="command-panel"><div class="command-head"><div><div class="eyebrow">Deployment terminal</div><h2>Command Center</h2></div><div class="career"><b id="careerRank">RANK 01 · RECRUIT</b><span><span id="careerXp">0</span> XP · <span id="careerCredits">0</span> CR</span><div id="careerTier">SILVER · 1000</div></div></div>
-    <div class="mode-tabs" id="modeTabs"><button data-mode="campaign" class="on">Campaign</button><button data-mode="survival">Survival</button><button data-mode="creative">Creative</button></div>
+    <div class="mode-tabs" id="modeTabs"><button data-mode="campaign" class="on">Campaign</button><button data-mode="teams">Team battle</button><button data-mode="survival">Survival</button><button data-mode="creative">Creative</button></div>
     <div id="campaignSelect"><div class="field-label">Select operation <span>Progress saved locally</span></div><div class="mission-list" id="missionList"></div></div>
-    <div class="field-label">Combat region <span id="regionHint">Operation region</span></div><div class="map-grid" id="mapGrid">
+    <div id="teamSelect" class="hidden"><div class="field-label">Choose your squad <span>First to 20 eliminations</span></div><div class="team-select"><button data-team="0" class="blue on">BLUE GUARD</button><button data-team="1" class="red">RED RAIDERS</button></div></div><div class="field-label">Combat region <span id="regionHint">Operation region</span></div><div class="map-grid" id="mapGrid">
       <button class="map-card on" data-map="0"><div class="map-shot"></div><div class="map-info"><b>Greenhaven</b><small>Forest village</small></div></button>
       <button class="map-card" data-map="1"><div class="map-shot"></div><div class="map-info"><b>Redrock</b><small>Desert outpost</small></div></button>
       <button class="map-card" data-map="2"><div class="map-shot"></div><div class="map-info"><b>Frostfall</b><small>Arctic relay</small></div></button>
@@ -151,7 +160,7 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
       <div class="row"><label>FOV</label><input type="range" id="fov" aria-label="Field of view" min="65" max="105" step="1" value="80"></div>
       <div class="row"><label>Day cycle</label><div class="seg" data-k="cycle"><button data-v="1" class="on">Auto</button><button data-v="0">Fixed</button></div></div>
     </div></details>
-    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><span class="footer-actions"><button id="rewardsB">Rewards <i id="rewardNotify"></i></button><button id="settingsB">Settings</button><button id="helpB">Field manual</button></span></div>
+    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><span class="footer-actions"><button id="marketB">Market</button><button id="rewardsB">Rewards <i id="rewardNotify"></i></button><button id="settingsB">Settings</button><button id="helpB">Field manual</button></span></div>
    </section>
   </main>
   <footer class="menu-footer"><span>WASD MOVE · MOUSE AIM · B BUILD · E VEHICLE / INTERACT</span><div id="hi"></div></footer>
@@ -159,6 +168,8 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
 </div>
 <div id="pause" class="ov hidden"><div class="panel"><div class="eyebrow">Tactical suspension</div><div class="big">Paused</div><p class="subtitle">The battlefield is frozen. Review your controls or return to the operation.</p><button class="btn" id="resumeB">Resume operation</button><button class="btn alt" id="restartB">Restart mission</button><button class="btn alt" id="pauseSettingsB">Settings</button><button class="btn alt" id="pauseHelpB">Field manual</button><button class="btn alt danger" id="quitB">Abort to command center</button></div></div>
 <div id="over" class="ov hidden"><div class="panel"><div class="eyebrow" id="overSub">After action report</div><div class="big" id="overTitle">Mission failed</div><p class="subtitle" id="overMessage">Regroup, rearm, and return to the fight.</p><div id="matchRewards">MATCH REWARDS · +0 XP · +0 CR · +0 RATING</div><div class="stats"><div>Score<b id="oScore">0</b></div><div>Personal best<b id="oBest">0</b></div><div>Wave<b id="oWave">0</b></div><div>Eliminations<b id="oKills">0</b></div></div><button class="btn hidden" id="nextB">Next operation →</button><button class="btn" id="againB">Redeploy</button><button class="btn alt" id="menuB">Command center</button></div></div>
+<div id="marketOv" class="ov hidden"><div class="market-shell"><header class="market-head"><div><div class="eyebrow">Frontline outfitter</div><div class="big">Market</div><p class="subtitle">Permanent cosmetic unlocks. No gameplay advantage.</p></div><div class="market-wallet">BALANCE<b id="marketCredits">0 CR</b><button class="btn alt small" id="closeMarket">Close</button></div></header><div class="market-grid" id="marketGrid"></div><p class="market-note">Purchased cosmetics are saved locally and applied to your operative and weapons.</p></div></div>
+
 <div id="rewardsOv" class="ov hidden"><div class="rewards-shell"><header class="rewards-head"><div><div class="eyebrow">Season 01 · Frontline network</div><div class="big">Reward center</div></div><button class="btn alt small" id="closeRewards">Close</button></header><div class="rank-hero"><div class="rank-emblem">⬡</div><div><div class="eyebrow">Competitive division</div><h2 id="rewardRank">SILVER</h2><p><span id="rewardRating">1000</span> RATING · <span id="rewardLevel">LEVEL 1</span></p></div><div class="season-xp"><span>ACCOUNT PROGRESS</span><b id="rewardXpText">0 / 1000 XP</b><div><i id="rewardXpFill"></i></div></div></div><div class="reward-section"><div class="reward-title"><div><h3>Daily supply</h3><p>Return each day to increase your streak. Rewards reset after day seven.</p></div><button class="btn small" id="claimDaily">Claim reward</button></div><div class="daily-grid" id="dailyGrid"></div></div><div class="reward-columns"><div class="reward-section"><h3>Career record</h3><div class="career-record" id="rewardStats"></div></div><div class="reward-section"><h3>Ranked divisions</h3><div class="rank-tiers" id="rankTiers"></div></div></div><p class="reward-note">Earn rating from completed operations and strong survival performances. Supply drops contain field gear, RP, XP, and credits.</p></div></div>
 
 <div id="tacticalOv" class="ov hidden"><div class="tac-shell"><header class="tac-head"><div><div class="eyebrow">Command network · live theatre map</div><div class="big">Tactical map</div></div><div class="tac-status"><i></i> UPLINK ACTIVE <span id="tacClock">12:00</span></div></header><div class="tac-body"><div class="tac-map-wrap"><canvas id="bigMap" width="640" height="640"></canvas><div class="map-coords">128 × 128 COMBAT GRID</div></div><aside class="tac-side"><div class="eyebrow">Current tasking</div><h2 id="tacOpName">OPERATION</h2><p id="tacObjective">Objective</p><div class="tac-progress"><span id="tacProgress">0 / 0</span><i id="tacProgressFill"></i></div><div class="tac-legend"><p><i class="lg-player"></i> Your position</p><p><i class="lg-objective"></i> Mission objective</p><p><i class="lg-friendly"></i> Vehicles & sentry guns</p><p><i class="lg-hostile"></i> Detected hostiles</p><p><i class="lg-waypoint"></i> Custom waypoint</p></div><div class="tac-tip"><b>SET WAYPOINT</b><p>Click anywhere on the map to place a navigation marker. Recon pulse reveals all hostile positions.</p></div><div id="waypointInfo">NO CUSTOM WAYPOINT</div></aside></div><footer class="tac-foot"><button class="btn alt small" id="clearWaypoint">Clear waypoint</button><span>M / ESC TO CLOSE</span><button class="btn small" id="closeTactical">Return to combat</button></footer></div></div>
@@ -170,14 +181,14 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
  <div class="setting-group"><h3>Controls & audio</h3><div class="setting-line"><label for="setSens">Look sensitivity <output id="setSensValue">1.00</output></label><input id="setSens" type="range" min="0.3" max="2.5" step="0.05" value="1"></div><div class="setting-line"><label for="setVol">Master volume <output id="setVolValue">70%</output></label><input id="setVol" type="range" min="0" max="1" step="0.05" value="0.7"></div><div class="setting-line"><label>Invert vertical look</label><button class="toggle" id="setInvert" role="switch" aria-checked="false"><i></i></button></div></div>
  <div class="settings-actions"><button class="btn alt" id="resetSettings">Reset defaults</button><button class="btn" id="closeSettings">Apply & return</button></div></div></div>
 
-<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p><p><span class="key">X</span> Recon · <span class="key">H</span> Medkit · <span class="key">T</span> Sentry</p><p><span class="key">M</span> Tactical map · <span class="key">U</span> Combat upgrades</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p><span class="key">C</span> Camera · <span class="key">L</span> Headlights</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p><span class="key">C</span> Player / vehicle camera</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
+<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p><p><span class="key">X</span> Recon · <span class="key">H</span> Medkit · <span class="key">T</span> Sentry</p><p><span class="key">M</span> Tactical map · <span class="key">U</span> Combat upgrades</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p><span class="key">C</span> Camera · <span class="key">L</span> Headlights</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p><span class="key">C</span> Player / vehicle camera</p><p><span class="key">CTRL</span> Crouch · <span class="key">Q</span> Robot follow / hold</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,rnd=Math.random,rr=(a,b)=>a+(b-a)*Math.random();
 const PI=Math.PI;
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0,playerCam:0,adaptive:true};
+const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0,playerCam:0,adaptive:true,team:0};
 const DIFF=[{dmg:.6,hp:.8,cnt:.8,regen:1},{dmg:1,hp:1,cnt:1,regen:1},{dmg:1.5,hp:1.3,cnt:1.25,regen:0}];
 const QS=[.55,.8,1,1.25];
 let state='menu';
@@ -858,8 +869,8 @@ function updatePlayer(dt){
   let ix=moveIn.x,iz=-moveIn.y;
   ix+=(keys.KeyD?1:0)-(keys.KeyA?1:0)+(keys.ArrowRight?1:0)-(keys.ArrowLeft?1:0);iz+=(keys.KeyW?1:0)-(keys.KeyS?1:0)+(keys.ArrowUp?1:0)-(keys.ArrowDown?1:0);
   const l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l}
-  const sprint=(keys.ShiftLeft||keys.ShiftRight||moveIn.sprint)&&iz>.3&&adsA<.3;
-  const sp=sprint?7.4:adsA>.5?2.8:5.2,sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
+  const sprint=(keys.ShiftLeft||keys.ShiftRight||moveIn.sprint)&&iz>.3&&adsA<.3&&stamina>1&&crouchAmount<.3;
+  const sp=(sprint?8.2:adsA>.5?2.8:5.2)*(1-crouchAmount*.45),sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
   const tx=(cy*ix-sy*iz)*sp,tz=(-sy*ix-cy*iz)*sp,k=Math.min(1,(P.onGround?13:3)*dt);
   P.vx+=(tx-P.vx)*k;P.vz+=(tz-P.vz)*k;
   if((jumpReq||keys.Space)&&P.onGround){P.vy=8.4;sfxStep();}jumpReq=false;
@@ -883,7 +894,7 @@ function tryFire(){
   if(s.ammo<=0){if(s.res>0)startReload();else if(fireCd<=0){sfxTone(300,250,.03,.2,'square');fireCd=.3;}return;}
   s.ammo--;fireCd=W_.delay;fireBuf=0;muzzleT=.06;kick=1;
   const moving=Math.hypot(P.vx,P.vz)>1.5;
-  let spr=W_.spread*(adsA>.5?.45:1)*(moving?1.7:1)*(P.onGround?1:2.2);if(W_.scope&&adsA<.8)spr=.08;
+  let spr=W_.spread*(adsA>.5?.45:1)*(moving?1.7:1)*(P.onGround?1:2.2)*(scopeSteady?0.45:1);if(W_.scope&&adsA<.8)spr=.08;
   const e0=eyePos(),ox=e0[0],oy=e0[1],oz=e0[2];
   const mxp=ox+fwdV[0]*.9+rgtV[0]*.15*(1-adsA),myp=oy+fwdV[1]*.9-.12*(1-adsA),mzp=oz+fwdV[2]*.9+rgtV[2]*.15*(1-adsA);
   for(let p=0;p<W_.pel;p++){
@@ -910,7 +921,7 @@ function tryFire(){
       pt(ex,ey,ez,bh.nx,bh.ny,bh.nz,.15,.2,1,.9,.5,3,0);
     }
   }
-  const kp=W_.rec*(1-.45*adsA)*(.8+rnd()*.4);P.pitch=Math.min(1.5,P.pitch+kp);P.yaw+=(rnd()-.5)*kp*.9;shake=Math.max(shake,W_.snd>=3?.12:.025);
+  const kp=W_.rec*(1-.45*adsA)*(.8+rnd()*.4)*(scopeSteady?0.6:1);P.pitch=Math.min(1.5,P.pitch+kp);P.yaw+=(rnd()-.5)*kp*.9;shake=Math.max(shake,W_.snd>=3?.12:.025);
   sfxShot(W_.snd,.8);
   if(s.ammo===0&&s.res>0)autoRl=.4;
 }
@@ -1305,12 +1316,12 @@ document.querySelectorAll('.seg').forEach(seg=>{
 (function(){const t=document.querySelectorAll('.seg[data-k="touch"] button');t.forEach(b=>b.classList.remove('on'));(isTouch?$('ctTouch'):$('ctKey')).classList.add('on');})();
 $('sens').addEventListener('input',e=>S.sens=+e.target.value);
 $('vol').addEventListener('input',e=>{S.vol=+e.target.value;if(master)master.gain.value=S.vol;});
-$('deploy').addEventListener('click',startGame);
-$('resumeB').addEventListener('click',resumeGame);
-$('restartB').addEventListener('click',startGame);
-$('quitB').addEventListener('click',toMenu);
-$('againB').addEventListener('click',startGame);
-$('menuB').addEventListener('click',toMenu);
+$('deploy').addEventListener('click',()=>startGame());
+$('resumeB').addEventListener('click',()=>resumeGame());
+$('restartB').addEventListener('click',()=>startGame());
+$('quitB').addEventListener('click',()=>toMenu());
+$('againB').addEventListener('click',()=>startGame());
+$('menuB').addEventListener('click',()=>toMenu());
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')pauseGame();});
 
 
@@ -1339,7 +1350,7 @@ let cars=[],decor=[],missionObjects=[];
 let buildMode=false,buildMat=0,builtCount=0,removedCount=0,buildInv=BUILD.map(b=>b.start);
 let activeCar=null,flying=false,carDistance=0,carBumpCd=0;
 let missionDone=false,wavesCleared=0,intelN=0,heliKills=0,defenseT=0,extractStage=0,missionClock=0;
-let career={xp:0,credits:0,completed:{},rating:1000,lastDaily:'',dailyStreak:0,matches:0,wins:0,supplyOpened:0};
+let career={xp:0,credits:0,completed:{},rating:1000,lastDaily:'',dailyStreak:0,matches:0,wins:0,supplyOpened:0,owned:{vanguard:true,carbon:true},equippedSkin:'vanguard',equippedGun:'carbon'};
 try{career=Object.assign(career,JSON.parse(localStorage.getItem('blockops_career')||'{}'));if(!career.completed)career.completed={};}catch(e){}
 function saveCareer(){try{localStorage.setItem('blockops_career',JSON.stringify(career));}catch(e){}}
 function missionDef(){return MISSIONS[S.mission]||MISSIONS[0];}
@@ -1935,7 +1946,7 @@ const playerAvatar={type:'soldier',scale:1,pal:PLAYER_PAL,flash:0};
 let perfScale=1,fpsSmooth=60,perfTime=0,miniElapsed=0;
 function firstPersonView(){return S.playerCam===0||(WP[cur].scope&&adsA>.85);}
 function updatePlayerCamera(dt){
- if(activeCar||firstPersonView()){playerCam.init=false;return;}const target=RWD.eyePos(),dist=S.playerCam===1?4.6:3.25,side=S.playerCam===2?.68:0,sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
+ if(activeCar||firstPersonView()){playerCam.init=false;return;}const target=eyePos(),dist=S.playerCam===1?4.6:3.25,side=S.playerCam===2?.68:0,sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
  let dx=target[0]+sy*dist+cy*side,dy=target[1]+.65+Math.max(0,-P.pitch)*dist*.45,dz=target[2]+cy*dist-sy*side;
  let vx=dx-target[0],vy=dy-target[1],vz=dz-target[2];const len=Math.hypot(vx,vy,vz)||1;vx/=len;vy/=len;vz/=len;const hit=castVoxel(target[0],target[1],target[2],vx,vy,vz,len);
  if(hit&&hit.t<len){const d=Math.max(.6,hit.t-.3);dx=target[0]+vx*d;dy=target[1]+vy*d;dz=target[2]+vz*d;}
@@ -2009,7 +2020,7 @@ function drawSupplyDrop(d){
  if(!d.landed){boxM(dynO,IDENT,d.x,d.y+3,d.z,3.6,.28,2.4,.92,.55,.2,1,T.PLAIN,-1,0);for(const sx of[-1,1])for(const sz of[-1,1])boxM(dynO,IDENT,d.x+sx*.65,d.y+1.9,d.z+sz*.5,.035,2,.035,.8,.8,.75,1,T.PLAIN,-1,0);}
  else boxM(dynT,IDENT,d.x,d.y+4,d.z,.4,7,.4,1,.5,.1,.17,T.WHITE,-1,1);
 }
-buildDynamic=function(eye){RWD.buildDynamic(eye);if(state==='play'&&!activeCar&&!firstPersonView()&&!P.dead)drawPlayerAvatar();for(const d of supplyDrops)drawSupplyDrop(d);};
+buildDynamic=function(eye){RWD.buildDynamic(eye);if(!insertion&&state==='play'&&!activeCar&&!firstPersonView()&&!P.dead)drawPlayerAvatar();for(const d of supplyDrops)drawSupplyDrop(d);};
 function drawSupplyMini(){const c=mctx,sc=2.6,yaw=activeCar?driveCam.yaw:P.yaw;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(yaw);for(const d of supplyDrops){const x=(d.x-P.x)*sc,z=(d.z-P.z)*sc;c.fillStyle='#ff9b42';c.fillRect(x-5,z-5,10,10);}c.restore();}
 drawTacticalMap=function(){RWD.drawTacticalMap();const c=$('bigMap').getContext('2d'),sc=640/W;for(const d of supplyDrops){c.fillStyle='#ff9b42';c.fillRect(d.x*sc-6,d.z*sc-6,12,12);}};
 
@@ -2026,6 +2037,141 @@ gameOver=function(){
  document.body.classList.remove('driving');RWD.gameOver();if(was)$('matchRewards').textContent='MATCH REWARDS · +'+lastMatch.xp+' XP · +'+lastMatch.cr+' CR · '+(lastMatch.rating>=0?'+':'')+lastMatch.rating+' RATING';
 };
 updateRewardMenu();
+
+
+/* ================= VANGUARD: MARKET, TEAMS & SHARED STATE ================= */
+const VG={startGame,startWave,updateWaves,resetGame,toMenu,completeMission,gameOver,updatePlayer,updateEnemies,updateWeapon,tryFire,throwGren,render,eyePos,buildDynamic,buildViewModel,updateHUD,hurtEnemy,hurtPlayer,killEnemy,spawnEnemy,fireEnemyBullet,updateProj,refreshMenu,objectiveInfo,drawMini,drawTacticalMap,btnDown,drawPlayerAvatar,enterCar,exitVehicle,toggleBuild,interact,useRecon,useMedkit,deployTurret,callStrike};
+let insertion=null,insertionIntent=false,invulnT=0,stamina=100,crouchAmount=0,landKick=0,scopeSteady=false,coyote=0,jumpBuffer=0,lastFootMark=0;
+let teamPoints=[0,0],teamEnded=false;
+const TEAM_PALS=[{skin:[.88,.68,.5],shirt:[.16,.38,.72],pants:[.12,.2,.34],st:T.CAMO,vest:[.15,.3,.55],helm:[.1,.25,.48]},{skin:[.88,.68,.5],shirt:[.72,.16,.13],pants:[.32,.12,.1],st:T.CAMO,vest:[.55,.18,.14],helm:[.48,.1,.08]}];
+const MARKET=[
+ {id:'vanguard',name:'Vanguard',type:'skin',cost:0,color:'#397b91',desc:'Blue-gray special operations armor.'},
+ {id:'crimson',name:'Crimson Ops',type:'skin',cost:500,color:'#a63832',desc:'Red tactical armor and dark plate carrier.'},
+ {id:'arctic',name:'Arctic Recon',type:'skin',cost:750,color:'#b9d9df',desc:'Cold-region white and cyan combat gear.'},
+ {id:'gold',name:'Gold Ghost',type:'skin',cost:1200,color:'#d5a93d',desc:'Elite gold-accented operative armor.'},
+ {id:'carbon',name:'Carbon Weapons',type:'gun',cost:0,color:'#3e464c',desc:'Factory dark-metal weapon finish.'},
+ {id:'emerald',name:'Emerald Weapons',type:'gun',cost:600,color:'#3b9b68',desc:'Green anodized weapon components.'},
+ {id:'solar',name:'Solar Weapons',type:'gun',cost:1000,color:'#e29b39',desc:'Premium orange-gold weapon finish.'}
+];
+career.owned=Object.assign({vanguard:true,carbon:true},career.owned||{});
+function applyCosmetics(){
+ const id=career.equippedSkin||'vanguard';if(id==='crimson')Object.assign(PLAYER_PAL,{shirt:[.55,.12,.1],pants:[.2,.12,.11],vest:[.35,.08,.07],helm:[.4,.07,.06]});else if(id==='arctic')Object.assign(PLAYER_PAL,{shirt:[.7,.82,.84],pants:[.3,.42,.46],vest:[.45,.65,.7],helm:[.65,.8,.84]});else if(id==='gold')Object.assign(PLAYER_PAL,{shirt:[.65,.43,.1],pants:[.2,.17,.12],vest:[.8,.58,.15],helm:[.7,.5,.12]});else Object.assign(PLAYER_PAL,{shirt:[.18,.34,.42],pants:[.16,.2,.24],vest:[.16,.23,.26],helm:[.12,.22,.25]});
+ const gun=career.equippedGun||'carbon';GC.d=gun==='emerald'?[.12,.38,.25]:gun==='solar'?[.55,.3,.08]:[.17,.18,.2];GC.g=gun==='emerald'?[.2,.65,.4]:gun==='solar'?[.85,.55,.16]:[.42,.44,.48];
+}
+function renderMarket(){
+ $('marketCredits').textContent=career.credits+' CR';const grid=$('marketGrid');grid.innerHTML='';for(const item of MARKET){const owned=!!career.owned[item.id],equipped=item.type==='skin'?career.equippedSkin===item.id:career.equippedGun===item.id,card=document.createElement('section');card.className='market-card';card.innerHTML='<div class="market-preview" style="--skin:'+item.color+'"></div><h3>'+item.name+'</h3><p>'+item.desc+'</p><button data-item="'+item.id+'" '+(!owned&&career.credits<item.cost?'disabled':'')+'>'+(equipped?'EQUIPPED':owned?'EQUIP':item.cost+' CR · UNLOCK')+'</button>';grid.appendChild(card);}
+}
+function marketAction(id){const item=MARKET.find(i=>i.id===id);if(!item)return;if(!career.owned[id]){if(career.credits<item.cost)return;career.credits-=item.cost;career.owned[id]=true;}if(item.type==='skin')career.equippedSkin=id;else career.equippedGun=id;applyCosmetics();saveCareer();renderMarket();refreshMenu();sfxTone(450,900,.15,.18,'sine');}
+$('marketB').addEventListener('click',()=>{renderMarket();$('marketOv').classList.remove('hidden');});$('closeMarket').addEventListener('click',()=>$('marketOv').classList.add('hidden'));$('marketGrid').addEventListener('click',e=>{const b=e.target.closest('button[data-item]');if(b&&!b.disabled)marketAction(b.dataset.item);});
+drawPlayerAvatar=function(){const old=playerAvatar.pal,oldScale=playerAvatar.scale;playerAvatar.pal=S.mode==='teams'?TEAM_PALS[S.team]:PLAYER_PAL;playerAvatar.scale=1-crouchAmount*.14;VG.drawPlayerAvatar();playerAvatar.pal=old;playerAvatar.scale=oldScale;};
+refreshMenu=function(){VG.refreshMenu();$('teamSelect').classList.toggle('hidden',S.mode!=='teams');if(S.mode==='teams'){$('selectedCode').textContent='TEAM DEATHMATCH · BLUE VS RED';$('selectedName').textContent='Squad Clash';$('selectedDesc').textContent='Fight alongside three AI squadmates and N.O.V.A. in a first-to-20 team battle. Enemy soldiers can target you, your squad, and your companion.';$('selectedType').textContent='FIRST TO 20';$('selectedReward').textContent='RANKED RP';}};
+$('teamSelect').addEventListener('click',e=>{const b=e.target.closest('button[data-team]');if(!b)return;S.team=+b.dataset.team;$('teamSelect').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));refreshMenu();});
+applyCosmetics();
+
+/* ================= CAMPAIGN AIRPLANE & PARACHUTE INSERTION ================= */
+function beginInsertion(){
+ wave=1;waveActive=false;toSpawnZ=toSpawnS=toSpawnH=0;E.scope.style.display='none';E.cross.style.display='none';insertion={phase:'plane',t:0,yaw:-1.97};P.x=-16;P.y=26;P.z=W/2-34;P.yaw=0;P.pitch=0;P.vx=P.vy=P.vz=0;robot.active=false;document.body.classList.add('inserting');showBanner('AIRBORNE INSERTION','SPACE / E TO JUMP · AUTOMATIC DROP IN 5 SECONDS',2600);
+}
+function beginParachute(){if(!insertion||insertion.phase!=='plane')return;insertion.phase='chute';insertion.t=0;P.x=clamp(P.x,4,W-4);P.z=clamp(P.z,4,W-4);P.y=Math.max(P.y,24);P.vy=0;jumpReq=false;showBanner('PARACHUTE DEPLOYED','WASD TO STEER · LAND TO BEGIN THE OPERATION',2200);sfxNoise(.5,700,180,.35);}
+function landingHeight(x,z){for(let y=H-2;y>=0;y--)if(getV(x|0,y,z|0))return y+1;return 1;}
+function finishInsertion(){
+ const ground=landingHeight(P.x,P.z);P.y=ground;P.vy=0;insertion=null;E.cross.style.display='block';document.body.classList.remove('inserting');robot.active=true;robot.dead=false;robot.x=P.x+2;robot.z=P.z+2;robot.y=landingHeight(robot.x,robot.z);VG.startWave(1);showBanner(missionDef().name,'BOOTS ON GROUND · N.O.V.A. ONLINE',2200);
+}
+function updateInsertion(dt){
+ if(!insertion)return;insertion.t+=dt;if(insertion.phase==='plane'){const k=clamp(insertion.t/5,0,1);P.x=lerp(-16,W/2,k);P.z=lerp(W/2-34,W/2,k);P.y=26+Math.sin(k*PI)*3;P.yaw=insertion.yaw;if(keys.Space||jumpReq)beginParachute();else if(k>=1)beginParachute();jumpReq=false;}
+ else{let ix=moveIn.x+(keys.KeyD?1:0)-(keys.KeyA?1:0),iz=-moveIn.y+(keys.KeyW?1:0)-(keys.KeyS?1:0);const l=Math.hypot(ix,iz);if(l>1){ix/=l;iz/=l;}P.x=clamp(P.x+ix*5.5*dt,3,W-3);P.z=clamp(P.z+iz*5.5*dt,3,W-3);P.y-=5.2*dt;P.yaw+=ix*dt*.5;P.vy=-5.2;if(P.y<=landingHeight(P.x,P.z))finishInsertion();}
+}
+function cameraLook(x,y,z,tx,ty,tz){const dx=tx-x,dy=ty-y,dz=tz-z;return{yaw:Math.atan2(-dx,-dz),pitch:Math.atan2(dy,Math.hypot(dx,dz))};}
+function drawPlane(){
+ const yaw=insertion.yaw;NS=1;mTRY(_bm,P.x,P.y,P.z,yaw,1);boxM(dynO,_bm,0,0,0,2.2,2,8,.65,.7,.72,1,T.METAL,-1,0);boxM(dynO,_bm,0,.15,-.4,15,.35,2.1,.55,.61,.64,1,T.METAL,-1,0);boxM(dynO,_bm,0,1.3,3.1,5,.28,1.3,.5,.56,.58,1,T.METAL,-1,0);boxM(dynO,_bm,0,1.5,3.4,.25,2.6,1.4,.5,.56,.58,1,T.METAL,-1,0);boxM(dynO,_bm,0,.1,-4.25,1.7,1.2,.6,.16,.34,.42,1,T.PLAIN,-1,.2);
+ for(const sx of[-1,1])for(const z of[-.8,.7]){boxM(dynO,_bm,sx*4.6,-.45,z,.8,.8,1.5,.25,.29,.31,1,T.GUN,-1,0);boxM(dynO,_bm,sx*4.6,-.45,z-1,.15,2.4,.15,.1,.1,.11,1,T.PLAIN,-1,0);}for(const sx of[-1,1])boxM(dynT,_bm,sx*7.3,.15,-.4,.22,.22,.22,sx<0?1:.1,sx<0?.1:1,.1,.9,T.WHITE,-1,1);
+}
+function drawParachute(){drawPlayerAvatar();NS=1;boxM(dynO,IDENT,P.x,P.y+3.7,P.z,4.4,.35,3,.92,.55,.18,1,T.PLAIN,-1,0);boxM(dynO,IDENT,P.x,P.y+3.35,P.z,3.3,.45,2.5,.96,.68,.28,1,T.PLAIN,-1,0);for(const sx of[-1,1])for(const sz of[-1,1])boxM(dynO,IDENT,P.x+sx*.55,P.y+2.5,P.z+sz*.35,.035,2.1,.035,.75,.75,.7,1,T.PLAIN,-1,0);}
+
+/* ================= N.O.V.A. ROBOT & SQUAD COMPANIONS ================= */
+const robot={kind:'robot',active:false,dead:false,x:0,y:1,z:0,vy:0,r:.35,h:1.5,onGround:true,hp:220,maxhp:220,respawnT:0,rescue:0,yaw:0,anim:0,amp:0,shootCd:0,think:0,target:null,hold:false,muz:0,flash:0};
+let allies=[];
+function makeAlly(i){return{kind:'ally',active:true,dead:false,x:P.x+(i-1)*1.5,y:1,z:P.z+3,vy:0,r:.35,h:1.9,onGround:true,hp:120,maxhp:120,respawnT:0,yaw:0,anim:0,amp:0,shootCd:rr(0,.5),think:0,target:null,hold:false,muz:0,flash:0,scale:1,type:'soldier',pal:TEAM_PALS[S.team],index:i};}
+function resetCompanions(){Object.assign(robot,{active:S.mode!=='campaign',dead:false,x:P.x+2,y:1,z:P.z+2,vy:0,hp:220,respawnT:0,rescue:0,shootCd:0,target:null,hold:false});allies=S.mode==='teams'?[makeAlly(0),makeAlly(1),makeAlly(2)]:[];}
+function hurtBot(b,d){if(b.dead)return;b.hp-=d;b.flash=.15;if(b.hp<=0){b.dead=true;b.respawnT=b.kind==='robot'?12:7;b.target=null;if(b.kind==='ally'&&S.mode==='teams'){teamPoints[1-S.team]++;checkTeamEnd();}feed(b.kind==='robot'?'N.O.V.A. DISABLED · REBOOTING':'SQUADMATE DOWN · REDEPLOYING','#ff8c70');}}
+function respawnBot(b){b.dead=false;b.hp=b.maxhp;b.x=P.x+rr(-3,3);b.z=P.z+rr(-3,3);b.y=landingHeight(b.x,b.z);b.vy=0;b.target=null;}
+function updateBot(b,dt){
+ if(!b.active)return;if(b.dead){b.respawnT-=dt;if(b.respawnT<=0)respawnBot(b);return;}b.muz=Math.max(0,b.muz-dt);b.flash=Math.max(0,b.flash-dt);b.shootCd-=dt;b.think-=dt;
+ const dx=P.x-b.x,dz=P.z-b.z,pdist=Math.hypot(dx,dz);if(pdist>38){b.x=P.x+rr(-3,3);b.z=P.z+rr(-3,3);b.y=landingHeight(b.x,b.z);}
+ if(b.think<=0){b.think=.28+rnd()*.12;b.target=null;let bd=32;for(const e of enemies){if(e.dead)continue;const d=Math.hypot(e.x-b.x,e.z-b.z);if(d<bd){const ty=e.type==='heli'?e.y:e.y+e.h*.65;if(losCheck(b.x,b.y+1.2,b.z,e.x,ty,e.z)){bd=d;b.target=e;}}}}
+ const target=b.target;if(target&&!target.dead){const ty=target.type==='heli'?target.y:target.y+target.h*.65,dx2=target.x-b.x,dz2=target.z-b.z;b.yaw=angLerp(b.yaw,Math.atan2(dx2,dz2),Math.min(1,dt*9));if(b.shootCd<=0){b.shootCd=b.kind==='robot'?.38:.55;b.muz=.07;hurtEnemy(target,b.kind==='robot'?13:16,false);const d=Math.hypot(dx2,ty-(b.y+1.2),dz2)||1;tracers.push({x:b.x,y:b.y+1.2,z:b.z,dx:dx2,dy:ty-(b.y+1.2),dz:dz2,d,p:0});const v=spat(b.x,b.z,65);sfxShot(2,v*.25,_pan);}}
+ let mx=0,mz=0;if(!b.hold){if(target&&!target.dead){const dx2=target.x-b.x,dz2=target.z-b.z,d=Math.hypot(dx2,dz2)||1;if(d>17){mx=dx2/d;mz=dz2/d;}else if(d<7){mx=-dx2/d;mz=-dz2/d;}else{mx=-dz2/d*.5;mz=dx2/d*.5;}}else if(pdist>(b.kind==='robot'?4.5:6)){const fd=flowDir(b);if(fd){mx=fd[0];mz=fd[1];}else{mx=dx/pdist;mz=dz/pdist;}}}
+ const speed=activeCar?10:b.kind==='robot'?5.6:4.6,blocked=moveBody(b,mx*speed*dt,mz*speed*dt,dt);if(blocked&&b.onGround)b.vy=8;if(Math.hypot(mx,mz)>.1){b.anim+=dt*speed*2.2;b.amp=Math.min(.85,b.amp+dt*5);}else b.amp=Math.max(0,b.amp-dt*5);
+}
+function updateCompanions(dt){robot.rescue=Math.max(0,robot.rescue-dt);updateBot(robot,dt);for(const b of allies)updateBot(b,dt);}
+function drawRobot(b){
+ if(!b.active||b.dead)return;NS=1;mTRY(_bm,b.x,b.y,b.z,b.yaw,1);drawShadow(b.x,b.y,b.z,.9);const sw=Math.sin(b.anim)*b.amp;mLimb(_lm,_bm,-.18,.65,0,sw,0);boxM(dynO,_lm,0,-.32,0,.18,.65,.2,.25,.3,.32,1,T.METAL,-1,0);mLimb(_lm,_bm,.18,.65,0,-sw,0);boxM(dynO,_lm,0,-.32,0,.18,.65,.2,.25,.3,.32,1,T.METAL,-1,0);boxM(dynO,_bm,0,1.02,0,.65,.65,.42,.32,.4,.43,1,T.METAL,-1,0);boxM(dynO,_bm,0,1.52,0,.48,.38,.45,.45,.53,.55,1,T.METAL,-1,0);boxM(dynT,_bm,0,1.55,.24,.3,.09,.035,.1,.9,1,.95,T.WHITE,-1,1);for(const sx of[-1,1]){mLimb(_lm,_bm,sx*.43,1.25,0,-sw*.7,0);boxM(dynO,_lm,0,-.28,0,.16,.58,.18,.28,.34,.36,1,T.METAL,-1,0);}boxM(dynO,_bm,.38,1.05,.55,.14,.14,.85,.12,.15,.16,1,T.GUN,-1,0);if(b.muz>0)boxM(dynT,_bm,.38,1.05,1.08,.25,.25,.2,1,.8,.3,.9,T.WHITE,-1,1);
+}
+
+/* ================= TEAM BATTLE & ADVANCED ENEMY AI ================= */
+function checkTeamEnd(){if(S.mode!=='teams'||teamEnded)return;if(teamPoints[S.team]>=20)finishTeamMatch(true);else if(teamPoints[1-S.team]>=20)finishTeamMatch(false);}
+function finishTeamMatch(win){
+ if(teamEnded)return;teamEnded=true;state='over';wantFire=false;stopEngine();document.body.classList.remove('driving');const xp=win?400:120,cr=win?150:60,rating=win?20:-10;score+=win?2000:400;career.xp+=xp;career.credits+=cr;career.rating=Math.max(0,career.rating+rating);career.matches++;if(win)career.wins++;saveCareer();if(score>hiScore){hiScore=score;try{localStorage.setItem(hiKey,hiScore);}catch(e){}}
+ try{document.exitPointerLock&&document.exitPointerLock();}catch(e){}E.oScore.textContent=score;E.oBest.textContent=hiScore;E.oWave.textContent=wave;E.oKills.textContent=kills;$('overTitle').textContent=win?'TEAM VICTORY':'TEAM DEFEAT';$('overTitle').style.color=win?'var(--lime)':'var(--red)';$('overSub').textContent='TEAM DEATHMATCH · '+teamPoints[0]+' / '+teamPoints[1];$('overMessage').textContent=win?'Your squad controls the battlefield.':'The opposing squad reached the elimination target.';$('matchRewards').textContent='MATCH REWARDS · +'+xp+' XP · +'+cr+' CR · '+(rating>=0?'+':'')+rating+' RATING';$('nextB').classList.add('hidden');$('againB').textContent='REMATCH';E.hud.classList.add('hidden');E.touch.classList.add('hidden');E.over.classList.remove('hidden');
+}
+startWave=function(n){
+ if(insertion||insertionIntent||teamEnded)return;if(S.mode==='teams'){wave=n;const D=DIFF[S.diff];toSpawnZ=0;toSpawnS=Math.floor((7+n*2)*D.cnt);toSpawnH=n%5===0?1:0;spawnT=1;waveActive=true;showBanner('SQUAD WAVE '+n,'BLUE '+teamPoints[0]+' · RED '+teamPoints[1]+' · FIRST TO 20',2200);return;}VG.startWave(n);
+};
+updateWaves=function(dt){if(insertion||insertionIntent||teamEnded)return;VG.updateWaves(dt);checkTeamEnd();};
+spawnEnemy=function(kind){VG.spawnEnemy(kind);if(S.mode==='teams'&&enemies.length){const e=enemies[enemies.length-1];e.team=1-S.team;if(e.type==='soldier')e.pal=TEAM_PALS[1-S.team];}};
+killEnemy=function(e,head){const fresh=!e.dead;VG.killEnemy(e,head);if(fresh&&S.mode==='teams'){teamPoints[S.team]++;checkTeamEnd();}};
+objectiveInfo=function(){if(S.mode!=='teams')return VG.objectiveInfo();return{op:'TEAM DEATHMATCH · '+(S.team?'RED RAIDERS':'BLUE GUARD'),text:'FIRST TO 20 ELIMINATIONS',progress:teamPoints[S.team]+' / 20 · ENEMY '+teamPoints[1-S.team],pct:teamPoints[S.team]/20*100,dist:'SQUAD '+allies.filter(a=>!a.dead).length};};
+hurtEnemy=function(e,d,head){e.suppressed=1.6;e.dodgeDir=rnd()<.5?-1:1;VG.hurtEnemy(e,d,head);};
+fireEnemyBullet=function(e,fromY,spd,dmg,acc){
+ const candidates=[{ref:P,y:P.y+1.1}];if(robot.active&&!robot.dead)candidates.push({ref:robot,y:robot.y+1});for(const b of allies)if(!b.dead)candidates.push({ref:b,y:b.y+1});let best=candidates[0],bd=1e9;for(const c of candidates){const d=Math.hypot(c.ref.x-e.x,c.ref.z-e.z);if(d<bd){bd=d;best=c;}}const target=rnd()<.68?best:candidates[rnd()*candidates.length|0],t=target.ref,tx=t.x+rr(-1,1)*acc,ty=target.y+rr(-.5,.5)*acc,tz=t.z+rr(-1,1)*acc,dx=tx-e.x,dy=ty-fromY,dz=tz-e.z,d=Math.hypot(dx,dy,dz)||1;proj.push({x:e.x,y:fromY,z:e.z,vx:dx/d*spd,vy:dy/d*spd,vz:dz/d*spd,life:3,type:0,dmg,ox:e.x,oz:e.z});
+};
+updateProj=function(dt){VG.updateProj(dt);for(let i=proj.length-1;i>=0;i--){const p=proj[i];if(p.type!==0)continue;let hit=false;if(robot.active&&!robot.dead&&Math.abs(p.x-robot.x)<.55&&Math.abs(p.z-robot.z)<.55&&p.y>robot.y&&p.y<robot.y+robot.h){hurtBot(robot,p.dmg);hit=true;}if(!hit)for(const b of allies){if(!b.dead&&Math.abs(p.x-b.x)<.55&&Math.abs(p.z-b.z)<.55&&p.y>b.y&&p.y<b.y+b.h){hurtBot(b,p.dmg);hit=true;break;}}if(hit)proj.splice(i,1);}};
+function handleTeamDeath(){P.dead=false;deadT=0;teamPoints[1-S.team]++;if(teamPoints[1-S.team]>=20){checkTeamEnd();return;}P.hp=100;P.armor=25;P.x=W/2+(S.team?8:-8);P.z=W/2;P.y=landingHeight(P.x,P.z);P.vx=P.vy=P.vz=0;invulnT=3;proj=[];showBanner('REDEPLOYED','3 SECOND SPAWN PROTECTION · '+teamPoints[S.team]+' / '+teamPoints[1-S.team],1600);}
+hurtPlayer=function(d,ax,az){
+ if(insertion||invulnT>0)return;VG.hurtPlayer(d,ax,az);if(P.dead&&S.mode==='teams'){handleTeamDeath();return;}if(P.dead&&robot.active&&!robot.dead&&robot.rescue<=0){P.dead=false;P.hp=35;deadT=0;robot.rescue=120;dmgFlash=.4;showBanner('N.O.V.A. EMERGENCY REVIVE','COMPANION RESCUE · RECHARGES IN 120 SECONDS',2200);sfxTone(300,950,.45,.25,'sine');}
+};
+function updateAdvancedAI(dt){
+ invulnT=Math.max(0,invulnT-dt);for(const e of enemies){if(e.dead||e.type==='heli')continue;e.suppressed=Math.max(0,(e.suppressed||0)-dt);if(e.type==='soldier'&&e.suppressed>0&&e.los){const dx=e.x-P.x,dz=e.z-P.z,l=Math.hypot(dx,dz)||1,dir=e.dodgeDir||1;moveBody(e,-dz/l*dir*dt*2.4,dx/l*dir*dt*2.4,dt);}if(e.type==='zombie'&&e.v==='brute'){const dx=P.x-e.x,dz=P.z-e.z,d=Math.hypot(dx,dz)||1;if(d<13&&e.los)moveBody(e,dx/d*dt*1.4,dz/d*dt*1.4,dt);}}
+ updateCompanions(dt);
+}
+updateEnemies=function(dt){if(insertion)return;VG.updateEnemies(dt);updateAdvancedAI(dt);};
+
+/* ================= MOVEMENT, OPTICS, EFFECTS & ANIMATION ================= */
+updatePlayer=function(dt){
+ if(insertion){updateInsertion(dt);return;}const wasGround=P.onGround,oldVy=P.vy;coyote=P.onGround?.12:Math.max(0,coyote-dt);if(jumpReq)jumpBuffer=.13;else jumpBuffer=Math.max(0,jumpBuffer-dt);if(jumpBuffer>0&&(P.onGround||coyote>0)&&!activeCar){P.onGround=true;jumpReq=true;jumpBuffer=0;coyote=0;}else jumpReq=false;
+ const crouching=!!keys.ControlLeft&&!activeCar&&!(S.mode==='creative'&&P.flying);if(crouching)crouchAmount=Math.min(1,crouchAmount+dt*8);else if(!collides(P.x,P.y,P.z,P.r,1.8))crouchAmount=Math.max(0,crouchAmount-dt*8);P.h=1.8-crouchAmount*.45;scopeSteady=!!WP[cur].scope&&adsA>.7&&(keys.ShiftLeft||keys.ShiftRight||moveIn.sprint)&&stamina>0;
+ VG.updatePlayer(dt);if(!wasGround&&P.onGround&&oldVy<-5){landKick=Math.min(.2,-oldVy*.012);shake=Math.min(.15,shake+.04);}landKick=Math.max(0,landKick-dt*.9);const moving=Math.hypot(P.vx,P.vz)>4&&P.onGround,sprinting=(keys.ShiftLeft||keys.ShiftRight||moveIn.sprint)&&Math.hypot(P.vx,P.vz)>5&&!activeCar;if(sprinting)stamina=Math.max(0,stamina-dt*17);else if(scopeSteady)stamina=Math.max(0,stamina-dt*9);else stamina=Math.min(100,stamina+dt*13);
+ const mark=Math.floor(bobT/PI);if(moving&&mark!==lastFootMark){lastFootMark=mark;for(let i=0;i<2;i++)parts.push({x:P.x+rr(-.2,.2),y:P.y+.05,z:P.z+rr(-.2,.2),vx:rr(-.25,.25),vy:rr(.2,.5),vz:rr(-.25,.25),life:.45,max:.45,size:.09,r:.48,g:.43,b:.34,kind:0});}
+};
+eyePos=function(){const e=VG.eyePos();if(!activeCar&&!insertion)e[1]-=crouchAmount*.42+landKick;return e;};
+render=function(eye,yaw,pitch,fov){
+ if(insertion){let c;if(insertion.phase==='plane')c=cameraLook(P.x+11,P.y+5,P.z+13,P.x,P.y,P.z);else c=cameraLook(P.x+Math.sin(P.yaw)*6,P.y+2.7,P.z+Math.cos(P.yaw)*6,P.x,P.y+1.8,P.z);PRO.render([P.x+(insertion.phase==='plane'?11:Math.sin(P.yaw)*6),P.y+(insertion.phase==='plane'?5:2.7),P.z+(insertion.phase==='plane'?13:Math.cos(P.yaw)*6)],c.yaw,c.pitch,76);return;}
+ if(WP[cur].scope&&adsA>.85&&!scopeSteady){yaw+=Math.sin(perfTime*1.7)*.0008;pitch+=Math.cos(perfTime*1.3)*.00055;}const sprintFov=Math.hypot(P.vx,P.vz)>6&&adsA<.2?2:0;VG.render(eye,yaw,pitch,fov+sprintFov);
+};
+buildDynamic=function(eye){VG.buildDynamic(eye);if(insertion){if(insertion.phase==='plane')drawPlane();else drawParachute();}else if(state!=='menu'){drawRobot(robot);for(const b of allies)if(!b.dead)drawHuman(b);}};
+buildViewModel=function(){if(insertion){dynV.reset();dynVT.reset();return;}VG.buildViewModel();};
+updateWeapon=function(dt){if(insertion){wantFire=false;adsA=Math.max(0,adsA-dt*10);return;}VG.updateWeapon(dt);};
+tryFire=function(){if(insertion)return;const before=ammo[cur];VG.tryFire();if(ammo[cur]<before){const e=eyePos(),f=fwdV,rx=-f[2],rz=f[0];parts.push({x:e[0]+f[0]*.5+rx*.18,y:e[1]-.15,z:e[2]+f[2]*.5+rz*.18,vx:rx*2+rr(-.4,.4),vy:1.4,vz:rz*2+rr(-.4,.4),life:.8,max:.8,size:.055,r:.85,g:.65,b:.25,kind:0});parts.push({x:e[0]+f[0]*1.1,y:e[1]-.1,z:e[2]+f[2]*1.1,vx:rr(-.1,.1),vy:.25,vz:rr(-.1,.1),life:.28,max:.28,size:.14,r:.6,g:.62,b:.63,kind:2});}};
+throwGren=function(){if(!insertion)VG.throwGren();};
+toggleBuild=function(){if(!insertion)VG.toggleBuild();};interact=function(){if(insertion){beginParachute();return;}VG.interact();};useRecon=function(){if(!insertion)VG.useRecon();};useMedkit=function(){if(!insertion)VG.useMedkit();};deployTurret=function(){if(!insertion)VG.deployTurret();};callStrike=function(){if(!insertion)VG.callStrike();};
+enterCar=function(c){crouchAmount=0;P.h=1.8;VG.enterCar(c);};exitVehicle=function(){crouchAmount=0;P.h=1.8;VG.exitVehicle();};
+
+/* ================= VANGUARD HUD, LIFECYCLE & CONTROLS ================= */
+updateHUD=function(dt){
+ VG.updateHUD(dt);$('staminaFill').style.width=stamina+'%';$('staminaTxt').textContent=Math.round(stamina);const showRobot=robot.active;$('robotHud').style.display=showRobot?'flex':'none';$('robotStatus').textContent=robot.dead?'REBOOT '+Math.ceil(robot.respawnT)+'s':Math.ceil(robot.hp)+' HP · '+(robot.hold?'HOLDING':'FOLLOWING')+(robot.rescue>0?' · RESCUE '+Math.ceil(robot.rescue)+'s':'');$('robotHud').classList.toggle('offline',robot.dead);
+ $('teamHud').classList.toggle('hidden',S.mode!=='teams');$('teamHud').style.display=S.mode==='teams'?'flex':'none';if(S.mode==='teams'){$('blueScore').textContent=teamPoints[0];$('redScore').textContent=teamPoints[1];}
+ $('insertionHud').style.display=insertion?'block':'none';if(insertion){$('insertionPhase').textContent=insertion.phase==='plane'?'AIRBORNE · PRESS SPACE TO JUMP':'PARACHUTE · WASD TO STEER';$('insertionTitle').textContent=insertion.phase==='plane'?'C-130 APPROACHING DROP ZONE':'PARACHUTE DEPLOYED';$('insertionText').textContent=insertion.phase==='plane'?'Press SPACE or E to jump · automatic drop in 5 seconds':'WASD / joystick to steer · prepare for landing';$('altitudeTxt').textContent=Math.max(0,Math.round(P.y*100))+'m';$('jumpPlane').style.display=insertion.phase==='plane'?'block':'none';}
+ if(WP[cur].scope&&adsA>.85){const e=eyePos(),f=fwdV,hit=castVoxel(e[0],e[1],e[2],f[0],f[1],f[2],160);$('scopeRange').textContent='RANGE '+(hit?Math.round(hit.t)+'m':'---');const steady=document.querySelector('.scope-data span:last-child');if(steady)steady.textContent=scopeSteady?'STEADY AIM':'HOLD SHIFT TO STEADY';}
+};
+drawMini=function(dt){VG.drawMini(dt);if(state!=='play')return;const c=mctx,yaw=activeCar?driveCam.yaw:P.yaw;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(yaw);for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.fillRect((b.x-P.x)*2.6-3,(b.z-P.z)*2.6-3,6,6);}c.restore();};
+drawTacticalMap=function(){VG.drawTacticalMap();if(state!=='play')return;const c=$('bigMap').getContext('2d'),sc=640/W;for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.beginPath();c.arc(b.x*sc,b.z*sc,5,0,TAU);c.fill();}};
+resetGame=function(){insertion=null;wave=0;waveActive=false;toSpawnZ=toSpawnS=toSpawnH=0;teamEnded=false;teamPoints=[0,0];invulnT=0;stamina=100;crouchAmount=0;landKick=0;scopeSteady=false;coyote=0;jumpBuffer=0;document.body.classList.remove('inserting','driving');VG.resetGame();resetCompanions();applyCosmetics();};
+startGame=function(){insertionIntent=S.mode==='campaign';VG.startGame();insertionIntent=false;if(S.mode==='campaign')beginInsertion();};
+toMenu=function(){insertion=null;insertionIntent=false;document.body.classList.remove('inserting','driving');VG.toMenu();};
+gameOver=function(){if(S.mode==='teams'&&state==='play'){if(P.dead)handleTeamDeath();return;}VG.gameOver();};
+btnDown=function(b){if(b==='jumpPlane'){beginParachute();return;}VG.btnDown(b);};
+$('jumpPlane').addEventListener('click',beginParachute);
+window.addEventListener('keydown',e=>{if(e.code==='Escape'&&!$('marketOv').classList.contains('hidden')){$('marketOv').classList.add('hidden');return;}if(state!=='play')return;if(insertion&&(e.code==='KeyE'||e.code==='Space')){beginParachute();e.preventDefault();return;}if(e.code==='KeyQ'&&robot.active&&!robot.dead){robot.hold=!robot.hold;feed('N.O.V.A. · '+(robot.hold?'HOLD POSITION':'FOLLOW ME'),'#79dfe8');}});
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
