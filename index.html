@@ -79,6 +79,12 @@ body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabe
 @media(max-width:1050px){.menu-grid{grid-template-columns:1fr;gap:25px;align-items:start}.menu-hero{max-width:none}.menu-hero h1{font-size:54px;letter-spacing:-3px}.hero-copy{display:none}.feature-row{margin-bottom:15px}.selected-op{max-width:none}.command-panel{justify-self:start;max-width:none}.menu-shell{overflow:auto}.menu-grid{padding:24px 0}.menu-footer{margin-top:10px}}
 @media(max-width:650px){.ov{padding:14px}.menu-shell{padding:18px 16px}.menu-top{padding-bottom:15px}.online span{display:none}.brand small{display:none}.menu-hero h1{font-size:43px}.feature-row{display:none}.selected-op{padding:13px 15px}.command-panel{padding:18px 15px}.map-grid{grid-template-columns:1fr 1fr}.map-shot{height:43px}.settings-grid{grid-template-columns:1fr}.help-grid{grid-template-columns:1fr}.menu-footer{display:none}.mission-list{max-height:155px}.panel{padding:23px}.menu-grid{gap:18px}}
 @media(max-height:760px) and (min-width:1051px){.menu-shell{padding-top:18px}.menu-top{padding-bottom:14px}.menu-grid{padding:18px 0}.menu-hero h1{font-size:65px}.hero-copy{margin-bottom:15px}.feature-row{margin-bottom:16px}.command-panel{padding-top:18px;padding-bottom:16px}.command-head{margin-bottom:12px}.mode-tabs{margin-bottom:12px}.mission-list{max-height:112px}.map-shot{height:43px}.advanced{margin-top:9px}#deploy{margin-top:11px}.menu-footer{padding-top:10px}}
+
+/* Frontline Pro: settings, telemetry and time */
+.footer-actions{display:flex;gap:14px}.footer-actions button{white-space:nowrap}#worldTime{margin-top:7px;color:var(--amber);font:700 8px/1 Consolas,monospace;letter-spacing:.7px}
+.settings-panel{width:min(680px,100%);max-height:calc(100vh - 36px);overflow:auto}.setting-group{padding:13px 0;border-top:1px solid var(--line)}.setting-group h3{margin:0 0 11px;color:var(--lime);font-size:9px;letter-spacing:1.7px;text-transform:uppercase}.setting-line{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:6px 0;color:#d5dfd8;font-size:11px}.setting-line label{flex:1}.setting-line label small{display:block;margin-top:4px;color:var(--dim);font-size:9px;line-height:1.4}.setting-line output{float:right;margin-left:12px;color:var(--lime);font:700 10px/1 Consolas,monospace}.setting-line input[type=range]{flex:0 0 230px;max-width:45%}.setting-line select{min-width:145px;padding:8px 28px 8px 10px;border:1px solid var(--line);background:#111a17;color:var(--ink);font-size:10px;text-transform:uppercase}.setting-seg{display:flex;gap:3px}.setting-seg button{padding:7px 10px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font-size:8px;font-weight:900;text-transform:uppercase;cursor:pointer}.setting-seg button.on{border-color:var(--lime);background:rgba(185,244,93,.14);color:var(--lime)}.toggle{width:42px;height:23px;flex:none;padding:2px;border:1px solid var(--line);border-radius:15px;background:#252e2a;cursor:pointer}.toggle i{display:block;width:17px;height:17px;border-radius:50%;background:#748078;transition:transform .18s,background .18s}.toggle.on{background:rgba(185,244,93,.18);border-color:rgba(185,244,93,.5)}.toggle.on i{transform:translateX(17px);background:var(--lime)}.settings-actions{display:grid;grid-template-columns:1fr 1.5fr;gap:10px}.drive-meta{display:flex;justify-content:space-between;margin:0 0 7px;color:var(--amber);font:800 8px/1 Consolas,monospace;letter-spacing:.7px}.rpm-track{height:3px;margin:0 0 7px;background:rgba(255,255,255,.12)}#rpmFill{display:block;width:0;height:100%;background:var(--amber);transition:width .08s}#bCam{left:164px;bottom:108px;width:52px;height:52px;border-color:rgba(103,219,232,.65)}
+@media(max-width:600px){.setting-line{gap:10px}.setting-line input[type=range]{flex-basis:150px}.setting-seg button{padding:7px 6px}.settings-actions{grid-template-columns:1fr}.settings-panel{padding:20px}}
+body.touch canvas#gl{filter:none}
 </style>
 </head>
 <body>
@@ -87,7 +93,7 @@ body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabe
   <canvas id="mini" width="240" height="240"></canvas><div id="mapLabel">TACTICAL MAP · <span id="mapName">GREENHAVEN</span></div>
   <div id="top"><div id="waveTxt">WAVE 1</div><div id="enemyTxt">HOSTILES 0</div></div>
   <div id="compass"><span>W</span><b id="compassTxt">N · 000</b><span>E</span></div>
-  <div id="scoreBox"><div id="score">0</div><div id="killsTxt">0 ELIMINATIONS</div></div><div id="pauseB" title="Pause">Ⅱ</div>
+  <div id="scoreBox"><div id="score">0</div><div id="killsTxt">0 ELIMINATIONS</div><div id="worldTime">☀ 12:00 · DAY</div></div><div id="pauseB" title="Pause">Ⅱ</div>
   <div id="missionHud"><div id="opName">OPERATION 01</div><div id="objTxt">ELIMINATE HOSTILES</div><div class="obj-line"><span id="objProgress">0 / 12</span><span id="objDist"></span></div><div class="obj-track"><i id="objFill"></i></div></div>
   <div id="feed"></div><div id="bossBar"><span>ATTACK HELICOPTER</span><div><i id="bossFill"></i></div></div>
   <div id="vig"></div><div id="flashW"></div><div id="dirInd"></div><div id="scope"></div><div id="cross"><i></i><i></i><i></i><i></i></div><div id="hitm"></div>
@@ -95,12 +101,12 @@ body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabe
   <div id="bars"><div class="bar-label"><span>HEALTH</span><b id="hpTxt">100</b></div><div class="bar"><i id="hpFill"></i></div><div class="bar-label armor-label"><span>ARMOR</span><b id="arTxt">0</b></div><div class="bar"><i id="arFill" style="width:0"></i></div></div>
   <div id="ammoBox"><div id="wname">M4 CARBINE</div><div id="ammo">30<small>/150</small></div><div id="gren">FRAG × 3 · [G]</div></div><div id="slots"></div>
   <div id="buildBar"><div id="buildSlots"></div><div id="buildTip">LMB PLACE · RMB REMOVE · B EXIT · V FLIGHT</div></div>
-  <div id="vehicleHud"><div class="vlabel">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · E EXIT</div></div>
+  <div id="vehicleHud"><div class="vlabel" id="vehicleName">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="drive-meta"><span id="gearTxt">N</span><span id="cameraTxt">CHASE CAM</span></div><div class="rpm-track"><i id="rpmFill"></i></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · C CAMERA · E EXIT</div></div>
   <div id="interact"><b>E</b><span id="interactTxt">INTERACT</span></div>
   <div id="banner"><h1 id="bannerH">WAVE 1</h1><p id="bannerP"></p></div>
 </div>
 <div id="touch" class="hidden">
-  <div id="joyBase"><div id="joyKnob"></div></div><div class="tb" id="bFire" data-b="fire">FIRE</div><div class="tb" id="bFire2" data-b="fire">FIRE</div><div class="tb" id="bJump" data-b="jump">JUMP</div><div class="tb" id="bAds" data-b="ads">AIM</div><div class="tb" id="bRel" data-b="reload">RELOAD</div><div class="tb" id="bGren" data-b="gren">FRAG</div><div class="tb" id="bSwap" data-b="swap">SWAP</div><div class="tb" id="bStrike" data-b="strike">AIR<br>STRIKE</div><div class="tb" id="bBuild" data-b="build">BUILD</div><div class="tb" id="bInteract" data-b="interact">USE</div><div class="tb" id="bRemove" data-b="remove">REMOVE</div>
+  <div id="joyBase"><div id="joyKnob"></div></div><div class="tb" id="bFire" data-b="fire">FIRE</div><div class="tb" id="bFire2" data-b="fire">FIRE</div><div class="tb" id="bJump" data-b="jump">JUMP</div><div class="tb" id="bAds" data-b="ads">AIM</div><div class="tb" id="bRel" data-b="reload">RELOAD</div><div class="tb" id="bGren" data-b="gren">FRAG</div><div class="tb" id="bSwap" data-b="swap">SWAP</div><div class="tb" id="bStrike" data-b="strike">AIR<br>STRIKE</div><div class="tb" id="bBuild" data-b="build">BUILD</div><div class="tb" id="bInteract" data-b="interact">USE</div><div class="tb" id="bRemove" data-b="remove">REMOVE</div><div class="tb" id="bCam" data-b="camera">CAM</div>
 </div>
 <div id="rotate">ROTATE YOUR DEVICE<br>FOR THE BEST EXPERIENCE</div>
 <div id="menu" class="ov">
@@ -121,30 +127,38 @@ body.touch #mini{width:105px;height:105px;left:12px;top:12px}body.touch #mapLabe
     </div>
     <details class="advanced"><summary>Difficulty, graphics & controls</summary><div class="settings-grid">
       <div class="row"><label>Difficulty</label><div class="seg" data-k="diff"><button data-v="0">Recruit</button><button data-v="1" class="on">Veteran</button><button data-v="2">Elite</button></div></div>
-      <div class="row"><label>Time</label><div class="seg" data-k="time"><button data-v="0" class="on">Day</button><button data-v="1">Sunset</button><button data-v="2">Night</button></div></div>
-      <div class="row"><label>Graphics</label><div class="seg" data-k="q"><button data-v="0">Low</button><button data-v="1">Medium</button><button data-v="2" class="on">High</button></div></div>
+      <div class="row"><label>Start time</label><div class="seg" data-k="time"><button data-v="0" class="on">Day</button><button data-v="1">Sunset</button><button data-v="2">Night</button></div></div>
+      <div class="row"><label>Graphics</label><div class="seg" data-k="q"><button data-v="0">Low</button><button data-v="1">Med</button><button data-v="2" class="on">High</button><button data-v="3">Ultra</button></div></div>
       <div class="row"><label>Input</label><div class="seg" data-k="touch"><button data-v="1" id="ctTouch">Touch</button><button data-v="0" id="ctKey">Keyboard</button></div></div>
       <div class="row"><label>Sensitivity</label><input type="range" id="sens" aria-label="Sensitivity" min="0.3" max="2.5" step="0.05" value="1"></div>
       <div class="row"><label>Volume</label><input type="range" id="vol" aria-label="Volume" min="0" max="1" step="0.05" value="0.7"></div>
+      <div class="row"><label>FOV</label><input type="range" id="fov" aria-label="Field of view" min="65" max="105" step="1" value="80"></div>
+      <div class="row"><label>Day cycle</label><div class="seg" data-k="cycle"><button data-v="1" class="on">Auto</button><button data-v="0">Fixed</button></div></div>
     </div></details>
-    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><button id="helpB">Controls & field manual</button></div>
+    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><span class="footer-actions"><button id="settingsB">Settings</button><button id="helpB">Field manual</button></span></div>
    </section>
   </main>
   <footer class="menu-footer"><span>WASD MOVE · MOUSE AIM · B BUILD · E VEHICLE / INTERACT</span><div id="hi"></div></footer>
  </div>
 </div>
-<div id="pause" class="ov hidden"><div class="panel"><div class="eyebrow">Tactical suspension</div><div class="big">Paused</div><p class="subtitle">The battlefield is frozen. Review your controls or return to the operation.</p><button class="btn" id="resumeB">Resume operation</button><button class="btn alt" id="restartB">Restart mission</button><button class="btn alt" id="pauseHelpB">Field manual</button><button class="btn alt danger" id="quitB">Abort to command center</button></div></div>
+<div id="pause" class="ov hidden"><div class="panel"><div class="eyebrow">Tactical suspension</div><div class="big">Paused</div><p class="subtitle">The battlefield is frozen. Review your controls or return to the operation.</p><button class="btn" id="resumeB">Resume operation</button><button class="btn alt" id="restartB">Restart mission</button><button class="btn alt" id="pauseSettingsB">Settings</button><button class="btn alt" id="pauseHelpB">Field manual</button><button class="btn alt danger" id="quitB">Abort to command center</button></div></div>
 <div id="over" class="ov hidden"><div class="panel"><div class="eyebrow" id="overSub">After action report</div><div class="big" id="overTitle">Mission failed</div><p class="subtitle" id="overMessage">Regroup, rearm, and return to the fight.</p><div class="stats"><div>Score<b id="oScore">0</b></div><div>Personal best<b id="oBest">0</b></div><div>Wave<b id="oWave">0</b></div><div>Eliminations<b id="oKills">0</b></div></div><button class="btn hidden" id="nextB">Next operation →</button><button class="btn" id="againB">Redeploy</button><button class="btn alt" id="menuB">Command center</button></div></div>
-<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
+<div id="settingsOv" class="ov hidden"><div class="panel settings-panel"><div class="eyebrow">System configuration</div><div class="big">Settings</div><p class="subtitle">Changes apply instantly and are saved on this device.</p>
+ <div class="setting-group"><h3>Graphics</h3><div class="setting-line"><label>Render quality<small>Resolution, effects and weather density</small></label><div class="setting-seg" id="setQuality"><button data-q="0">Low</button><button data-q="1">Medium</button><button data-q="2">High</button><button data-q="3">Ultra</button></div></div><div class="setting-line"><label for="setFov">Field of view <output id="setFovValue">80°</output></label><input id="setFov" type="range" min="65" max="105" step="1" value="80"></div></div>
+ <div class="setting-group"><h3>World & camera</h3><div class="setting-line"><label>Automatic day / night<small>Dynamic sun, moon, fog and lighting</small></label><button class="toggle" id="setCycle" role="switch" aria-checked="true"><i></i></button></div><div class="setting-line"><label for="setDayLength">Full cycle duration</label><select id="setDayLength"><option value="180">3 minutes</option><option value="360">6 minutes</option><option value="720">12 minutes</option></select></div><div class="setting-line"><label for="setCarCam">Vehicle camera<small>Press C while driving to cycle</small></label><select id="setCarCam"><option value="0">Chase</option><option value="1">Hood</option><option value="2">Cinematic</option></select></div><div class="setting-line"><label>Camera shake</label><button class="toggle" id="setShake" role="switch" aria-checked="true"><i></i></button></div></div>
+ <div class="setting-group"><h3>Controls & audio</h3><div class="setting-line"><label for="setSens">Look sensitivity <output id="setSensValue">1.00</output></label><input id="setSens" type="range" min="0.3" max="2.5" step="0.05" value="1"></div><div class="setting-line"><label for="setVol">Master volume <output id="setVolValue">70%</output></label><input id="setVol" type="range" min="0" max="1" step="0.05" value="0.7"></div><div class="setting-line"><label>Invert vertical look</label><button class="toggle" id="setInvert" role="switch" aria-checked="false"><i></i></button></div></div>
+ <div class="settings-actions"><button class="btn alt" id="resetSettings">Reset defaults</button><button class="btn" id="closeSettings">Apply & return</button></div></div></div>
+
+<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p><span class="key">C</span> Camera · <span class="key">L</span> Headlights</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,rnd=Math.random,rr=(a,b)=>a+(b-a)*Math.random();
 const PI=Math.PI;
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0};
+const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0};
 const DIFF=[{dmg:.6,hp:.8,cnt:.8,regen:1},{dmg:1,hp:1,cnt:1,regen:1},{dmg:1.5,hp:1.3,cnt:1.25,regen:0}];
-const QS=[.5,.75,1];
+const QS=[.55,.8,1,1.25];
 let state='menu';
 
 /* ================= AUDIO ================= */
@@ -227,7 +241,7 @@ function mDir(o,x,y,z,dx,dy,dz){
 const IDENT=new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
 
 /* ================= TEXTURE ATLAS ================= */
-const TS=16,COLS=8,ROWS=4,AW=TS*COLS,AH=TS*ROWS;
+const TS=32,COLS=8,ROWS=4,AW=TS*COLS,AH=TS*ROWS;
 const atlas=document.createElement('canvas');atlas.width=AW;atlas.height=AH;
 const actx=atlas.getContext('2d');
 let seed=1337;function srnd(){seed=(seed*16807)%2147483647;return(seed-1)/2147483646}
@@ -235,7 +249,7 @@ const T={GRASS:0,GSIDE:1,DIRT:2,STONE:3,SBRICK:4,RBRICK:5,CRATE:6,LOGS:7,LOGT:8,
 function mk(i,b,v,fn){
   const x0=(i%COLS)*TS,y0=((i/COLS)|0)*TS;
   for(let y=0;y<TS;y++)for(let x=0;x<TS;x++){const k=1+(srnd()-.5)*v;actx.fillStyle=`rgb(${b[0]*k|0},${b[1]*k|0},${b[2]*k|0})`;actx.fillRect(x0+x,y0+y,1,1);}
-  if(fn)fn(x0,y0);
+  if(fn){actx.save();actx.translate(x0,y0);actx.scale(TS/16,TS/16);fn(0,0);actx.restore();}
 }
 const px=(x0,y0,x,y,w,h,c)=>{actx.fillStyle=c;actx.fillRect(x0+x,y0+y,w,h)};
 mk(0,[88,160,48],.4);
@@ -283,19 +297,22 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform sampler2D uTex;uniform vec3 uFog;uniform vec2 uFogR;uniform float uFlash;uniform float uLamp;uniform vec3 uAmb;
+uniform sampler2D uTex;uniform vec3 uFog;uniform vec2 uFogR;uniform float uFlash;uniform float uLamp;uniform vec3 uAmb;uniform vec2 uResolution;uniform float uExposure;
 varying vec4 vCol;varying vec2 vUV;varying float vDist;varying float vS;
 void main(){vec4 t=texture2D(uTex,vUV);float em=step(2.0,vS);
 vec3 sh=mix(vec3(vS)*uAmb,vec3(vS-2.0),em);
-float lamp=(1.0-em)*(uLamp*max(0.0,1.0-vDist/24.0)+uFlash*max(0.0,1.0-vDist/16.0)*.7);
+float lamp=(1.0-em)*(uLamp*max(0.0,1.0-vDist/28.0)+uFlash*max(0.0,1.0-vDist/16.0)*.7);
 vec3 c=t.rgb*vCol.rgb*sh*(1.0+lamp);
-float f=clamp((vDist-uFogR.x)/(uFogR.y-uFogR.x),0.0,1.0);
-c=mix(c,uFog,f);gl_FragColor=vec4(c,vCol.a*t.a);}`;
+float f=clamp((vDist-uFogR.x)/(uFogR.y-uFogR.x),0.0,1.0);c=mix(c,uFog,f);
+// Filmic tone mapping, gentle contrast and a restrained lens vignette.
+c*=uExposure;c=(c*(2.51*c+0.03))/(c*(2.43*c+0.59)+0.14);c=pow(clamp(c,0.0,1.0),vec3(0.92));
+vec2 uv=gl_FragCoord.xy/max(uResolution,vec2(1.0));float lens=smoothstep(0.38,0.82,length(uv-0.5));c*=1.0-lens*0.14;
+gl_FragColor=vec4(c,vCol.a*t.a);}`;
 function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(s));return s;}
 const prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));
 gl.bindAttribLocation(prog,0,'aPos');gl.bindAttribLocation(prog,1,'aShade');gl.bindAttribLocation(prog,2,'aCol');gl.bindAttribLocation(prog,3,'aUV');
 gl.linkProgram(prog);gl.useProgram(prog);
-const U={};['uVP','uTex','uFog','uFogR','uFlash','uLamp','uAmb'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
+const U={};['uVP','uTex','uFog','uFogR','uFlash','uLamp','uAmb','uResolution','uExposure'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
 for(let i=0;i<4;i++)gl.enableVertexAttribArray(i);
 const tex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tex);
 gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,atlas);
@@ -388,7 +405,7 @@ function buildChunk(c){
         const px_=x+.5+.5*n[0]+.5*su*u[0]+.5*sv*v[0],py_=y+.5+.5*n[1]+.5*su*u[1]+.5*sv*v[1],pz_=z+.5+.5*n[2]+.5*su*u[2]+.5*sv*v[2];
         const tu=su>0?TT[2]:TT[0];const tv=F.side?(sv>0?TT[1]:TT[3]):(sv>0?TT[3]:TT[1]);
         const a=AOV[_ao[k]]*tint;
-        CB.v(px_,py_,pz_,F.sh,a,a,a,1,tu,tv);
+        CB.v(px_,py_,pz_,t===16?3:F.sh,t===16?1:a,t===16?1:a,t===16?1:a,1,tu,tv);
       }
     }
   }
@@ -525,7 +542,7 @@ const stars=[];for(let i=0;i<80;i++){const a=rnd()*PI*2,e=rr(.15,1.3);stars.push
 const clouds=[];for(let i=0;i<16;i++){const parts=[];const n=3+(rnd()*3|0);for(let k=0;k<n;k++)parts.push([rr(-14,14),rr(-2,2),rr(-8,8),rr(10,22),rr(4,7),rr(8,16)]);clouds.push({x:rr(-300,300),z:rr(-300,300),y:rr(70,95),parts});}
 const WT=TUV[T.WHITE],WU=(WT[0]+WT[2])/2,WV=(WT[1]+WT[3])/2;
 function buildSky(){
-  const b=dynS,th=THEMES[S.time];b.reset();const R=500;
+  const b=dynS,th=ENV;b.reset();const R=500;
   const q=(p,c)=>{for(const k of QI)b.v(p[k][0],p[k][1],p[k][2],1,c[k][0],c[k][1],c[k][2],1,WU,WV);};
   const hor=th.hor,top=th.top;
   const cs=[[-R,-R,R,-R],[R,-R,R,R],[R,R,-R,R],[-R,R,-R,-R]];
@@ -572,7 +589,7 @@ const P={x:W/2,y:1,z:W/2,vx:0,vz:0,vy:0,r:.3,h:1.8,onGround:true,yaw:0,pitch:0,h
 let ws=[],cur=1,fireCd=0,swapT=0,reloadT=0,fireBuf=0,muzzleT=0,kick=0,autoRl=0,adsA=0,adsToggle=false,adsHeld=false,wantFire=false,jumpReq=false,gcd=0;
 let enemies=[],proj=[],grens=[],PT=[],pickups=[],tracers=[],bombs=[];
 let time=0,wave=0,score=0,kills=0,shake=0,dmgFlash=0,whiteFlash=0,dirT=0,bobT=0,lastStep=0,flowT=0,deadT=0;
-let toSpawnZ=0,toSpawnS=0,toSpawnH=0,spawnT=0,breakT=0,waveActive=false,streakN=0,strikeReady=false,camX=0,camY=0,camZ=0,fovCur=75,menuA=0;
+let toSpawnZ=0,toSpawnS=0,toSpawnH=0,spawnT=0,breakT=0,waveActive=false,streakN=0,strikeReady=false,camX=0,camY=0,camZ=0,fovCur=S.fov,menuA=0;
 const hiKey='blockops_hi';let hiScore=0;try{hiScore=+(localStorage.getItem(hiKey)||0);}catch(e){}
 const moveIn={x:0,y:0,sprint:false},keys={};
 
@@ -895,7 +912,7 @@ function updateWeapon(dt){
   if(reloadT>0){reloadT-=dt;if(reloadT<=0){const need=W_.mag-s.ammo,take=Math.min(need,s.res);s.ammo+=take;s.res-=take;}}
   if(autoRl>0){autoRl-=dt;if(autoRl<=0)startReload();}
   if(wantFire&&!P.dead&&(W_.auto||fireBuf>0))tryFire();
-  const target=lerp(75,75/W_.zoom,adsA);fovCur+=(target-fovCur)*Math.min(1,dt*14);
+  const target=lerp(S.fov,S.fov/W_.zoom,adsA);fovCur+=(target-fovCur)*Math.min(1,dt*14);
 }
 
 /* ================= WAVES ================= */
@@ -977,7 +994,7 @@ function drawMini(dt){
 /* ================= RENDER ================= */
 const proj3=new Float32Array(16),view=new Float32Array(16),vp=new Float32Array(16),_bm=new Float32Array(16),_lm=new Float32Array(16),_vm=new Float32Array(16);
 function resize(){
-  const dpr=Math.min(window.devicePixelRatio||1,1.5),sc=QS[S.q]*dpr;
+  const dpr=Math.min(window.devicePixelRatio||1,S.q===3?2:1.5),sc=QS[S.q]*dpr;
   const w=Math.max(160,Math.floor(innerWidth*sc)),h=Math.max(90,Math.floor(innerHeight*sc));
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
 }
@@ -1028,7 +1045,7 @@ function drawHeli(x,y,z,yaw,bank,rotor,flash,muz){
 }
 function buildDynamic(eye){
   dynO.reset();dynT.reset();NS=1;
-  const th=THEMES[S.time],lim=th.ff+12;
+  const th=ENV,lim=th.ff+12;
   for(const e of enemies){
     const dx=e.x-eye[0],dz=e.z-eye[2];if(dx*dx+dz*dz>lim*lim)continue;
     if(e.type==='heli')drawHeli(e.x,e.y,e.z,e.yaw,e.bank,e.rotor,e.flash,e.muz);else drawHuman(e);
@@ -1073,9 +1090,9 @@ function buildViewModel(t){
     boxM(dynVT,_vm,m[0],m[1],m[2]-.03,s*.4,s*2.2,.06,1,.7,.2,.8,T.WHITE,-1,1);}
 }
 function render(eye,yaw,pitch,fov){
-  resize();const th=THEMES[S.time],asp=cv.width/cv.height;
+  resize();const th=ENV,asp=cv.width/cv.height;
   camX=eye[0];camY=eye[1];camZ=eye[2];
-  gl.viewport(0,0,cv.width,cv.height);gl.clearColor(th.fog[0],th.fog[1],th.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.viewport(0,0,cv.width,cv.height);gl.uniform2f(U.uResolution,cv.width,cv.height);gl.uniform1f(U.uExposure,S.q===3?1.12:1.06);gl.clearColor(th.fog[0],th.fog[1],th.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
   gl.uniform3fv(U.uFog,th.fog);gl.uniform3fv(U.uAmb,th.amb);
   // sky
   gl.disable(gl.BLEND);gl.depthMask(true);
@@ -1108,7 +1125,7 @@ function menuHeli(){}
 let last=performance.now();
 function frame(now){
   requestAnimationFrame(frame);
-  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);
+  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);updateEnvironment(dt);
   for(const c of chunks){} let rb=0;for(const c of chunks){if(c.dirty&&rb<3){buildChunk(c);rb++;}}
   if(state==='play'){
     time+=dt;updateVecs();
@@ -1117,7 +1134,7 @@ function frame(now){
     updateEnemies(dt);updateProj(dt);updateGrens(dt);updateBombs(dt);updateParticles(dt);updatePickups(dt);updateTracers(dt);updateWaves(dt);
     shake=Math.max(0,shake-dt*1.6);
     updateVecs();
-    const e=eyePos(),sk=shake*.03;
+    const e=eyePos(),sk=S.shake?shake*.03:0;
     render(e,P.yaw+(rnd()-.5)*sk,P.pitch+(rnd()-.5)*sk,fovCur);
     updateHUD(dt);drawMini(dt);
     if(P.dead&&deadT>1.8)gameOver();
@@ -1139,7 +1156,7 @@ function frame(now){
 function resetGame(){
   genWorld();for(const c of chunks)buildChunk(c);renderMini();
   Object.assign(P,{x:W/2+.5,y:1,z:W/2+.5,vx:0,vz:0,vy:0,yaw:0,pitch:0,hp:100,armor:0,gren:3,dead:false,lastHit:-99,onGround:true});
-  ws=WP.map(w=>({ammo:w.mag,res:w.res===Infinity?Infinity:w.res}));cur=1;fireCd=0;swapT=0;reloadT=0;adsToggle=false;adsHeld=false;adsA=0;wantFire=false;fovCur=75;
+  ws=WP.map(w=>({ammo:w.mag,res:w.res===Infinity?Infinity:w.res}));cur=1;fireCd=0;swapT=0;reloadT=0;adsToggle=false;adsHeld=false;adsA=0;wantFire=false;fovCur=S.fov;
   enemies=[];proj=[];grens=[];PT=[];pickups=[];tracers=[];bombs=[];
   time=0;score=0;kills=0;shake=0;dmgFlash=0;whiteFlash=0;streakN=0;strikeReady=false;deadT=0;flowT=0;
   P.gren=3;E.feed.innerHTML='';buildSlots();
@@ -1176,7 +1193,7 @@ function gameOver(){
 function updateHi(){E.hi.textContent=hiScore?'BEST SCORE: '+hiScore:'';}
 
 /* ================= INPUT ================= */
-function look(dx,dy,k){const f=fovCur/75;P.yaw-=dx*k*S.sens*f;P.pitch=clamp(P.pitch-dy*k*S.sens*f,-1.5,1.5);}
+function look(dx,dy,k){const f=fovCur/S.fov;P.yaw-=dx*k*S.sens*f;P.pitch=clamp(P.pitch-dy*k*S.sens*f*(S.invert?-1:1),-1.5,1.5);}
 let hadLock=false,dragging=false;
 document.addEventListener('pointerlockchange',()=>{
   const l=document.pointerLockElement===cv;
@@ -1553,7 +1570,7 @@ function drawMissionObject(o){
  }
 }
 buildDynamic=function(eye){
- BASE.buildDynamic(eye);NS=1;const lim=THEMES[S.time].ff+10;
+ BASE.buildDynamic(eye);NS=1;const lim=ENV.ff+10;
  for(const c of cars){const dx=c.x-eye[0],dz=c.z-eye[2];if(dx*dx+dz*dz<lim*lim)drawCar(c);}
  for(const d of decor){if(d.type==='lamp'){
   boxM(dynO,IDENT,d.x,d.y+2,d.z,.16,4,.16,.2,.23,.24,1,T.METAL,-1,0);boxM(dynO,IDENT,d.x,d.y+4,d.z,.65,.16,.65,.16,.18,.19,1,T.METAL,-1,0);
@@ -1562,10 +1579,10 @@ buildDynamic=function(eye){
  for(const o of missionObjects)drawMissionObject(o);
  if(buildMode&&!P.dead){const h=buildRay();if(h){const x=h.x+h.nx,y=h.y+h.ny,z=h.z+h.nz;if(!getV(x,y,z)&&y>=1&&y<H){const b=BUILD[buildMat],cc=BT[b.v].c;boxM(dynT,IDENT,x+.5,y+.5,z+.5,1.015,1.015,1.015,cc[0],cc[1],cc[2],.34,b.tile,-1,.15);}}}
  // Lightweight deterministic weather: no allocations or physics overhead.
- if(S.map===2){for(let i=0;i<(S.q===0?28:70);i++){
+ if(S.map===2){for(let i=0;i<(S.q===0?28:S.q===3?110:70);i++){
   const x=eye[0]+((i*17.13+time*1.2)%42)-21,z=eye[2]+((i*29.71+time*.35)%42)-21,y=1+((i*11.37-time*3.4)%20+20)%20;
   boxM(dynT,IDENT,x,y,z,.07,.07,.07,.9,.96,1,.75,T.WHITE,-1,.5);
- }}else if(S.map===3){for(let i=0;i<(S.q===0?20:55);i++){
+ }}else if(S.map===3){for(let i=0;i<(S.q===0?20:S.q===3?90:55);i++){
   const x=eye[0]+((i*19.17+time*2)%38)-19,z=eye[2]+((i*31.31)%38)-19,y=1+((i*13.73-time*15)%20+20)%20;
   boxM(dynT,IDENT,x,y,z,.025,.42,.025,.45,.68,.85,.42,T.WHITE,-1,.3);
  }}else if(S.map===1){for(let i=0;i<18;i++){
@@ -1640,6 +1657,158 @@ window.addEventListener('keydown',e=>{
 });
 cv.addEventListener('mousedown',e=>{if(state==='play'&&buildMode&&e.button===2){e.preventDefault();adsHeld=false;removeBuildBlock();}});
 refreshMenu();updateBuildUI();
+
+
+/* ================= FRONTLINE PRO: ENVIRONMENT & SETTINGS ================= */
+const PRO={render,buildSky,updateCar,drawCar,buildDynamic,buildViewModel,eyePos,enterCar,exitVehicle,resetGame,toMenu,gameOver,completeMission,updateHUD,look,btnDown,pauseGame,resumeGame};
+const ENV={top:[.2,.45,.95],hor:[.62,.8,1],fog:[.62,.8,1],amb:[1.08,1.08,1.05],sun:[1,.95,.6],fn:35,ff:105,lamp:0,cloud:1,dayF:1,duskF:0,solar:1};
+let dayTime=.38;
+function smooth01(a,b,v){const t=clamp((v-a)/(b-a),0,1);return t*t*(3-2*t);}
+function updateEnvironment(dt){
+ if(S.cycle&&state!=='paused')dayTime=(dayTime+dt/Math.max(60,S.dayLength))%1;
+ const solar=Math.sin((dayTime-.25)*PI*2),dayF=smooth01(-.16,.24,solar),duskF=clamp(1-Math.abs(solar)/.38,0,1)*(1-dayF*.25);
+ ENV.dayF=dayF;ENV.duskF=duskF;ENV.solar=solar;
+ for(const key of['top','hor','fog','amb','sun'])for(let i=0;i<3;i++){
+  const base=lerp(THEMES[2][key][i],THEMES[0][key][i],dayF);ENV[key][i]=lerp(base,THEMES[1][key][i],duskF*.68);
+ }
+ ENV.fn=lerp(14,38,dayF);ENV.ff=lerp(72,S.q===3?125:108,dayF);ENV.lamp=lerp(.95,.02,dayF)+duskF*.08;ENV.cloud=lerp(.18,1,dayF);
+}
+function setStartTime(){dayTime=S.time===0?.38:S.time===1?.74:.96;updateEnvironment(0);}
+function clockText(){const mins=Math.floor(dayTime*1440)%1440,h=Math.floor(mins/60),m=mins%60;const phase=ENV.duskF>.55?(dayTime<.5?'DAWN':'DUSK'):ENV.dayF>.55?'DAY':'NIGHT';return(ENV.dayF>.45?'☀ ':'☾ ')+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' · '+phase;}
+buildSky=function(){
+ const b=dynS,th=ENV;b.reset();const R=500,q=(p,c)=>{for(const k of QI)b.v(p[k][0],p[k][1],p[k][2],1,c[k][0],c[k][1],c[k][2],1,WU,WV);};
+ const hor=th.hor,top=th.top,cs=[[-R,-R,R,-R],[R,-R,R,R],[R,R,-R,R],[-R,R,-R,-R]];
+ for(const[ax,az,bx,bz]of cs){q([[ax,-R,az],[bx,-R,bz],[bx,0,bz],[ax,0,az]],[hor,hor,hor,hor]);q([[ax,0,az],[bx,0,bz],[bx,R*.5,bz],[ax,R*.5,az]],[hor,hor,top,top]);q([[ax,R*.5,az],[bx,R*.5,bz],[bx,R,bz],[ax,R,bz]],[top,top,top,top]);}
+ q([[-R,R,-R],[R,R,-R],[R,R,R],[-R,R,R]],[top,top,top,top]);NS=1;
+ const starA=clamp(1-th.dayF*1.4,0,1);if(starA>.02)for(const s of stars)boxM(b,IDENT,s[0],s[1],s[2],2.4,2.4,2.4,starA,starA,starA,1,T.WHITE,-1,1);
+ const a=(dayTime-.25)*PI*2,sx=Math.cos(a)*390,sy=Math.sin(a)*390;
+ if(sy>-60)boxM(b,IDENT,sx,sy,-290,42,42,42,th.sun[0],th.sun[1],th.sun[2],1,T.WHITE,-1,1.2);
+ if(-sy>-50&&starA>.02)boxM(b,IDENT,-sx,-sy,270,32,32,32,.8*starA,.87*starA,starA,1,T.WHITE,-1,1);
+ const cc=th.cloud*(.35+.65*th.dayF);for(const c of clouds){const rx=(((c.x+time*3-camX+300)%600)+600)%600-300,rz=(((c.z-camZ+300)%600)+600)%600-300;for(const p of c.parts)boxM(b,IDENT,rx+p[0],c.y+p[1],rz+p[2],p[3],p[4],p[5],cc,cc,cc*(th.duskF>.4?.85:1),1,T.WHITE,-1,1.15);}
+};
+
+const SETTING_KEYS=['diff','time','q','sens','vol','fov','cycle','dayLength','shake','invert','carCam'];
+function saveSettings(){try{const o={};for(const k of SETTING_KEYS)o[k]=S[k];localStorage.setItem('blockops_pro_settings',JSON.stringify(o));}catch(e){}}
+function loadSettings(){try{const o=JSON.parse(localStorage.getItem('blockops_pro_settings')||'{}');for(const k of SETTING_KEYS)if(o[k]!==undefined)S[k]=o[k];}catch(e){}S.q=clamp(S.q|0,0,3);S.fov=clamp(+S.fov||80,65,105);S.dayLength=[180,360,720].includes(+S.dayLength)?+S.dayLength:360;S.carCam=clamp(S.carCam|0,0,2);S.cycle=!!S.cycle;S.shake=S.shake!==false;S.invert=!!S.invert;}
+function syncMainSettings(){
+ document.querySelectorAll('.seg[data-k]').forEach(seg=>{const k=seg.dataset.k,v=(k==='touch'||k==='cycle')?Number(!!S[k]):S[k];seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.v===+v));});
+ $('sens').value=S.sens;$('vol').value=S.vol;$('fov').value=S.fov;
+}
+function syncSettingsUI(){
+ $('setFov').value=S.fov;$('setFovValue').textContent=S.fov+'°';$('setSens').value=S.sens;$('setSensValue').textContent=(+S.sens).toFixed(2);$('setVol').value=S.vol;$('setVolValue').textContent=Math.round(S.vol*100)+'%';$('setDayLength').value=S.dayLength;$('setCarCam').value=S.carCam;
+ for(const[id,on]of[['setCycle',S.cycle],['setShake',S.shake],['setInvert',S.invert]]){$(id).classList.toggle('on',!!on);$(id).setAttribute('aria-checked',String(!!on));}
+ $('setQuality').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.q===S.q));
+}
+function syncAllSettings(){syncMainSettings();syncSettingsUI();}
+function openSettings(){syncSettingsUI();$('settingsOv').classList.remove('hidden');}
+function closeSettingsPanel(){$('settingsOv').classList.add('hidden');saveSettings();}
+loadSettings();syncAllSettings();setStartTime();
+$('settingsB').addEventListener('click',openSettings);$('pauseSettingsB').addEventListener('click',openSettings);$('closeSettings').addEventListener('click',closeSettingsPanel);
+$('setQuality').addEventListener('click',e=>{const b=e.target.closest('button[data-q]');if(!b)return;S.q=+b.dataset.q;syncAllSettings();saveSettings();});
+$('setFov').addEventListener('input',e=>{S.fov=+e.target.value;syncAllSettings();saveSettings();});
+$('setSens').addEventListener('input',e=>{S.sens=+e.target.value;syncAllSettings();saveSettings();});
+$('setVol').addEventListener('input',e=>{S.vol=+e.target.value;if(master)master.gain.value=S.vol;syncAllSettings();saveSettings();});
+$('setDayLength').addEventListener('change',e=>{S.dayLength=+e.target.value;saveSettings();});
+$('setCarCam').addEventListener('change',e=>{S.carCam=+e.target.value;driveCam.init=false;saveSettings();});
+for(const[id,key]of[['setCycle','cycle'],['setShake','shake'],['setInvert','invert']])$(id).addEventListener('click',()=>{S[key]=!S[key];syncAllSettings();saveSettings();});
+$('resetSettings').addEventListener('click',()=>{Object.assign(S,{q:2,sens:1,vol:.7,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0});if(master)master.gain.value=S.vol;syncAllSettings();setStartTime();saveSettings();});
+document.querySelectorAll('.seg[data-k]').forEach(seg=>seg.addEventListener('click',()=>{if(seg.dataset.k==='time')setStartTime();syncSettingsUI();saveSettings();}));
+for(const id of['sens','vol','fov'])$(id).addEventListener('input',()=>{if(id==='fov')S.fov=+$(id).value;syncSettingsUI();saveSettings();});
+
+/* ================= FRONTLINE PRO: VEHICLE PHYSICS & CAMERAS ================= */
+const VSPECS=[
+ {name:'SCOUT 4×4',max:19,reverse:8,accel:12,brake:24,steer:.58,wheelBase:2.65,hp:100,color:[.28,.48,.25]},
+ {name:'ARMORED MRAP',max:15,reverse:6,accel:9,brake:22,steer:.5,wheelBase:2.9,hp:180,color:[.48,.4,.24]},
+ {name:'RAIDER RALLY',max:25,reverse:9,accel:16,brake:28,steer:.64,wheelBase:2.5,hp:80,color:[.2,.43,.58]}
+];
+const driveCam={x:0,y:4,z:0,yaw:0,pitch:-.2,init:false};
+let camOrbit=0,camPitch=-.24,camLookT=-10,engineOsc=null,engineGain=null,engineFilter=null;
+spawnCar=function(x,z,yaw=0,color=0){const spec=VSPECS[color%VSPECS.length];cars.push({x,y:1,z,yaw,speed:0,hp:spec.hp,maxhp:spec.hp,color,spec,dead:false,steer:0,wheel:0,roll:0,pitch:0,accel:0,suspension:0,lights:true});};
+function startEngine(){
+ if(!AC||engineOsc)return;try{engineOsc=AC.createOscillator();engineGain=AC.createGain();engineFilter=AC.createBiquadFilter();engineOsc.type='sawtooth';engineOsc.frequency.value=55;engineFilter.type='lowpass';engineFilter.frequency.value=320;engineGain.gain.value=.0001;engineOsc.connect(engineFilter);engineFilter.connect(engineGain);engineGain.connect(master);engineOsc.start();}catch(e){engineOsc=null;}
+}
+function updateEngine(){if(!engineOsc||!activeCar||!AC)return;const c=activeCar,t=AC.currentTime,r=Math.abs(c.speed)/c.spec.max;engineOsc.frequency.setTargetAtTime(52+r*125+(Math.abs(c.accel)>.5?18:0),t,.06);engineFilter.frequency.setTargetAtTime(250+r*650,t,.08);engineGain.gain.setTargetAtTime(state==='play'?.025+r*.035:.0001,t,.08);}
+function stopEngine(){if(engineOsc){try{engineGain.gain.setTargetAtTime(.0001,AC.currentTime,.03);engineOsc.stop(AC.currentTime+.12);}catch(e){}engineOsc=null;engineGain=null;engineFilter=null;}}
+function cycleCamera(){if(!activeCar)return;S.carCam=(S.carCam+1)%3;driveCam.init=false;syncSettingsUI();saveSettings();feed(['CHASE CAMERA','HOOD CAMERA','CINEMATIC CAMERA'][S.carCam],'#67dbe8');}
+enterCar=function(c){PRO.enterCar(c);if(activeCar){camOrbit=0;camPitch=-.24;driveCam.init=false;startEngine();showBanner(activeCar.spec.name,'WASD DRIVE · C CAMERA · L LIGHTS · E EXIT',1800);}};
+exitVehicle=function(){stopEngine();PRO.exitVehicle();driveCam.init=false;};
+look=function(dx,dy,k){if(activeCar){camOrbit-=dx*k*S.sens;camPitch=clamp(camPitch-dy*k*S.sens*(S.invert?-1:1),-.72,.18);camLookT=time;return;}PRO.look(dx,dy,k);};
+function groundAt(x,z){const ix=Math.floor(x),iz=Math.floor(z);let y=1;while(y<4&&getV(ix,y,iz))y++;return y;}
+function carBlocked(x,z,yaw,y){for(const off of[-1.15,0,1.15]){const px=x-Math.sin(yaw)*off,pz=z-Math.cos(yaw)*off;if(collides(px,y,pz,.72,1.2))return true;}return false;}
+function updateDriveCamera(dt){
+ const c=activeCar;if(!c)return;const hood=S.carCam===1,tx=c.x,ty=c.y+1.05,tz=c.z;
+ if(hood){
+  const yaw=c.yaw+camOrbit*.35,x=c.x-Math.sin(c.yaw)*.42,y=c.y+1.43,z=c.z-Math.cos(c.yaw)*.42,k=driveCam.init?Math.min(1,dt*18):1;
+  driveCam.x=lerp(driveCam.x,x,k);driveCam.y=lerp(driveCam.y,y,k);driveCam.z=lerp(driveCam.z,z,k);driveCam.yaw=angLerp(driveCam.yaw,yaw,k);driveCam.pitch=lerp(driveCam.pitch,camPitch,k);driveCam.init=true;return;
+ }
+ const cinematic=S.carCam===2,dist=cinematic?8.2:5.9,yaw=c.yaw+camOrbit,height=cinematic?4.5:3.25;
+ let dx=c.x+Math.sin(yaw)*dist,dy=c.y+height+Math.max(0,-camPitch)*dist*.5,dz=c.z+Math.cos(yaw)*dist;
+ let vx=dx-tx,vy=dy-ty,vz=dz-tz;const len=Math.hypot(vx,vy,vz)||1;vx/=len;vy/=len;vz/=len;const hit=castVoxel(tx,ty,tz,vx,vy,vz,len);
+ if(hit&&hit.t<len){const d=Math.max(1.15,hit.t-.35);dx=tx+vx*d;dy=ty+vy*d;dz=tz+vz*d;}
+ const k=driveCam.init?1-Math.exp(-dt*(cinematic?5:11)):1;driveCam.x=lerp(driveCam.x,dx,k);driveCam.y=lerp(driveCam.y,dy,k);driveCam.z=lerp(driveCam.z,dz,k);
+ const lx=tx-driveCam.x,ly=ty-driveCam.y,lz=tz-driveCam.z,targetYaw=Math.atan2(-lx,-lz),targetPitch=Math.atan2(ly,Math.hypot(lx,lz)),kl=driveCam.init?Math.min(1,dt*14):1;
+ driveCam.yaw=angLerp(driveCam.yaw,targetYaw,kl);driveCam.pitch=lerp(driveCam.pitch,targetPitch,kl);driveCam.init=true;
+}
+updateCar=function(dt){
+ const c=activeCar;if(!c||c.dead){activeCar=null;stopEngine();return;}if(P.dead){exitVehicle();return;}carBumpCd=Math.max(0,carBumpCd-dt);
+ const spec=c.spec||VSPECS[c.color%VSPECS.length];c.spec=spec;
+ let input=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)-moveIn.y;input=clamp(input,-1,1);
+ const handbrake=keys.Space||jumpReq;jumpReq=false;let acceleration=0;
+ if(input>0)acceleration=c.speed<-.4?spec.brake:spec.accel*Math.max(.18,1-Math.max(0,c.speed)/spec.max*.82);
+ else if(input<0)acceleration=c.speed>.4?-spec.brake:-spec.accel*.72*Math.max(.25,1-Math.max(0,-c.speed)/spec.reverse*.8);
+ else{const drag=.65+Math.abs(c.speed)*.055+c.speed*c.speed*.006;acceleration=-Math.sign(c.speed)*Math.min(Math.abs(c.speed)/Math.max(dt,.001),drag);}
+ if(handbrake)acceleration=-Math.sign(c.speed)*Math.min(Math.abs(c.speed)/Math.max(dt,.001),spec.brake*1.35);
+ c.accel=acceleration;c.speed=clamp(c.speed+acceleration*dt,-spec.reverse,spec.max);if(Math.abs(c.speed)<.025&&!input)c.speed=0;
+ let steer=(keys.KeyA||keys.ArrowLeft?1:0)-(keys.KeyD||keys.ArrowRight?1:0)-moveIn.x;steer=clamp(steer,-1,1);
+ const steerTarget=steer*spec.steer/(1+Math.abs(c.speed)*.105);c.steer=lerp(c.steer,steerTarget,Math.min(1,dt*12));
+ if(Math.abs(c.speed)>.08){const rate=clamp(c.speed/spec.wheelBase*Math.tan(c.steer),-1.85,1.85);c.yaw+=rate*dt;}
+ const nx=c.x-Math.sin(c.yaw)*c.speed*dt,nz=c.z-Math.cos(c.yaw)*c.speed*dt,gy=groundAt(nx,nz),testY=Math.max(c.y,gy);
+ if(gy-c.y<=.7&&!carBlocked(nx,nz,c.yaw,testY)){c.x=nx;c.z=nz;carDistance+=Math.abs(c.speed*dt);c.y=lerp(c.y,gy,Math.min(1,dt*11));}
+ else{if(Math.abs(c.speed)>3&&carBumpCd<=0){c.hp-=Math.abs(c.speed)*1.6;carBumpCd=.38;shake=Math.max(shake,.32);sfxNoise(.15,650,80,.48);}c.speed*=-.18;c.accel=0;}
+ c.wheel=(c.wheel+c.speed*dt/.36)%(PI*2);c.roll=lerp(c.roll,-c.steer*c.speed*.014,Math.min(1,dt*7));c.pitch=lerp(c.pitch,-c.accel*.006,Math.min(1,dt*6));c.suspension=Math.sin(c.wheel*2)*Math.min(.035,Math.abs(c.speed)*.0018);
+ P.x=c.x;P.y=c.y;P.z=c.z;P.vx=-Math.sin(c.yaw)*c.speed;P.vz=-Math.cos(c.yaw)*c.speed;P.vy=0;P.onGround=true;
+ for(const e of enemies){if(e.dead||e.type==='heli')continue;const d=Math.hypot(e.x-c.x,e.z-c.z);if(d<1.8&&Math.abs(c.speed)>3){hurtEnemy(e,Math.abs(c.speed)*20,false);c.speed*=.78;shake=Math.max(shake,.18);feed('VEHICLE IMPACT','#ffc857');}}
+ if(c.hp<42&&rnd()<dt*(c.hp<20?14:6)){pt(c.x+rr(-.4,.4),c.y+1.4,c.z+rr(-.4,.4),rr(-.2,.2),rr(.8,1.5),rr(-.2,.2),rr(.8,1.4),rr(.3,.55),.16,.17,.18,2,0);if(c.hp<20)pt(c.x,c.y+1.1,c.z,0,1,0,.3,.25,1,.3,.03,1,0);}
+ if(time-camLookT>1.3&&Math.abs(c.speed)>2)camOrbit=angLerp(camOrbit,0,Math.min(1,dt*2));updateDriveCamera(dt);updateEngine();if(c.hp<=0)destroyCar(c);
+};
+eyePos=function(){if(activeCar)return[driveCam.x,driveCam.y,driveCam.z];return PRO.eyePos();};
+render=function(eye,yaw,pitch,fov){if(activeCar){const boost=Math.abs(activeCar.speed)/activeCar.spec.max*4;PRO.render([driveCam.x,driveCam.y,driveCam.z],driveCam.yaw,driveCam.pitch,fov+boost);}else PRO.render(eye,yaw,pitch,fov);};
+
+/* ---------- Detailed vehicle models, cockpit and telemetry ---------- */
+const _wheelM=new Float32Array(16),_wheelL=new Float32Array(16);
+function drawWheel(c,lx,lz,front){const co=Math.cos(c.yaw),si=Math.sin(c.yaw),x=c.x+co*lx+si*lz,z=c.z-si*lx+co*lz;mTRY(_wheelM,x,c.y+.43,z,c.yaw+(front?c.steer:0),1);mLimb(_wheelL,_wheelM,0,0,0,c.wheel,0);boxM(dynO,_wheelL,0,0,0,.38,.72,.72,.045,.05,.055,1,T.PLAIN,-1,0);boxM(dynO,_wheelL,lx>0?.205:-.205,0,0,.04,.34,.34,.38,.41,.43,1,T.METAL,-1,0);}
+drawCar=function(c){
+ if(c.dead||(activeCar===c&&S.carCam===1))return;NS=1;const spec=c.spec||VSPECS[c.color%3],body=spec.color;mTRY(_bm,c.x,c.y+c.suspension,c.z,c.yaw,1);mLimb(_lm,_bm,0,0,0,c.pitch,c.roll);drawShadow(c.x,c.y,c.z,2.8);
+ boxM(dynO,_lm,0,.65,0,1.9,.55,3.8,body[0],body[1],body[2],1,T.METAL,-1,0);boxM(dynO,_lm,0,1.15,.35,1.72,.65,1.95,body[0]*1.08,body[1]*1.08,body[2]*1.08,1,T.METAL,-1,0);
+ boxM(dynO,_lm,0,1.2,-.69,1.5,.43,.07,.16,.43,.55,1,T.PLAIN,-1,.16);boxM(dynO,_lm,0,1.18,1.36,1.5,.45,.07,.12,.28,.34,1,T.PLAIN,-1,0);
+ boxM(dynO,_lm,0,.84,-1.55,1.82,.18,1.05,body[0]*1.13,body[1]*1.13,body[2]*1.13,1,T.METAL,-1,0);boxM(dynO,_lm,0,.48,-2,2.08,.18,.18,.15,.17,.18,1,T.GUN,-1,0);boxM(dynO,_lm,0,.48,2,2.08,.18,.18,.15,.17,.18,1,T.GUN,-1,0);
+ boxM(dynO,_lm,0,.69,-2.06,.78,.28,.06,.09,.1,.11,1,T.GUN,-1,0);for(const sx of[-1,1]){boxM(dynO,_lm,sx*.98,1.15,-.15,.12,.12,.28,.12,.14,.15,1,T.METAL,-1,0);boxM(dynO,_lm,sx*.84,1.19,-.4,.06,.5,.78,.11,.25,.3,1,T.PLAIN,-1,0);boxM(dynO,_lm,sx*.84,1.15,.68,.06,.5,.55,body[0]*.8,body[1]*.8,body[2]*.8,1,T.METAL,-1,0);}
+ for(const sx of[-1,1]){const on=c.lights?1:.15;boxM(dynT,_lm,sx*.62,.82,-2.09,.38,.24,.07,on,on*.92,on*.6,.95,T.WHITE,-1,c.lights?1:0);boxM(dynT,_lm,sx*.63,.77,2.08,.32,.18,.07,1,.06,.02,.75,T.WHITE,-1,.6);}
+ boxM(dynO,_lm,0,1.54,.45,1.5,.08,1.4,.16,.18,.19,1,T.METAL,-1,0);for(const sx of[-1,1])boxM(dynO,_lm,sx*.68,1.63,.45,.07,.12,1.5,.12,.13,.14,1,T.GUN,-1,0);
+ if(c.color===1){boxM(dynO,_lm,0,1.66,.35,.75,.18,.75,.22,.24,.2,1,T.METAL,-1,0);boxM(dynO,_lm,0,1.78,.35,.42,.12,.42,.15,.17,.15,1,T.GUN,-1,0);}
+ if(c.color===2){boxM(dynO,_lm,0,1.15,1.85,1.75,.09,.35,.12,.14,.16,1,T.METAL,-1,0);for(const sx of[-1,1])boxM(dynO,_lm,sx*.62,.93,1.78,.08,.45,.08,.12,.13,.14,1,T.GUN,-1,0);}
+ for(const sx of[-1,1])for(const sz of[-1,1])drawWheel(c,sx*1.02,sz*1.25,sz<0);
+ if(c.lights&&ENV.dayF<.62)for(const sx of[-1,1])boxM(dynT,_lm,sx*.62,.55,-3.8,.75,.12,3.2,1,.88,.52,.055,T.WHITE,-1,.6);
+};
+buildViewModel=function(){
+ if(activeCar){dynV.reset();dynVT.reset();if(S.carCam===1){NS=1;mLimb(_vm,IDENT,0,-.28,-.48,0,0);boxM(dynV,_vm,0,0,0,.75,.15,.28,.12,.15,.15,1,T.GUN,-1,0);boxM(dynV,_vm,0,.08,-.08,.34,.06,.14,.05,.07,.075,1,T.PLAIN,-1,0);for(const sx of[-1,1])boxM(dynV,_vm,sx*.15,.15,-.02,.035,.25,.035,.06,.07,.07,1,T.GUN,-1,0);boxM(dynV,_vm,0,.25,-.02,.33,.035,.035,.06,.07,.07,1,T.GUN,-1,0);boxM(dynV,_vm,0,.15,-.02,.06,.06,.04,.25,.27,.28,1,T.METAL,-1,0);}return;}PRO.buildViewModel();
+};
+updateHUD=function(dt){
+ PRO.updateHUD(dt);$('worldTime').textContent=clockText();$('bCam').style.display=activeCar&&S.touch?'flex':'none';
+ if(activeCar){const c=activeCar;$('vehicleName').textContent=c.spec.name;$('gearTxt').textContent=(keys.Space?'B':c.speed>.25?'D':c.speed<-.25?'R':'N');$('cameraTxt').textContent=['CHASE CAM','HOOD CAM','CINEMATIC'][S.carCam];$('rpmFill').style.width=clamp(Math.abs(c.speed)/c.spec.max*100+(Math.abs(c.accel)>1?8:0),0,100)+'%';$('vehicleHpFill').style.width=clamp(c.hp/c.maxhp*100,0,100)+'%';}
+};
+const PRO_DRAW_MINI=drawMini;drawMini=function(dt){if(!activeCar){PRO_DRAW_MINI(dt);return;}const yaw=P.yaw;P.yaw=driveCam.yaw;PRO_DRAW_MINI(dt);P.yaw=yaw;};
+
+/* ---------- Lifecycle, input and settings integration ---------- */
+resetGame=function(){stopEngine();setStartTime();driveCam.init=false;camOrbit=0;camPitch=-.24;PRO.resetGame();};
+toMenu=function(){stopEngine();driveCam.init=false;PRO.toMenu();};
+gameOver=function(){stopEngine();PRO.gameOver();};
+completeMission=function(){stopEngine();PRO.completeMission();};
+pauseGame=function(){PRO.pauseGame();stopEngine();};
+resumeGame=function(){PRO.resumeGame();if(activeCar)startEngine();};
+btnDown=function(n,t){if(n==='camera'){cycleCamera();return;}PRO.btnDown(n,t);};
+window.addEventListener('keydown',e=>{if(e.code==='Escape'&&!$('settingsOv').classList.contains('hidden')){closeSettingsPanel();return;}if(state!=='play'||e.repeat||!activeCar)return;if(e.code==='KeyC')cycleCamera();else if(e.code==='KeyL'){activeCar.lights=!activeCar.lights;feed(activeCar.lights?'HEADLIGHTS ON':'HEADLIGHTS OFF','#ffc857');}});
+updateEnvironment(0);syncAllSettings();
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
