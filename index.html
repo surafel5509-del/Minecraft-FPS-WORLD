@@ -93,6 +93,12 @@ body.touch canvas#gl{filter:none}
 body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.touch #abilityRp,body.touch .ability>div{display:none}body.touch .ability{width:43px;height:43px;padding:3px;gap:2px}body.touch .ability .key{width:14px;height:14px;font-size:7px}body.touch .ability>i{font-size:17px;width:18px}body.touch #waypointHud{display:none!important}
 @media(max-width:760px){.tac-body{grid-template-columns:1fr}.tac-side{display:none}.tac-shell,.upgrade-shell{padding:16px}.tac-status{display:none}.upgrade-grid{grid-template-columns:1fr 1fr}.upgrade-head .subtitle{display:none}.tac-foot>span,.upgrade-foot>span{display:none}}
 @media(max-width:480px){.upgrade-grid{grid-template-columns:1fr}.upgrade-card{min-height:160px}}
+
+/* Clean contextual driving, player perspectives and seasonal rewards */
+#vehicleHud{display:none!important}#driveActions{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:none;gap:6px;pointer-events:auto}#driveActions button{padding:10px 14px;border:1px solid rgba(255,255,255,.18);background:rgba(5,10,8,.78);color:#dce6df;font:800 8px/1 Consolas,monospace;letter-spacing:.6px;cursor:pointer}#driveActions button:first-child{border-color:var(--cyan);color:var(--cyan)}body.driving #driveActions{display:flex}body.driving #ammoBox,body.driving #slots,body.driving #abilities,body.driving #streak,body.driving #cross,body.driving #buildBar,body.driving #interact{display:none!important}body.driving #bFire,body.driving #bFire2,body.driving #bAds,body.driving #bRel,body.driving #bGren,body.driving #bSwap,body.driving #bBuild{display:none!important}body.touch.driving #driveActions{display:none}
+#matchRewards{margin:-8px 0 12px;padding:10px;border:1px solid rgba(255,200,87,.22);background:rgba(255,200,87,.06);color:var(--amber);font:800 9px/1.4 Consolas,monospace;letter-spacing:.5px}#careerTier{margin-top:3px;color:var(--amber);font:700 8px/1 Consolas,monospace;letter-spacing:.6px}#rewardNotify{display:inline-block;width:5px;height:5px;margin-left:3px;border-radius:50%;background:var(--amber);vertical-align:top}#rewardNotify.claimed{display:none}
+.rewards-shell{width:min(850px,100%);max-height:calc(100vh - 36px);overflow:auto;margin:auto;padding:25px;background:rgba(7,13,11,.98);border:1px solid rgba(255,255,255,.15);box-shadow:var(--shadow)}.rewards-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line)}.rewards-head .big{font-size:34px}.rank-hero{display:flex;align-items:center;gap:17px;margin:18px 0;padding:18px;background:linear-gradient(110deg,rgba(255,200,87,.12),rgba(255,255,255,.025));border:1px solid rgba(255,200,87,.2)}.rank-emblem{display:grid;place-items:center;width:62px;height:62px;color:var(--amber);border:2px solid var(--amber);font-size:37px;transform:rotate(45deg)}.rank-emblem::first-letter{transform:rotate(-45deg)}.rank-hero h2{margin:3px 0;font-size:23px;letter-spacing:1px}.rank-hero p{margin:0;color:var(--muted);font:700 9px/1 Consolas,monospace}.season-xp{flex:1;margin-left:auto;max-width:230px}.season-xp span{color:var(--muted);font:700 8px/1 Consolas,monospace}.season-xp b{float:right;color:var(--amber);font:700 9px/1 Consolas,monospace}.season-xp>div{clear:both;height:5px;margin-top:11px;background:rgba(255,255,255,.12)}.season-xp i{display:block;width:0;height:100%;background:var(--amber)}.reward-section{padding:15px 0;border-top:1px solid var(--line)}.reward-section h3{margin:0 0 10px;font-size:10px;letter-spacing:1px;text-transform:uppercase}.reward-title{display:flex;align-items:center;justify-content:space-between;gap:15px}.reward-title h3{margin:0}.reward-title p{margin:5px 0 0;color:var(--muted);font-size:10px}.daily-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:14px}.daily-day{padding:11px 4px;text-align:center;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);font:700 8px/1.4 Consolas,monospace}.daily-day b{display:block;margin-top:6px;color:var(--amber);font-size:10px}.daily-day.today{border-color:var(--amber);background:rgba(255,200,87,.08)}.daily-day.claimed{opacity:.4}.reward-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.career-record{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.career-record div{padding:12px 5px;background:rgba(255,255,255,.035);text-align:center;color:var(--muted);font-size:8px}.career-record b{display:block;margin-bottom:5px;color:#fff;font:800 21px/1 Consolas,monospace}.rank-tiers{display:flex;flex-wrap:wrap;gap:5px}.rank-tiers span{padding:8px 10px;border:1px solid var(--line);color:var(--dim);font:800 8px/1 Consolas,monospace}.rank-tiers span.on{border-color:var(--amber);color:var(--amber);background:rgba(255,200,87,.07)}.reward-note{margin:5px 0 0;color:var(--dim);font-size:9px;line-height:1.5}
+@media(max-width:600px){.daily-grid{grid-template-columns:repeat(4,1fr)}.reward-columns{grid-template-columns:1fr}.rank-hero{flex-wrap:wrap}.season-xp{max-width:none;flex-basis:100%}.rewards-shell{padding:17px}}
 </style>
 </head>
 <body>
@@ -111,7 +117,7 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
   <div id="bars"><div class="bar-label"><span>HEALTH</span><b id="hpTxt">100</b></div><div class="bar"><i id="hpFill"></i></div><div class="bar-label armor-label"><span>ARMOR</span><b id="arTxt">0</b></div><div class="bar"><i id="arFill" style="width:0"></i></div></div>
   <div id="ammoBox"><div id="wname">M4 CARBINE</div><div id="ammo">30<small>/150</small></div><div id="gren">FRAG × 3 · [G]</div></div><div id="slots"></div>
   <div id="buildBar"><div id="buildSlots"></div><div id="buildTip">LMB PLACE · RMB REMOVE · B EXIT · V FLIGHT</div></div>
-  <div id="vehicleHud"><div class="vlabel" id="vehicleName">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="drive-meta"><span id="gearTxt">N</span><span id="cameraTxt">CHASE CAM</span></div><div class="rpm-track"><i id="rpmFill"></i></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · C CAMERA · E EXIT</div></div>
+  <div id="driveActions"><button data-b="camera">C · CAMERA</button><button data-b="lights">L · LIGHTS</button><button data-b="exit">E · EXIT</button></div><div id="vehicleHud"><div class="vlabel" id="vehicleName">SCOUT 4×4</div><div id="speedTxt">0 <small>KM/H</small></div><div class="drive-meta"><span id="gearTxt">N</span><span id="cameraTxt">CHASE CAM</span></div><div class="rpm-track"><i id="rpmFill"></i></div><div class="vtrack"><i id="vehicleHpFill"></i></div><div class="vhint">SPACE HANDBRAKE · C CAMERA · E EXIT</div></div>
   <div id="interact"><b>E</b><span id="interactTxt">INTERACT</span></div>
   <div id="banner"><h1 id="bannerH">WAVE 1</h1><p id="bannerP"></p></div>
 </div>
@@ -126,7 +132,7 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
    <section class="menu-hero"><div class="eyebrow">Tactical voxel combat</div><h1>Build.<br><span>Drive.</span><br>Survive.</h1><p class="hero-copy">Drop into a fully destructible voxel battlefield. Master five weapons, fortify your position block by block, commandeer vehicles, and complete high-stakes operations across four distinct regions.</p><div class="feature-row"><span>6 Operations</span><span>4 Regions</span><span>Build Mode</span><span>Drivable 4×4</span></div>
     <div class="selected-op"><div class="op-index" id="selectedCode">OPERATION 01 · CAMPAIGN</div><h2 id="selectedName">First Contact</h2><p id="selectedDesc">Sweep Greenhaven and eliminate the hostile vanguard before they establish a foothold.</p><div class="op-meta"><span id="selectedMap">GREENHAVEN</span><span id="selectedType">ELIMINATION</span><span id="selectedReward">+500 XP</span></div></div>
    </section>
-   <section class="command-panel"><div class="command-head"><div><div class="eyebrow">Deployment terminal</div><h2>Command Center</h2></div><div class="career"><b id="careerRank">RANK 01 · RECRUIT</b><span><span id="careerXp">0</span> XP · <span id="careerCredits">0</span> CR</span></div></div>
+   <section class="command-panel"><div class="command-head"><div><div class="eyebrow">Deployment terminal</div><h2>Command Center</h2></div><div class="career"><b id="careerRank">RANK 01 · RECRUIT</b><span><span id="careerXp">0</span> XP · <span id="careerCredits">0</span> CR</span><div id="careerTier">SILVER · 1000</div></div></div>
     <div class="mode-tabs" id="modeTabs"><button data-mode="campaign" class="on">Campaign</button><button data-mode="survival">Survival</button><button data-mode="creative">Creative</button></div>
     <div id="campaignSelect"><div class="field-label">Select operation <span>Progress saved locally</span></div><div class="mission-list" id="missionList"></div></div>
     <div class="field-label">Combat region <span id="regionHint">Operation region</span></div><div class="map-grid" id="mapGrid">
@@ -145,31 +151,33 @@ body.touch #abilities{left:190px;bottom:12px;width:auto;flex-direction:row}body.
       <div class="row"><label>FOV</label><input type="range" id="fov" aria-label="Field of view" min="65" max="105" step="1" value="80"></div>
       <div class="row"><label>Day cycle</label><div class="seg" data-k="cycle"><button data-v="1" class="on">Auto</button><button data-v="0">Fixed</button></div></div>
     </div></details>
-    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><span class="footer-actions"><button id="settingsB">Settings</button><button id="helpB">Field manual</button></span></div>
+    <button class="btn" id="deploy">Deploy operation <span>→</span></button><div class="deploy-foot"><span>100% offline · No downloads</span><span class="footer-actions"><button id="rewardsB">Rewards <i id="rewardNotify"></i></button><button id="settingsB">Settings</button><button id="helpB">Field manual</button></span></div>
    </section>
   </main>
   <footer class="menu-footer"><span>WASD MOVE · MOUSE AIM · B BUILD · E VEHICLE / INTERACT</span><div id="hi"></div></footer>
  </div>
 </div>
 <div id="pause" class="ov hidden"><div class="panel"><div class="eyebrow">Tactical suspension</div><div class="big">Paused</div><p class="subtitle">The battlefield is frozen. Review your controls or return to the operation.</p><button class="btn" id="resumeB">Resume operation</button><button class="btn alt" id="restartB">Restart mission</button><button class="btn alt" id="pauseSettingsB">Settings</button><button class="btn alt" id="pauseHelpB">Field manual</button><button class="btn alt danger" id="quitB">Abort to command center</button></div></div>
-<div id="over" class="ov hidden"><div class="panel"><div class="eyebrow" id="overSub">After action report</div><div class="big" id="overTitle">Mission failed</div><p class="subtitle" id="overMessage">Regroup, rearm, and return to the fight.</p><div class="stats"><div>Score<b id="oScore">0</b></div><div>Personal best<b id="oBest">0</b></div><div>Wave<b id="oWave">0</b></div><div>Eliminations<b id="oKills">0</b></div></div><button class="btn hidden" id="nextB">Next operation →</button><button class="btn" id="againB">Redeploy</button><button class="btn alt" id="menuB">Command center</button></div></div>
+<div id="over" class="ov hidden"><div class="panel"><div class="eyebrow" id="overSub">After action report</div><div class="big" id="overTitle">Mission failed</div><p class="subtitle" id="overMessage">Regroup, rearm, and return to the fight.</p><div id="matchRewards">MATCH REWARDS · +0 XP · +0 CR · +0 RATING</div><div class="stats"><div>Score<b id="oScore">0</b></div><div>Personal best<b id="oBest">0</b></div><div>Wave<b id="oWave">0</b></div><div>Eliminations<b id="oKills">0</b></div></div><button class="btn hidden" id="nextB">Next operation →</button><button class="btn" id="againB">Redeploy</button><button class="btn alt" id="menuB">Command center</button></div></div>
+<div id="rewardsOv" class="ov hidden"><div class="rewards-shell"><header class="rewards-head"><div><div class="eyebrow">Season 01 · Frontline network</div><div class="big">Reward center</div></div><button class="btn alt small" id="closeRewards">Close</button></header><div class="rank-hero"><div class="rank-emblem">⬡</div><div><div class="eyebrow">Competitive division</div><h2 id="rewardRank">SILVER</h2><p><span id="rewardRating">1000</span> RATING · <span id="rewardLevel">LEVEL 1</span></p></div><div class="season-xp"><span>ACCOUNT PROGRESS</span><b id="rewardXpText">0 / 1000 XP</b><div><i id="rewardXpFill"></i></div></div></div><div class="reward-section"><div class="reward-title"><div><h3>Daily supply</h3><p>Return each day to increase your streak. Rewards reset after day seven.</p></div><button class="btn small" id="claimDaily">Claim reward</button></div><div class="daily-grid" id="dailyGrid"></div></div><div class="reward-columns"><div class="reward-section"><h3>Career record</h3><div class="career-record" id="rewardStats"></div></div><div class="reward-section"><h3>Ranked divisions</h3><div class="rank-tiers" id="rankTiers"></div></div></div><p class="reward-note">Earn rating from completed operations and strong survival performances. Supply drops contain field gear, RP, XP, and credits.</p></div></div>
+
 <div id="tacticalOv" class="ov hidden"><div class="tac-shell"><header class="tac-head"><div><div class="eyebrow">Command network · live theatre map</div><div class="big">Tactical map</div></div><div class="tac-status"><i></i> UPLINK ACTIVE <span id="tacClock">12:00</span></div></header><div class="tac-body"><div class="tac-map-wrap"><canvas id="bigMap" width="640" height="640"></canvas><div class="map-coords">128 × 128 COMBAT GRID</div></div><aside class="tac-side"><div class="eyebrow">Current tasking</div><h2 id="tacOpName">OPERATION</h2><p id="tacObjective">Objective</p><div class="tac-progress"><span id="tacProgress">0 / 0</span><i id="tacProgressFill"></i></div><div class="tac-legend"><p><i class="lg-player"></i> Your position</p><p><i class="lg-objective"></i> Mission objective</p><p><i class="lg-friendly"></i> Vehicles & sentry guns</p><p><i class="lg-hostile"></i> Detected hostiles</p><p><i class="lg-waypoint"></i> Custom waypoint</p></div><div class="tac-tip"><b>SET WAYPOINT</b><p>Click anywhere on the map to place a navigation marker. Recon pulse reveals all hostile positions.</p></div><div id="waypointInfo">NO CUSTOM WAYPOINT</div></aside></div><footer class="tac-foot"><button class="btn alt small" id="clearWaypoint">Clear waypoint</button><span>M / ESC TO CLOSE</span><button class="btn small" id="closeTactical">Return to combat</button></footer></div></div>
 <div id="upgradeOv" class="ov hidden"><div class="upgrade-shell"><header class="upgrade-head"><div><div class="eyebrow">Field requisition network</div><div class="big">Combat upgrades</div><p class="subtitle">Spend requisition on upgrades for this deployment. Eliminations and cleared waves earn RP.</p></div><div class="rp-balance">AVAILABLE<b id="upgradeRp">0 RP</b></div></header><div class="upgrade-grid" id="upgradeGrid"></div><footer class="upgrade-foot"><span>UPGRADES RESET ON REDEPLOY · U / ESC TO CLOSE</span><button class="btn small" id="closeUpgrades">Return to combat</button></footer></div></div>
 
 <div id="settingsOv" class="ov hidden"><div class="panel settings-panel"><div class="eyebrow">System configuration</div><div class="big">Settings</div><p class="subtitle">Changes apply instantly and are saved on this device.</p>
  <div class="setting-group"><h3>Graphics</h3><div class="setting-line"><label>Render quality<small>Resolution, effects and weather density</small></label><div class="setting-seg" id="setQuality"><button data-q="0">Low</button><button data-q="1">Medium</button><button data-q="2">High</button><button data-q="3">Ultra</button></div></div><div class="setting-line"><label for="setFov">Field of view <output id="setFovValue">80°</output></label><input id="setFov" type="range" min="65" max="105" step="1" value="80"></div></div>
- <div class="setting-group"><h3>World & camera</h3><div class="setting-line"><label>Automatic day / night<small>Dynamic sun, moon, fog and lighting</small></label><button class="toggle" id="setCycle" role="switch" aria-checked="true"><i></i></button></div><div class="setting-line"><label for="setDayLength">Full cycle duration</label><select id="setDayLength"><option value="180">3 minutes</option><option value="360">6 minutes</option><option value="720">12 minutes</option></select></div><div class="setting-line"><label for="setCarCam">Vehicle camera<small>Press C while driving to cycle</small></label><select id="setCarCam"><option value="0">Chase</option><option value="1">Hood</option><option value="2">Cinematic</option></select></div><div class="setting-line"><label>Camera shake</label><button class="toggle" id="setShake" role="switch" aria-checked="true"><i></i></button></div></div>
+ <div class="setting-line"><label>Adaptive performance<small>Automatically adjusts render resolution to maintain frame rate</small></label><button class="toggle on" id="setAdaptive" role="switch" aria-checked="true"><i></i></button></div></div><div class="setting-group"><h3>World & camera</h3><div class="setting-line"><label>Automatic day / night<small>Dynamic sun, moon, fog and lighting</small></label><button class="toggle" id="setCycle" role="switch" aria-checked="true"><i></i></button></div><div class="setting-line"><label for="setDayLength">Full cycle duration</label><select id="setDayLength"><option value="180">3 minutes</option><option value="360">6 minutes</option><option value="720">12 minutes</option></select></div><div class="setting-line"><label for="setPlayerCam">Player camera<small>Press C on foot to cycle perspectives</small></label><select id="setPlayerCam"><option value="0">First person</option><option value="1">Third person</option><option value="2">Shoulder camera</option></select></div><div class="setting-line"><label for="setCarCam">Vehicle camera<small>Press C while driving to cycle</small></label><select id="setCarCam"><option value="0">Chase</option><option value="1">Hood</option><option value="2">Cinematic</option></select></div><div class="setting-line"><label>Camera shake</label><button class="toggle" id="setShake" role="switch" aria-checked="true"><i></i></button></div></div>
  <div class="setting-group"><h3>Controls & audio</h3><div class="setting-line"><label for="setSens">Look sensitivity <output id="setSensValue">1.00</output></label><input id="setSens" type="range" min="0.3" max="2.5" step="0.05" value="1"></div><div class="setting-line"><label for="setVol">Master volume <output id="setVolValue">70%</output></label><input id="setVol" type="range" min="0" max="1" step="0.05" value="0.7"></div><div class="setting-line"><label>Invert vertical look</label><button class="toggle" id="setInvert" role="switch" aria-checked="false"><i></i></button></div></div>
  <div class="settings-actions"><button class="btn alt" id="resetSettings">Reset defaults</button><button class="btn" id="closeSettings">Apply & return</button></div></div></div>
 
-<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p><p><span class="key">X</span> Recon · <span class="key">H</span> Medkit · <span class="key">T</span> Sentry</p><p><span class="key">M</span> Tactical map · <span class="key">U</span> Combat upgrades</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p><span class="key">C</span> Camera · <span class="key">L</span> Headlights</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
+<div id="helpOv" class="ov hidden"><div class="panel help-panel"><div class="eyebrow">Field manual</div><div class="big">Controls</div><div class="help-grid"><div class="help-card"><h3>Combat</h3><p><span class="key">WASD</span> Move · <span class="key">SHIFT</span> Sprint</p><p><span class="key">LMB</span> Fire · <span class="key">RMB</span> Aim</p><p><span class="key">R</span> Reload · <span class="key">G</span> Grenade</p><p><span class="key">1–5</span> Weapons · <span class="key">F</span> Airstrike</p><p><span class="key">X</span> Recon · <span class="key">H</span> Medkit · <span class="key">T</span> Sentry</p><p><span class="key">M</span> Tactical map · <span class="key">U</span> Combat upgrades</p></div><div class="help-card"><h3>Build & create</h3><p><span class="key">B</span> Toggle build mode</p><p><span class="key">LMB</span> Place block · <span class="key">RMB</span> Remove</p><p><span class="key">1–6</span> Select block material</p><p><span class="key">V</span> Creative flight · Space / Shift up / down</p></div><div class="help-card"><h3>Vehicles & missions</h3><p><span class="key">E</span> Enter / exit vehicle or interact</p><p><span class="key">W/S</span> Accelerate / reverse</p><p><span class="key">A/D</span> Steer · <span class="key">SPACE</span> Handbrake</p><p><span class="key">C</span> Camera · <span class="key">L</span> Headlights</p><p>Follow the objective tracker and gold minimap markers.</p></div><div class="help-card"><h3>Survival</h3><p><span class="key">SPACE</span> Jump / auto-step</p><p><span class="key">P</span> Pause · <span class="key">ESC</span> Release mouse</p><p><span class="key">C</span> Player / vehicle camera</p><p>Eight eliminations charge an airstrike. Clear waves for health, ammunition, and bonus score.</p></div></div><button class="btn" id="closeHelp">Return</button></div></div>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t,rnd=Math.random,rr=(a,b)=>a+(b-a)*Math.random();
 const PI=Math.PI;
 const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0};
+const S={diff:1,time:0,q:2,sens:1,vol:.7,touch:isTouch,mode:'campaign',map:0,mission:0,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0,playerCam:0,adaptive:true};
 const DIFF=[{dmg:.6,hp:.8,cnt:.8,regen:1},{dmg:1,hp:1,cnt:1,regen:1},{dmg:1.5,hp:1.3,cnt:1.25,regen:0}];
 const QS=[.55,.8,1,1.25];
 let state='menu';
@@ -1007,7 +1015,7 @@ function drawMini(dt){
 /* ================= RENDER ================= */
 const proj3=new Float32Array(16),view=new Float32Array(16),vp=new Float32Array(16),_bm=new Float32Array(16),_lm=new Float32Array(16),_vm=new Float32Array(16);
 function resize(){
-  const dpr=Math.min(window.devicePixelRatio||1,S.q===3?2:1.5),sc=QS[S.q]*dpr;
+  const dpr=Math.min(window.devicePixelRatio||1,S.q===3?2:1.5),sc=QS[S.q]*dpr*perfScale;
   const w=Math.max(160,Math.floor(innerWidth*sc)),h=Math.max(90,Math.floor(innerHeight*sc));
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
 }
@@ -1138,7 +1146,7 @@ function menuHeli(){}
 let last=performance.now();
 function frame(now){
   requestAnimationFrame(frame);
-  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);updateEnvironment(dt);
+  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);updateEnvironment(dt);updatePerformance(dt);
   for(const c of chunks){} let rb=0;for(const c of chunks){if(c.dirty&&rb<3){buildChunk(c);rb++;}}
   if(state==='play'){
     time+=dt;updateVecs();
@@ -1331,7 +1339,7 @@ let cars=[],decor=[],missionObjects=[];
 let buildMode=false,buildMat=0,builtCount=0,removedCount=0,buildInv=BUILD.map(b=>b.start);
 let activeCar=null,flying=false,carDistance=0,carBumpCd=0;
 let missionDone=false,wavesCleared=0,intelN=0,heliKills=0,defenseT=0,extractStage=0,missionClock=0;
-let career={xp:0,credits:0,completed:{}};
+let career={xp:0,credits:0,completed:{},rating:1000,lastDaily:'',dailyStreak:0,matches:0,wins:0,supplyOpened:0};
 try{career=Object.assign(career,JSON.parse(localStorage.getItem('blockops_career')||'{}'));if(!career.completed)career.completed={};}catch(e){}
 function saveCareer(){try{localStorage.setItem('blockops_career',JSON.stringify(career));}catch(e){}}
 function missionDef(){return MISSIONS[S.mission]||MISSIONS[0];}
@@ -1700,16 +1708,16 @@ buildSky=function(){
  const cc=th.cloud*(.35+.65*th.dayF);for(const c of clouds){const rx=(((c.x+time*3-camX+300)%600)+600)%600-300,rz=(((c.z-camZ+300)%600)+600)%600-300;for(const p of c.parts)boxM(b,IDENT,rx+p[0],c.y+p[1],rz+p[2],p[3],p[4],p[5],cc,cc,cc*(th.duskF>.4?.85:1),1,T.WHITE,-1,1.15);}
 };
 
-const SETTING_KEYS=['diff','time','q','sens','vol','fov','cycle','dayLength','shake','invert','carCam'];
+const SETTING_KEYS=['diff','time','q','sens','vol','fov','cycle','dayLength','shake','invert','carCam','playerCam','adaptive'];
 function saveSettings(){try{const o={};for(const k of SETTING_KEYS)o[k]=S[k];localStorage.setItem('blockops_pro_settings',JSON.stringify(o));}catch(e){}}
-function loadSettings(){try{const o=JSON.parse(localStorage.getItem('blockops_pro_settings')||'{}');for(const k of SETTING_KEYS)if(o[k]!==undefined)S[k]=o[k];}catch(e){}S.q=clamp(S.q|0,0,3);S.fov=clamp(+S.fov||80,65,105);S.dayLength=[180,360,720].includes(+S.dayLength)?+S.dayLength:360;S.carCam=clamp(S.carCam|0,0,2);S.cycle=!!S.cycle;S.shake=S.shake!==false;S.invert=!!S.invert;}
+function loadSettings(){try{const o=JSON.parse(localStorage.getItem('blockops_pro_settings')||'{}');for(const k of SETTING_KEYS)if(o[k]!==undefined)S[k]=o[k];}catch(e){}S.q=clamp(S.q|0,0,3);S.fov=clamp(+S.fov||80,65,105);S.dayLength=[180,360,720].includes(+S.dayLength)?+S.dayLength:360;S.carCam=clamp(S.carCam|0,0,2);S.playerCam=clamp(S.playerCam|0,0,2);S.cycle=!!S.cycle;S.shake=S.shake!==false;S.invert=!!S.invert;S.adaptive=S.adaptive!==false;}
 function syncMainSettings(){
  document.querySelectorAll('.seg[data-k]').forEach(seg=>{const k=seg.dataset.k,v=(k==='touch'||k==='cycle')?Number(!!S[k]):S[k];seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.v===+v));});
  $('sens').value=S.sens;$('vol').value=S.vol;$('fov').value=S.fov;
 }
 function syncSettingsUI(){
- $('setFov').value=S.fov;$('setFovValue').textContent=S.fov+'°';$('setSens').value=S.sens;$('setSensValue').textContent=(+S.sens).toFixed(2);$('setVol').value=S.vol;$('setVolValue').textContent=Math.round(S.vol*100)+'%';$('setDayLength').value=S.dayLength;$('setCarCam').value=S.carCam;
- for(const[id,on]of[['setCycle',S.cycle],['setShake',S.shake],['setInvert',S.invert]]){$(id).classList.toggle('on',!!on);$(id).setAttribute('aria-checked',String(!!on));}
+ $('setFov').value=S.fov;$('setFovValue').textContent=S.fov+'°';$('setSens').value=S.sens;$('setSensValue').textContent=(+S.sens).toFixed(2);$('setVol').value=S.vol;$('setVolValue').textContent=Math.round(S.vol*100)+'%';$('setDayLength').value=S.dayLength;$('setCarCam').value=S.carCam;$('setPlayerCam').value=S.playerCam;
+ for(const[id,on]of[['setCycle',S.cycle],['setShake',S.shake],['setInvert',S.invert],['setAdaptive',S.adaptive]]){$(id).classList.toggle('on',!!on);$(id).setAttribute('aria-checked',String(!!on));}
  $('setQuality').querySelectorAll('button').forEach(b=>b.classList.toggle('on',+b.dataset.q===S.q));
 }
 function syncAllSettings(){syncMainSettings();syncSettingsUI();}
@@ -1724,7 +1732,7 @@ $('setVol').addEventListener('input',e=>{S.vol=+e.target.value;if(master)master.
 $('setDayLength').addEventListener('change',e=>{S.dayLength=+e.target.value;saveSettings();});
 $('setCarCam').addEventListener('change',e=>{S.carCam=+e.target.value;driveCam.init=false;saveSettings();});
 for(const[id,key]of[['setCycle','cycle'],['setShake','shake'],['setInvert','invert']])$(id).addEventListener('click',()=>{S[key]=!S[key];syncAllSettings();saveSettings();});
-$('resetSettings').addEventListener('click',()=>{Object.assign(S,{q:2,sens:1,vol:.7,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0});if(master)master.gain.value=S.vol;syncAllSettings();setStartTime();saveSettings();});
+$('resetSettings').addEventListener('click',()=>{Object.assign(S,{q:2,sens:1,vol:.7,fov:80,cycle:true,dayLength:360,shake:true,invert:false,carCam:0,playerCam:0,adaptive:true});if(master)master.gain.value=S.vol;syncAllSettings();setStartTime();saveSettings();});
 document.querySelectorAll('.seg[data-k]').forEach(seg=>seg.addEventListener('click',()=>{if(seg.dataset.k==='time')setStartTime();syncSettingsUI();saveSettings();}));
 for(const id of['sens','vol','fov'])$(id).addEventListener('input',()=>{if(id==='fov')S.fov=+$(id).value;syncSettingsUI();saveSettings();});
 
@@ -1917,6 +1925,107 @@ window.addEventListener('keydown',e=>{
  if(state==='map'&&(e.code==='KeyM'||e.code==='Escape')){closeTacticalOverlay();return;}if(state==='upgrade'&&(e.code==='KeyU'||e.code==='Escape')){closeTacticalOverlay();return;}if(state!=='play')return;
  if(e.code==='KeyM')openTactical();else if(e.code==='KeyU')openUpgrades();else if(e.code==='KeyX')useRecon();else if(e.code==='KeyH')useMedkit();else if(e.code==='KeyT')deployTurret();
 });
+
+
+/* ================= FRONTLINE ELITE: CONTEXT CONTROLS & PLAYER CAMERAS ================= */
+const RWD={render,updatePlayer,eyePos,buildViewModel,buildDynamic,drawMini,updateHUD,enterCar,exitVehicle,resetGame,toMenu,gameOver,completeMission,btnDown,refreshMenu,nearestInteraction,interact,updateEnemies,drawTacticalMap,pt};
+const playerCam={x:0,y:0,z:0,yaw:0,pitch:0,init:false};
+const PLAYER_PAL={skin:[.88,.68,.5],shirt:[.18,.34,.42],pants:[.16,.2,.24],st:T.CAMO,vest:[.16,.23,.26],helm:[.12,.22,.25]};
+const playerAvatar={type:'soldier',scale:1,pal:PLAYER_PAL,flash:0};
+let perfScale=1,fpsSmooth=60,perfTime=0,miniElapsed=0;
+function firstPersonView(){return S.playerCam===0||(WP[cur].scope&&adsA>.85);}
+function updatePlayerCamera(dt){
+ if(activeCar||firstPersonView()){playerCam.init=false;return;}const target=RWD.eyePos(),dist=S.playerCam===1?4.6:3.25,side=S.playerCam===2?.68:0,sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
+ let dx=target[0]+sy*dist+cy*side,dy=target[1]+.65+Math.max(0,-P.pitch)*dist*.45,dz=target[2]+cy*dist-sy*side;
+ let vx=dx-target[0],vy=dy-target[1],vz=dz-target[2];const len=Math.hypot(vx,vy,vz)||1;vx/=len;vy/=len;vz/=len;const hit=castVoxel(target[0],target[1],target[2],vx,vy,vz,len);
+ if(hit&&hit.t<len){const d=Math.max(.6,hit.t-.3);dx=target[0]+vx*d;dy=target[1]+vy*d;dz=target[2]+vz*d;}
+ const k=playerCam.init?1-Math.exp(-dt*13):1;playerCam.x=lerp(playerCam.x,dx,k);playerCam.y=lerp(playerCam.y,dy,k);playerCam.z=lerp(playerCam.z,dz,k);
+ const ax=target[0]+fwdV[0]*45-playerCam.x,ay=target[1]+fwdV[1]*45-playerCam.y,az=target[2]+fwdV[2]*45-playerCam.z,yaw=Math.atan2(-ax,-az),pitch=Math.atan2(ay,Math.hypot(ax,az)),kl=playerCam.init?Math.min(1,dt*20):1;
+ playerCam.yaw=angLerp(playerCam.yaw,yaw,kl);playerCam.pitch=lerp(playerCam.pitch,pitch,kl);playerCam.init=true;
+}
+updatePlayer=function(dt){RWD.updatePlayer(dt);if(activeCar)playerCam.init=false;else updatePlayerCamera(dt);};
+render=function(eye,yaw,pitch,fov){if(state==='play'&&!activeCar&&!firstPersonView())RWD.render([playerCam.x,playerCam.y,playerCam.z],playerCam.yaw,playerCam.pitch,fov);else RWD.render(eye,yaw,pitch,fov);};
+buildViewModel=function(){if(!activeCar&&!firstPersonView()){dynV.reset();dynVT.reset();return;}RWD.buildViewModel();};
+function drawPlayerAvatar(){Object.assign(playerAvatar,{x:P.x,y:P.y,z:P.z,yaw:P.yaw+PI,anim:bobT,amp:clamp(Math.hypot(P.vx,P.vz)/5,0,.85),muz:muzzleT});drawHuman(playerAvatar);}
+function cyclePlayerCamera(){if(activeCar)return;S.playerCam=(S.playerCam+1)%3;playerCam.init=false;syncSettingsUI();saveSettings();feed(['FIRST PERSON CAMERA','THIRD PERSON CAMERA','SHOULDER CAMERA'][S.playerCam],'#67dbe8');}
+enterCar=function(c){RWD.enterCar(c);if(activeCar){document.body.classList.add('driving');P.yaw=activeCar.yaw;playerCam.init=false;$('bJump').textContent='BRAKE';$('bInteract').textContent='EXIT';}};
+exitVehicle=function(){const c=activeCar;RWD.exitVehicle();document.body.classList.remove('driving');if(c)P.yaw=c.yaw;playerCam.init=false;$('bJump').textContent='JUMP';$('bInteract').textContent='USE';};
+btnDown=function(n,t){if(n==='exit'){exitVehicle();return;}if(n==='lights'&&activeCar){activeCar.lights=!activeCar.lights;feed(activeCar.lights?'HEADLIGHTS ON':'HEADLIGHTS OFF','#ffc857');return;}RWD.btnDown(n,t);};
+$('setPlayerCam').addEventListener('change',e=>{S.playerCam=+e.target.value;playerCam.init=false;syncSettingsUI();saveSettings();});
+document.querySelectorAll('#driveActions button').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.b;if(n==='camera')cycleCamera();else if(n==='lights'&&activeCar){activeCar.lights=!activeCar.lights;}else if(n==='exit')exitVehicle();}));
+$('setAdaptive').addEventListener('click',()=>{S.adaptive=!S.adaptive;perfScale=1;syncAllSettings();saveSettings();});
+window.addEventListener('keydown',e=>{if(state==='play'&&!e.repeat&&e.code==='KeyC'&&!activeCar)cyclePlayerCamera();});
+
+/* ================= ADAPTIVE PERFORMANCE ================= */
+function updatePerformance(dt){
+ if(!S.adaptive){perfScale=1;return;}const fps=1/Math.max(.001,dt);fpsSmooth=lerp(fpsSmooth,fps,.035);perfTime+=dt;if(perfTime<3)return;perfTime=0;
+ if(fpsSmooth<43&&perfScale>.65)perfScale=Math.max(.65,perfScale-.1);else if(fpsSmooth>57&&perfScale<1)perfScale=Math.min(1,perfScale+.05);
+}
+pt=function(...a){const cap=[320,520,780,1050][S.q]||600;if(PT.length<cap)RWD.pt(...a);};
+drawMini=function(dt){miniElapsed+=dt;if(miniElapsed<.05&&!mmDirty)return;const elapsed=miniElapsed;miniElapsed=0;RWD.drawMini(elapsed);drawSupplyMini();};
+
+/* ================= SEASONAL REWARDS & RANKED PROGRESSION ================= */
+const RANKS=[['BRONZE',0],['SILVER',1000],['GOLD',1400],['PLATINUM',1800],['DIAMOND',2300],['HEROIC',2900]];
+const DAILY=[100,150,200,250,350,450,700];
+function tierInfo(){let name='BRONZE';for(const r of RANKS)if(career.rating>=r[1])name=r[0];return{name};}
+function dateKey(d=new Date()){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function yesterdayKey(){const d=new Date();d.setDate(d.getDate()-1);return dateKey(d);}
+function dailyAvailable(){return career.lastDaily!==dateKey();}
+function updateRewardMenu(){const tier=tierInfo();$('careerTier').textContent=tier.name+' · '+career.rating;$('rewardNotify').classList.toggle('claimed',!dailyAvailable());}
+refreshMenu=function(){RWD.refreshMenu();updateRewardMenu();};
+function renderRewardCenter(){
+ const tier=tierInfo(),rank=rankInfo(),xp=career.xp%1000,next=dailyAvailable()?(career.lastDaily===yesterdayKey()?career.dailyStreak%7:0):(career.dailyStreak-1+7)%7;
+ $('rewardRank').textContent=tier.name;$('rewardRating').textContent=career.rating;$('rewardLevel').textContent='LEVEL '+rank.level;$('rewardXpText').textContent=xp+' / 1000 XP';$('rewardXpFill').style.width=xp/10+'%';
+ $('rewardStats').innerHTML='<div><b>'+career.matches+'</b>MATCHES</div><div><b>'+career.wins+'</b>WINS</div><div><b>'+career.supplyOpened+'</b>SUPPLY DROPS</div>';
+ $('rankTiers').innerHTML=RANKS.map(r=>'<span class="'+(r[0]===tier.name?'on':'')+'">'+r[0]+' · '+r[1]+'+</span>').join('');
+ $('dailyGrid').innerHTML=DAILY.map((v,i)=>'<div class="daily-day '+(i===next?'today':'')+' '+(!dailyAvailable()&&i<=next?'claimed':'')+'">DAY '+(i+1)+'<b>'+v+' CR</b></div>').join('');
+ $('claimDaily').disabled=!dailyAvailable();$('claimDaily').textContent=dailyAvailable()?'Claim day '+(next+1):'Claimed today';updateRewardMenu();
+}
+function claimDaily(){if(!dailyAvailable())return;const streak=career.lastDaily===yesterdayKey()?career.dailyStreak+1:1,index=(streak-1)%7,credits=DAILY[index],xp=50+index*25;career.dailyStreak=streak;career.lastDaily=dateKey();career.credits+=credits;career.xp+=xp;saveCareer();renderRewardCenter();refreshMenu();sfxTone(520,1100,.3,.2,'sine');}
+function openRewards(){renderRewardCenter();$('rewardsOv').classList.remove('hidden');}
+$('rewardsB').addEventListener('click',openRewards);$('closeRewards').addEventListener('click',()=> $('rewardsOv').classList.add('hidden'));$('claimDaily').addEventListener('click',claimDaily);
+
+/* ================= SUPPLY DROP EVENTS ================= */
+let supplyDrops=[],dropTimer=35,matchSettled=false,lastMatch={xp:0,cr:0,rating:0};
+function spawnSupplyDrop(){const p=findMissionSpot(22);supplyDrops.push({x:p.x,z:p.z,y:24,targetY:groundAt(p.x,p.z),landed:false,life:150,t:0});dropTimer=55;showBanner('SUPPLY DROP INBOUND','FOLLOW THE ORANGE BEACON · LIMITED TIME',2600);sfxPlane();}
+function updateSupplyDrops(dt){
+ if(S.mode==='creative')return;dropTimer-=dt;if(dropTimer<=0&&supplyDrops.length===0)spawnSupplyDrop();
+ for(let i=supplyDrops.length-1;i>=0;i--){const d=supplyDrops[i];d.t+=dt;if(!d.landed){d.y-=6.5*dt;if(d.y<=d.targetY){d.y=d.targetY;d.landed=true;showBanner('SUPPLY DROP LANDED','PRESS E NEAR THE CRATE TO CLAIM IT',1800);}}else{d.life-=dt;if(rnd()<dt*4)pt(d.x+rr(-.4,.4),d.y+1,d.z+rr(-.4,.4),0,rr(.5,1.2),0,1.2,.3,.4,1,.2,2,0);if(d.life<=0)supplyDrops.splice(i,1);}}
+}
+updateEnemies=function(dt){RWD.updateEnemies(dt);updateSupplyDrops(dt);};
+function nearestSupply(){if(activeCar)return null;for(const d of supplyDrops)if(d.landed&&Math.hypot(d.x-P.x,d.z-P.z)<3)return d;return null;}
+nearestInteraction=function(){const d=nearestSupply();if(d)return{kind:'supply',obj:d,label:'OPEN SUPPLY DROP'};return RWD.nearestInteraction();};
+function openSupply(d){
+ const index=supplyDrops.indexOf(d);if(index<0)return;supplyDrops.splice(index,1);runRP+=100;score+=250;let text='';const roll=rnd()*4|0;
+ if(roll===0){P.armor=Math.min(100,P.armor+50);medkits=Math.min(6,medkits+1);text='ARMOR + MEDKIT + 100 RP';}
+ else if(roll===1){for(let k=1;k<WP.length;k++)ws[k].res+=WP[k].mag*2;P.gren=Math.min(5,P.gren+1);text='WEAPON AMMO + GRENADE + 100 RP';}
+ else if(roll===2){career.credits+=150;career.xp+=75;text='+150 CREDITS +75 XP +100 RP';}
+ else{turretKits=Math.min(5,turretKits+1);runRP+=150;text='SENTRY KIT + 250 RP';}
+ career.supplyOpened++;saveCareer();showBanner('SUPPLY ACQUIRED',text,2400);feed(text,'#ffc857');sfxPick();
+}
+interact=function(){const n=nearestInteraction();if(n&&n.kind==='supply'){openSupply(n.obj);return;}RWD.interact();};
+function drawSupplyDrop(d){
+ NS=1;boxM(dynO,IDENT,d.x,d.y+.45,d.z,.9,.9,.9,.65,.43,.16,1,T.CRATE,-1,0);boxM(dynO,IDENT,d.x,d.y+.92,d.z,1,.1,1,.85,.65,.25,1,T.METAL,-1,0);
+ if(!d.landed){boxM(dynO,IDENT,d.x,d.y+3,d.z,3.6,.28,2.4,.92,.55,.2,1,T.PLAIN,-1,0);for(const sx of[-1,1])for(const sz of[-1,1])boxM(dynO,IDENT,d.x+sx*.65,d.y+1.9,d.z+sz*.5,.035,2,.035,.8,.8,.75,1,T.PLAIN,-1,0);}
+ else boxM(dynT,IDENT,d.x,d.y+4,d.z,.4,7,.4,1,.5,.1,.17,T.WHITE,-1,1);
+}
+buildDynamic=function(eye){RWD.buildDynamic(eye);if(state==='play'&&!activeCar&&!firstPersonView()&&!P.dead)drawPlayerAvatar();for(const d of supplyDrops)drawSupplyDrop(d);};
+function drawSupplyMini(){const c=mctx,sc=2.6,yaw=activeCar?driveCam.yaw:P.yaw;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(yaw);for(const d of supplyDrops){const x=(d.x-P.x)*sc,z=(d.z-P.z)*sc;c.fillStyle='#ff9b42';c.fillRect(x-5,z-5,10,10);}c.restore();}
+drawTacticalMap=function(){RWD.drawTacticalMap();const c=$('bigMap').getContext('2d'),sc=640/W;for(const d of supplyDrops){c.fillStyle='#ff9b42';c.fillRect(d.x*sc-6,d.z*sc-6,12,12);}};
+
+/* ================= MATCH REWARDS & LIFECYCLE ================= */
+updateHUD=function(dt){RWD.updateHUD(dt);$('vehicleHud').style.display='none';if(activeCar){$('bJump').textContent='BRAKE';$('bInteract').textContent='EXIT';}};
+resetGame=function(){supplyDrops=[];dropTimer=35;matchSettled=false;lastMatch={xp:0,cr:0,rating:0};playerCam.init=false;miniElapsed=0;perfScale=1;document.body.classList.remove('driving');$('bJump').textContent='JUMP';$('bInteract').textContent='USE';RWD.resetGame();};
+toMenu=function(){document.body.classList.remove('driving');supplyDrops=[];$('rewardsOv').classList.add('hidden');RWD.toMenu();};
+completeMission=function(){
+ const was=state==='play'&&S.mode==='campaign';if(was&&!matchSettled){matchSettled=true;const m=missionDef(),delta=25+S.mission*5;lastMatch={xp:m.reward,cr:Math.round(m.reward*.35),rating:delta};career.matches++;career.wins++;career.rating=Math.max(0,career.rating+delta);saveCareer();}
+ document.body.classList.remove('driving');RWD.completeMission();if(was)$('matchRewards').textContent='MATCH REWARDS · +'+lastMatch.xp+' XP · +'+lastMatch.cr+' CR · +'+lastMatch.rating+' RATING';
+};
+gameOver=function(){
+ const was=state==='play'&&S.mode!=='creative';if(was&&!matchSettled){matchSettled=true;const delta=S.mode==='survival'?clamp(wave*2+Math.floor(kills/4)-8,-15,30):-8;lastMatch={xp:S.mode==='survival'?kills*10:0,cr:S.mode==='survival'?kills*2:0,rating:delta};career.matches++;career.rating=Math.max(0,career.rating+delta);saveCareer();}
+ document.body.classList.remove('driving');RWD.gameOver();if(was)$('matchRewards').textContent='MATCH REWARDS · +'+lastMatch.xp+' XP · +'+lastMatch.cr+' CR · '+(lastMatch.rating>=0?'+':'')+lastMatch.rating+' RATING';
+};
+updateRewardMenu();
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
