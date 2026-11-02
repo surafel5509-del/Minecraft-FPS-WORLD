@@ -1157,7 +1157,7 @@ function menuHeli(){}
 let last=performance.now();
 function frame(now){
   requestAnimationFrame(frame);
-  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);document.body.classList.toggle('in-game',state==='play');updateEnvironment(dt);updatePerformance(dt);
+  let dt=(now-last)/1000;last=now;dt=Math.min(dt,.05);document.body.classList.toggle('in-game',state==='play');applyScreenState();updateEnvironment(dt);updatePerformance(dt);
   for(const c of chunks){} let rb=0;for(const c of chunks){if(c.dirty&&rb<3){buildChunk(c);rb++;}}
   if(state==='play'){
     time+=dt;updateVecs();
@@ -2166,23 +2166,37 @@ updateHUD=function(dt){
 drawMini=function(dt){VG.drawMini(dt);if(state!=='play')return;const c=mctx,yaw=activeCar?driveCam.yaw:P.yaw;c.save();c.beginPath();c.rect(0,0,240,240);c.clip();c.translate(120,120);c.rotate(yaw);for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.fillRect((b.x-P.x)*2.6-3,(b.z-P.z)*2.6-3,6,6);}c.restore();};
 drawTacticalMap=function(){VG.drawTacticalMap();if(state!=='play')return;const c=$('bigMap').getContext('2d'),sc=640/W;for(const b of[robot,...allies]){if(!b.active||b.dead)continue;c.fillStyle=b.kind==='robot'?'#65e5ef':'#76aaff';c.beginPath();c.arc(b.x*sc,b.z*sc,5,0,TAU);c.fill();}};
 resetGame=function(){insertion=null;wave=0;waveActive=false;toSpawnZ=toSpawnS=toSpawnH=0;teamEnded=false;teamPoints=[0,0];invulnT=0;stamina=100;crouchAmount=0;landKick=0;scopeSteady=false;coyote=0;jumpBuffer=0;document.body.classList.remove('inserting','driving');VG.resetGame();resetCompanions();applyCosmetics();};
-startGame=function(){closeMenuOverlays();insertionIntent=S.mode==='campaign';VG.startGame();insertionIntent=false;if(S.mode==='campaign')beginInsertion();};
-toMenu=function(){closeMenuOverlays();insertion=null;insertionIntent=false;document.body.classList.remove('inserting','driving','in-game');VG.toMenu();};
+startGame=function(){closeMenuOverlays();insertionIntent=S.mode==='campaign';VG.startGame();insertionIntent=false;if(S.mode==='campaign')beginInsertion();applyScreenState();};
+toMenu=function(){closeMenuOverlays();insertion=null;insertionIntent=false;document.body.classList.remove('inserting','driving','in-game');VG.toMenu();applyScreenState();};
 gameOver=function(){if(S.mode==='teams'&&state==='play'){if(P.dead)handleTeamDeath();return;}VG.gameOver();};
 btnDown=function(b){if(b==='jumpPlane'){beginParachute();return;}if(b==='rotateContinue'){document.body.classList.add('rotate-dismissed');return;}if(b==='rotateMenu'){toMenu();return;}VG.btnDown(b);};
 $('jumpPlane').addEventListener('click',beginParachute);
 window.addEventListener('keydown',e=>{if(e.code==='Escape'&&!$('marketOv').classList.contains('hidden')){$('marketOv').classList.add('hidden');return;}if(state!=='play')return;if(insertion&&(e.code==='KeyE'||e.code==='Space')){beginParachute();e.preventDefault();return;}if(e.code==='KeyQ'&&robot.active&&!robot.dead){robot.hold=!robot.hold;feed('N.O.V.A. · '+(robot.hold?'HOLD POSITION':'FOLLOW ME'),'#79dfe8');}});
 
 
-/* ================= COMMAND CENTER NAVIGATION FIX ================= */
-function closeMenuOverlays(){for(const id of['marketOv','rewardsOv','settingsOv','helpOv'])$(id).classList.add('hidden');}
+/* ================= SINGLE ACTIVE SCREEN / COMMAND CENTER ================= */
+let menuOverlay=null;
+function applyScreenState(){
+ const base=state==='menu'?'menu':state==='paused'?'pause':state==='over'?'over':state==='map'?'tacticalOv':state==='upgrade'?'upgradeOv':null,active=menuOverlay||base;
+ for(const o of document.querySelectorAll('.ov')){
+  const show=o.id===active;if(show&&o.classList.contains('hidden'))o.classList.remove('hidden');else if(!show&&!o.classList.contains('hidden'))o.classList.add('hidden');
+  const pointer=show?'auto':'none';if(o.style.pointerEvents!==pointer)o.style.pointerEvents=pointer;o.classList.toggle('screen-active',show);const aria=show?'false':'true';if(o.getAttribute('aria-hidden')!==aria)o.setAttribute('aria-hidden',aria);
+ }
+ const screen=active||'game';if(document.body.dataset.screen!==screen)document.body.dataset.screen=screen;
+}
+function setMenuOverlay(id){menuOverlay=id;applyScreenState();}
+function closeMenuOverlays(){menuOverlay=null;applyScreenState();}
+$('marketB').addEventListener('click',()=>setMenuOverlay('marketOv'));$('rewardsB').addEventListener('click',()=>setMenuOverlay('rewardsOv'));
+$('settingsB').addEventListener('click',()=>setMenuOverlay('settingsOv'));$('pauseSettingsB').addEventListener('click',()=>setMenuOverlay('settingsOv'));
+$('helpB').addEventListener('click',()=>setMenuOverlay('helpOv'));$('pauseHelpB').addEventListener('click',()=>setMenuOverlay('helpOv'));
+for(const id of['closeMarket','closeRewards','closeSettings','closeHelp','closeTactical','closeUpgrades'])$(id).addEventListener('click',()=>setMenuOverlay(null));
 $('rotateContinue').addEventListener('click',()=>document.body.classList.add('rotate-dismissed'));
 $('rotateMenu').addEventListener('click',()=>toMenu());
 window.addEventListener('keydown',e=>{
- if(e.code!=='Escape'||e.repeat)return;const open=['helpOv','settingsOv','rewardsOv','marketOv'].find(id=>!$(id).classList.contains('hidden'));
- if(open){e.preventDefault();e.stopImmediatePropagation();$(open).classList.add('hidden');if(open==='settingsOv')saveSettings();return;}
- if(state==='paused'){e.preventDefault();e.stopImmediatePropagation();resumeGame();}
+ if(e.repeat)return;if((e.code==='Escape'||e.code==='KeyP')&&menuOverlay){e.preventDefault();e.stopImmediatePropagation();if(menuOverlay==='settingsOv')saveSettings();setMenuOverlay(null);return;}
+ if(e.code==='Escape'&&state==='paused'){e.preventDefault();e.stopImmediatePropagation();resumeGame();}
 },true);
+applyScreenState();
 
 // init
 ws=WP.map(w=>({ammo:w.mag,res:w.res}));
